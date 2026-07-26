@@ -1,0 +1,16 @@
+node_modules/
+main.js
+.test-build/
+reference/
+tmp/
+.DS_Store
+
+# Local build docs and agent instructions: personal notes, local vault paths.
+BRIEF.md
+CLAUDE.md
+
+# Plugin settings can carry local vault paths; never publish them.
+data.json
+
+# Local dev vault path used by scripts/install-vault.mjs.
+.vault-path

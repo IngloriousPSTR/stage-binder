@@ -1,0 +1,59 @@
+{
+	"name": "chordpro-studio",
+	"version": "1.0.0",
+	"description": "Write ChordPro charts, build setlists and run sheets, transpose songs, and perform from an iPad or desktop.",
+	"main": "main.js",
+	"scripts": {
+		"dev": "node esbuild.config.mjs",
+		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+		"lint": "eslint src",
+		"test": "npm run test:core && npm run test:ui",
+		"test:core": "node scripts/run-tests.mjs",
+		"test:ui": "node scripts/run-ui-tests.mjs",
+		"install:vault": "npm run build && node scripts/install-vault.mjs"
+	},
+	"keywords": [
+		"obsidian",
+		"obsidian-plugin",
+		"chordpro",
+		"guitar",
+		"chords",
+		"worship",
+		"setlist",
+		"transpose"
+	],
+	"author": "Chris May",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/IngloriousPSTR/chordpro-studio-obsidian.git"
+	},
+	"bugs": {
+		"url": "https://github.com/IngloriousPSTR/chordpro-studio-obsidian/issues"
+	},
+	"homepage": "https://github.com/IngloriousPSTR/chordpro-studio-obsidian#readme",
+	"devDependencies": {
+		"@codemirror/state": "^6.5.0",
+		"@codemirror/view": "^6.38.6",
+		"@eslint/js": "^9.39.5",
+		"@types/node": "^22.0.0",
+		"esbuild": "^0.25.0",
+		"eslint": "^9.39.5",
+		"eslint-plugin-obsidianmd": "^0.4.1",
+		"globals": "^17.7.0",
+		"happy-dom": "^20.10.6",
+		"jiti": "^2.7.0",
+		"obsidian": "^1.8.7",
+		"typescript": "^5.7.0",
+		"typescript-eslint": "^8.65.0"
+	},
+	"dependencies": {
+		"@tombatossals/chords-db": "^0.5.1",
+		"chordsheetjs": "^12.0.0",
+		"svguitar": "^2.4.1",
+		"tonal": "^6.4.0"
+	},
+	"allowScripts": {
+		"esbuild@0.25.12": true
+	}
+}

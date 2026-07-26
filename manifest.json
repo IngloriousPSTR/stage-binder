@@ -1,0 +1,10 @@
+{
+	"id": "chordpro-studio",
+	"name": "ChordPro Studio",
+	"version": "1.0.0",
+	"minAppVersion": "1.8.7",
+	"description": "Write ChordPro charts, build setlists and run sheets, transpose songs, and perform from an iPad or desktop.",
+	"author": "Chris May",
+	"authorUrl": "https://github.com/IngloriousPSTR",
+	"isDesktopOnly": false
+}

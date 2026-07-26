@@ -1,0 +1,46 @@
+name: Bug report
+description: Something in the plugin does not work as expected
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What did you do, and what did the plugin do instead of what you expected?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open a song with ...
+        2. Run the command ...
+        3. See ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: song
+    attributes:
+      label: Song source (optional)
+      description: >
+        If a specific song triggers it, paste the smallest snippet that still shows the
+        problem. Please do not paste full copyrighted lyrics: a verse line or two is plenty.
+      render: text
+
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      placeholder: "ChordPro Studio 1.0.0, Obsidian 1.8.7, macOS 15 / iPadOS 18"
+    validations:
+      required: true
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Console errors (optional)
+      description: "Desktop: Ctrl/Cmd+Shift+I opens the developer console. Paste anything red."
+      render: shell

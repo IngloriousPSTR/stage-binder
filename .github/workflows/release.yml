@@ -1,0 +1,49 @@
+# Cut a release when a version tag is pushed. Obsidian requires the tag to
+# equal the manifest version EXACTLY, with no "v" prefix:
+#   git tag 1.0.1 && git push origin 1.0.1
+# Builds the plugin and attaches the three files Obsidian needs, which is also
+# what BRAT looks for.
+name: Release
+
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Check version matches tag
+        run: node scripts/check-version.mjs "${{ github.ref_name }}"
+
+      - name: Build
+        run: npm run build
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$TAG" \
+            --title "$TAG" \
+            --generate-notes \
+            main.js manifest.json styles.css

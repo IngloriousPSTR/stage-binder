@@ -1,0 +1,2319 @@
+/* ChordPro Studio styles: Toolbox, chart view, code blocks, hover tooltip. */
+
+/* --- Toolbox (right sidebar) --- */
+
+.cps-toolbox {
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+}
+
+.cps-toolbox-scroll {
+	flex: 1;
+	overflow-y: auto;
+	padding: 8px 8px 20px;
+}
+
+.cps-toolbox-disclosure {
+	margin: 0;
+	border-top: 1px solid var(--background-modifier-border);
+	background: transparent;
+}
+
+.cps-toolbox-disclosure > summary {
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 9px;
+	min-height: 44px;
+	padding: 8px 6px;
+	font-size: var(--font-ui-small);
+	font-weight: 600;
+	color: var(--text-normal);
+	list-style: none;
+	transition: color 120ms ease, background-color 120ms ease;
+}
+
+.cps-toolbox-disclosure > summary::-webkit-details-marker {
+	display: none;
+}
+
+.cps-toolbox-disclosure > summary::after {
+	content: "";
+	width: 7px;
+	height: 7px;
+	margin-left: auto;
+	margin-right: 5px;
+	border-right: 1.5px solid currentColor;
+	border-bottom: 1.5px solid currentColor;
+	transform: rotate(45deg) translateY(-2px);
+	transition: transform 140ms ease;
+}
+
+.cps-toolbox-disclosure[open] > summary::after {
+	transform: rotate(225deg) translate(-1px, -1px);
+}
+
+.cps-disclosure-icon {
+	display: inline-flex;
+	color: var(--text-muted);
+}
+
+.cps-disclosure-icon svg {
+	width: 17px;
+	height: 17px;
+}
+
+.cps-toolbox-disclosure > summary:hover {
+	background: var(--background-modifier-hover);
+}
+
+.cps-toolbox-disclosure > summary:focus-visible {
+	outline: 2px solid var(--interactive-accent);
+	outline-offset: 1px;
+	border-radius: var(--radius-s);
+}
+
+.cps-toolbox-disclosure-body {
+	padding: 2px 6px 4px 32px;
+}
+
+.cps-toolbox-disclosure-body > .cps-section:last-child {
+	margin-bottom: 10px;
+}
+
+.cps-section {
+	margin-bottom: 18px;
+}
+
+.cps-section-title {
+	font-size: var(--font-ui-smaller);
+	font-weight: 600;
+	color: var(--text-muted);
+	margin-bottom: 8px;
+}
+
+.cps-section-hint {
+	margin: 0 0 10px;
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	line-height: 1.4;
+	text-wrap: pretty;
+}
+
+/* The active file and the two reading actions remain visible while the
+   authoring sections scroll underneath. */
+.cps-current-chart {
+	position: sticky;
+	top: -8px;
+	z-index: 3;
+	margin: 0 -2px 8px;
+	padding: 11px 10px 10px;
+	border-left: 3px solid var(--interactive-accent);
+	background: var(--background-secondary);
+	box-shadow: 0 6px 12px -12px var(--background-modifier-box-shadow);
+}
+
+.cps-current-chart-label {
+	margin-bottom: 2px;
+	font-size: var(--font-ui-smaller);
+	font-weight: 600;
+	color: var(--text-muted);
+}
+
+.cps-current-chart-name {
+	font-size: var(--font-ui-medium);
+	font-weight: 650;
+	line-height: 1.25;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cps-current-chart-path {
+	margin-top: 2px;
+	font-size: var(--font-ui-smaller);
+	color: var(--text-faint);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cps-current-chart-path.is-empty {
+	white-space: normal;
+}
+
+.cps-current-chart-actions {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 6px;
+	margin-top: 10px;
+}
+
+.cps-key-select {
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.cps-chord-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+	gap: 6px;
+}
+
+.cps-chord-btn {
+	display: flex;
+	align-items: stretch;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-s);
+	background: var(--interactive-normal);
+	cursor: pointer;
+	overflow: hidden;
+}
+
+.cps-chord-btn:hover {
+	background: var(--interactive-hover);
+}
+
+.cps-chord-insert {
+	flex: 1;
+	padding: 5px 2px 6px 8px;
+	min-width: 0;
+}
+
+.cps-chord-numeral {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	line-height: 1.1;
+}
+
+.cps-chord-name {
+	font-weight: 600;
+	font-size: var(--font-ui-medium);
+	line-height: 1.2;
+}
+
+.cps-chord-detail-btn {
+	display: flex;
+	align-items: center;
+	padding: 0 5px;
+	color: var(--text-faint);
+	border-left: 1px solid var(--background-modifier-border);
+}
+
+.cps-chord-detail-btn:hover {
+	color: var(--text-accent);
+	background: var(--background-modifier-hover);
+}
+
+.cps-chord-detail-btn svg {
+	width: 14px;
+	height: 14px;
+}
+
+/* --- Chord detail (5b): now rendered inside the fingering dock --- */
+
+.cps-variation-select {
+	width: 100%;
+	margin-bottom: 8px;
+}
+
+.cps-detail-header {
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+	margin-bottom: 6px;
+}
+
+.cps-detail-name {
+	font-weight: 700;
+	font-size: var(--font-ui-large);
+}
+
+.cps-detail-notes {
+	flex: 1;
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+}
+
+.cps-detail-close {
+	cursor: pointer;
+	color: var(--text-faint);
+	display: flex;
+	align-items: center;
+}
+
+.cps-detail-close:hover {
+	color: var(--text-normal);
+}
+
+.cps-detail-close svg {
+	width: 16px;
+	height: 16px;
+}
+
+.cps-detail-empty {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+}
+
+.cps-diagram-row {
+	display: flex;
+	gap: 10px;
+	overflow-x: auto;
+	padding-bottom: 6px;
+}
+
+.cps-diagram-cell {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2px;
+	flex: 0 0 auto;
+}
+
+.cps-diagram {
+	width: 96px;
+	color: var(--text-normal);
+}
+
+.cps-diagram svg {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+/* svguitar draws the finger dot in `currentColor` (so it follows the theme) but
+   hardcodes the finger-number to white. On dark themes the dot is light too, so
+   the number vanishes. Paint the number with the background color so it always
+   contrasts against the dot. */
+.cps-diagram .finger-text,
+.cps-diagram .barre-text {
+	fill: var(--background-primary);
+}
+
+.cps-diagram-insert {
+	font-size: var(--font-ui-smaller);
+	padding: 2px 10px;
+	height: auto;
+}
+
+/* --- Snippet grids (5c) --- */
+
+.cps-snippet-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+	gap: 6px;
+}
+
+.cps-snippet-btn {
+	font-size: var(--font-ui-smaller);
+	padding: 6px 8px;
+	min-height: 34px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* --- Toolbox actions --- */
+
+.cps-action-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
+	gap: 6px;
+}
+
+.cps-action-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 7px;
+	min-width: 0;
+	min-height: 38px;
+	height: auto;
+	padding: 7px 9px;
+	font-size: var(--font-ui-small);
+	line-height: 1.2;
+	text-align: left;
+	transition: background-color 120ms ease, border-color 120ms ease, transform 80ms ease;
+}
+
+.cps-action-btn:active:not(:disabled) {
+	transform: translateY(1px);
+}
+
+.cps-action-btn:focus-visible {
+	outline: 2px solid var(--interactive-accent);
+	outline-offset: 1px;
+}
+
+.cps-action-btn:disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+}
+
+.cps-action-icon {
+	display: inline-flex;
+	flex: 0 0 auto;
+}
+
+.cps-action-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.cps-current-chart-actions .cps-action-btn {
+	justify-content: center;
+}
+
+/* --- Chart view and code blocks (section 6) --- */
+
+.cps-chart-view {
+	overflow-y: auto;
+}
+
+.cps-chart-view.cps-preview-view {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	container-type: inline-size;
+}
+
+.cps-stage-main {
+	min-width: 0;
+	min-height: 0;
+}
+
+.cps-preview-main {
+	flex: 1;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+	padding: 12px 8px 35vh;
+}
+
+.cps-stage-topbar {
+	position: relative;
+	z-index: 20;
+	display: grid;
+	grid-template-columns: 44px minmax(0, 1fr) 44px 44px;
+	align-items: center;
+	gap: 6px;
+	min-height: 56px;
+	padding: 6px 8px;
+	flex: 0 0 auto;
+	background: var(--background-primary);
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.cps-stage-topbar-performance {
+	grid-template-columns: 44px minmax(0, 1fr) 44px 44px 44px;
+}
+
+.cps-stage-heading {
+	min-width: 0;
+}
+
+.cps-stage-title {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-weight: 650;
+	font-size: var(--font-ui-medium);
+	letter-spacing: -0.01em;
+}
+
+.cps-stage-position {
+	min-height: 1em;
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	font-variant-numeric: tabular-nums;
+}
+
+button.cps-stage-icon-btn,
+button.cps-stage-choice {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 40px;
+	min-height: 40px;
+	padding: 6px 10px;
+	border: 0;
+	border-radius: var(--button-radius, var(--radius-s));
+	background: transparent;
+	box-shadow: none;
+	color: var(--text-normal);
+	font-size: var(--font-ui-small);
+	font-weight: 600;
+	transition: background-color 140ms ease, color 140ms ease, transform 80ms ease;
+}
+
+/* setIcon() supplies the SVG but its size otherwise depends on the active
+   Obsidian theme. Own the stage-chrome size so tablet themes cannot collapse
+   these controls to tiny glyphs inside otherwise-correct touch targets. */
+button.cps-stage-icon-btn > svg {
+	width: 20px;
+	height: 20px;
+	min-width: 20px;
+	min-height: 20px;
+	flex: 0 0 20px;
+	pointer-events: none;
+}
+
+button.cps-stage-icon-btn:hover,
+button.cps-stage-choice:hover {
+	background: var(--background-modifier-hover);
+}
+
+button.cps-stage-icon-btn:active,
+button.cps-stage-choice:active {
+	transform: translateY(1px);
+}
+
+button.cps-stage-choice.is-active {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
+
+.cps-stage-tools {
+	position: absolute;
+	top: 62px;
+	right: 54px;
+	z-index: 35;
+	width: min(540px, calc(100% - 24px));
+	max-height: calc(100% - 76px);
+	overflow-y: auto;
+	padding: 10px;
+	background: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-l);
+	box-shadow: var(--shadow-l);
+}
+
+.cps-stage-tools[hidden] {
+	display: none;
+}
+
+.cps-stage-tool-row {
+	display: grid;
+	grid-template-columns: 82px minmax(0, 1fr);
+	align-items: center;
+	gap: 8px;
+	padding: 5px 0;
+}
+
+.cps-stage-tool-row + .cps-stage-tool-row {
+	border-top: 1px solid var(--background-modifier-border-hover);
+}
+
+.cps-stage-tool-label,
+.cps-stage-eyebrow,
+.cps-stage-drawer-divider {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	font-weight: 650;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+}
+
+.cps-stage-tool-actions {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 3px;
+	min-width: 0;
+	flex-wrap: wrap;
+}
+
+.cps-stage-key,
+.cps-stage-value {
+	min-width: 3.5em;
+	padding: 0 5px;
+	text-align: center;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+}
+
+.cps-stage-scrim {
+	position: absolute;
+	inset: 0;
+	z-index: 38;
+	background: rgba(0, 0, 0, 0.34);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 180ms ease;
+}
+
+.cps-stage-scrim.is-open {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.cps-stage-drawer {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	z-index: 40;
+	display: flex;
+	flex-direction: column;
+	width: min(400px, 92%);
+	background: var(--background-primary);
+	box-shadow: var(--shadow-l);
+	transition: transform 220ms ease;
+}
+
+.cps-stage-drawer-left {
+	left: 0;
+	border-right: 1px solid var(--background-modifier-border);
+	transform: translateX(-102%);
+}
+
+.cps-stage-drawer-right {
+	right: 0;
+	border-left: 1px solid var(--background-modifier-border);
+	transform: translateX(102%);
+}
+
+.cps-stage-drawer.is-open {
+	transform: none;
+}
+
+.cps-stage-drawer-head {
+	padding: 20px 18px 14px;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.cps-stage-drawer-heading {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.cps-stage-drawer-head h2 {
+	margin: 4px 0 12px;
+	font-size: 1.35rem;
+	letter-spacing: -0.02em;
+}
+
+.cps-stage-service-picker {
+	width: 100%;
+	min-height: 40px;
+}
+
+.cps-stage-drawer-list {
+	flex: 1;
+	overflow-y: auto;
+	padding: 10px 12px 24px;
+}
+
+.cps-stage-drawer-divider {
+	padding: 14px 10px 5px;
+}
+
+button.cps-stage-drawer-row {
+	display: grid;
+	grid-template-columns: 64px minmax(0, 1fr) auto;
+	gap: 3px 10px;
+	align-items: baseline;
+	width: 100%;
+	min-height: 58px;
+	padding: 9px 10px;
+	text-align: left;
+	border: 0;
+	border-left: 3px solid transparent;
+	border-radius: var(--radius-m);
+	background: transparent;
+	box-shadow: none;
+	color: var(--text-normal);
+}
+
+button.cps-stage-drawer-row:hover {
+	background: var(--background-modifier-hover);
+}
+
+button.cps-stage-drawer-row.is-current {
+	border-left-color: var(--interactive-accent);
+	background: var(--background-modifier-hover);
+}
+
+button.cps-stage-drawer-row:disabled {
+	opacity: 0.72;
+	cursor: default;
+}
+
+.cps-stage-row-time {
+	color: var(--text-accent);
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+}
+
+.cps-stage-row-title {
+	min-width: 0;
+	font-weight: 650;
+}
+
+.cps-stage-row-kind {
+	grid-column: 2;
+	color: var(--text-faint);
+	font-size: var(--font-ui-smaller);
+	text-transform: capitalize;
+}
+
+.cps-stage-row-duration {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	font-variant-numeric: tabular-nums;
+}
+
+.cps-stage-row-host {
+	grid-column: 2 / 4;
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+}
+
+.cps-stage-empty {
+	padding: 28px 16px;
+	color: var(--text-muted);
+	text-align: center;
+}
+
+@container (max-width: 620px) {
+	.cps-stage-title {
+		font-size: var(--font-ui-small);
+	}
+
+	.cps-stage-position {
+		display: none;
+	}
+
+	.cps-stage-tools {
+		right: 8px;
+		width: calc(100% - 16px);
+	}
+
+	.cps-stage-tool-row {
+		grid-template-columns: 68px minmax(0, 1fr);
+	}
+
+	.cps-stage-choice {
+		padding-inline: 8px;
+	}
+}
+
+/* In the chart and setlist views, keep the controls reachable while scrolling
+   (autoscroll pause, transpose). Code blocks keep the inline layout. */
+.cps-chart-view > .cps-chart-controls {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	background: var(--background-primary);
+	padding: 6px 0;
+	margin-top: 0;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.cps-chart-controls {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 12px;
+	flex-wrap: wrap;
+}
+
+.cps-transpose-btn {
+	padding: 2px 8px;
+	height: auto;
+	display: flex;
+	align-items: center;
+}
+
+.cps-transpose-btn svg {
+	width: 14px;
+	height: 14px;
+}
+
+.cps-transpose-offset {
+	min-width: 2.2em;
+	text-align: center;
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+}
+
+.cps-chart-btn {
+	height: auto;
+	padding: 3px 10px;
+	font-size: var(--font-ui-smaller);
+}
+
+.cps-chart-meta {
+	color: var(--text-muted);
+	margin: -4px 0 16px 0;
+	font-size: var(--font-ui-small);
+}
+
+/* Chords-over-lyrics layout for ChordSheetJS HtmlDivFormatter output. */
+
+.cps-chart h1.title {
+	font-size: 1.5em;
+	margin: 0 0 4px 0;
+}
+
+.cps-chart .chord-sheet {
+	font-family: var(--cps-chart-font, var(--font-monospace));
+	font-size: 0.95em;
+	line-height: var(--cps-line-height, 1.35);
+}
+
+.cps-chart .paragraph {
+	margin-bottom: 1.2em;
+}
+
+.cps-chart .row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+}
+
+.cps-chart .column {
+	display: flex;
+	flex-direction: column;
+}
+
+/* Colors and sizes are settings-driven CSS variables (see the plugin's
+   appearance settings); the fallbacks are the theme defaults. */
+
+.cps-chart .chord {
+	font-weight: var(--cps-chord-weight, 700);
+	color: var(--cps-chord-color, var(--text-accent));
+	font-size: calc(1em * var(--cps-chord-scale, 1));
+	min-height: calc(1em * var(--cps-line-height, 1.35));
+	padding-right: 6px;
+	user-select: none;
+}
+
+.cps-chart .chord:empty {
+	padding-right: 0;
+}
+
+.cps-chart.cps-lyrics-only .chord {
+	display: none;
+}
+
+.cps-chart .lyrics {
+	white-space: pre-wrap;
+	color: var(--cps-lyrics-color, inherit);
+	font-size: calc(1em * var(--cps-lyrics-scale, 1));
+	min-height: calc(1em * var(--cps-line-height, 1.35));
+}
+
+.cps-chart h1.title {
+	color: var(--cps-title-color, inherit);
+}
+
+.cps-chart h3.label,
+.cps-chart .comment {
+	font-family: var(--font-interface);
+	font-size: var(--font-ui-small);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--cps-section-color, var(--text-muted));
+	margin: 0 0 2px 0;
+}
+
+/* Toggle buttons (Nashville, capo shapes) */
+
+.cps-toggle-btn.is-active {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
+
+/* Chords-used diagram strip */
+
+.cps-chart-diagrams {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin: 4px 0 18px 0;
+}
+
+.cps-strip-cell {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.cps-strip-name {
+	font-weight: 600;
+	font-size: var(--font-ui-smaller);
+	line-height: 1.1;
+}
+
+.cps-strip-diagram {
+	width: calc(72px * var(--cps-diagram-scale, 1));
+}
+
+/* Sidebar diagram panel (diagram placement: sidebar) */
+
+.cps-diagram-panel .cps-panel-title {
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+
+.cps-diagram-panel .cps-panel-empty {
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+	padding: 8px 0;
+}
+
+.cps-panel-cell {
+	cursor: pointer;
+	border-radius: 6px;
+	padding: 4px 6px;
+}
+
+.cps-panel-cell:hover {
+	background: var(--background-modifier-hover);
+}
+
+/* --- v0.6.0: tabbed settings --- */
+
+.cps-settings-tabs {
+	display: flex;
+	gap: 2px;
+	margin-bottom: 14px;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.cps-settings-tab {
+	padding: 7px 14px;
+	background: none;
+	box-shadow: none;
+	border: none;
+	border-bottom: 2px solid transparent;
+	border-radius: 6px 6px 0 0;
+	cursor: pointer;
+	color: var(--text-muted);
+	font-size: var(--font-ui-medium);
+}
+
+.cps-settings-tab:hover {
+	background: var(--background-modifier-hover);
+	color: var(--text-normal);
+}
+
+.cps-settings-tab.is-active {
+	color: var(--text-normal);
+	font-weight: 600;
+	border-bottom-color: var(--interactive-accent);
+}
+
+.cps-folder-warning {
+	margin-top: 4px;
+	color: var(--text-warning);
+	font-size: var(--font-ui-smaller);
+}
+
+/* Performance-scoped preview box: dark like the stage. */
+
+.cps-settings-preview-perf {
+	background: #101014;
+	border-radius: 8px;
+}
+
+.cps-settings-preview-perf .cps-chart {
+	color: #e8e8ea;
+}
+
+/* Editor tab mini preview */
+
+.cps-settings-editor-preview .cps-editor-preview-line {
+	font-family: var(--font-monospace);
+	padding: 6px 2px;
+}
+
+.cps-settings-editor-preview.is-off .cps-editor-chord {
+	color: inherit;
+	font-weight: inherit;
+}
+
+/* --- v0.6.0: editor chord colorizing --- */
+
+.cps-editor-chord {
+	color: var(--cps-editor-chord-color, var(--cps-chord-color, var(--text-accent)));
+	font-weight: 600;
+}
+
+/* --- v0.6.0: prose (chordless) setlist items: liturgy, prayers, orders --- */
+
+.cps-prose .cps-prose-body {
+	font-family: var(--font-text);
+	line-height: 1.5;
+	max-width: 46em;
+}
+
+.cps-perf-content .cps-prose .cps-prose-body {
+	color: #f2f2f0;
+}
+
+.cps-perf-content .cps-prose .cps-prose-body a {
+	color: #6fc3ff;
+}
+
+/* --- v0.7.0: order-of-service attachments (PDFs and images in a set) --- */
+
+.cps-attachment-body {
+	margin-top: 12px;
+}
+
+.cps-attachment-body img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 4px;
+}
+
+.cps-attachment-body .internal-embed {
+	display: block;
+	width: 100%;
+}
+
+.cps-pdf-reader {
+	width: 100%;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 8px;
+	overflow: hidden;
+	background: var(--background-secondary);
+}
+
+.cps-pdf-toolbar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 8px;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.cps-pdf-toolbar .cps-chart-btn {
+	min-height: 44px;
+}
+
+.cps-pdf-status {
+	min-width: 7.5em;
+	text-align: center;
+	font-variant-numeric: tabular-nums;
+}
+
+.cps-pdf-pages {
+	height: min(72vh, 900px);
+	overflow: auto;
+	overscroll-behavior: contain;
+	-webkit-overflow-scrolling: touch;
+	background: #303034;
+}
+
+.cps-pdf-reader.is-vertical .cps-pdf-pages {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 12px;
+	scroll-snap-type: y proximity;
+}
+
+.cps-pdf-reader.is-horizontal .cps-pdf-pages {
+	display: flex;
+	flex-direction: row;
+	overflow-y: hidden;
+	scroll-snap-type: x mandatory;
+}
+
+.cps-pdf-page {
+	box-sizing: border-box;
+	background: #fff;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+	scroll-snap-align: start;
+	scroll-snap-stop: always;
+}
+
+.cps-pdf-reader.is-vertical .cps-pdf-page {
+	width: 100%;
+	flex: 0 0 auto;
+}
+
+.cps-pdf-reader.is-horizontal .cps-pdf-page {
+	flex: 0 0 100%;
+	height: 100%;
+	display: grid;
+	place-items: center;
+}
+
+.cps-pdf-page canvas {
+	display: block;
+	max-width: 100%;
+	height: auto;
+	margin: 0 auto;
+}
+
+.cps-pdf-reader.is-vertical .cps-pdf-page canvas {
+	width: 100%;
+}
+
+.cps-pdf-reader.is-horizontal .cps-pdf-page canvas {
+	width: auto;
+	max-height: 100%;
+}
+
+.cps-pdf-error {
+	padding: 24px;
+	text-align: center;
+	color: var(--text-error);
+}
+
+.cps-perf-content .cps-pdf-pages {
+	height: calc(100dvh - 210px);
+}
+
+.cps-performance.cps-perf-light .cps-pdf-reader {
+	background: #f0ede6;
+	border-color: #dedad2;
+}
+
+@media screen and (max-width: 700px) {
+	.cps-pdf-toolbar {
+		gap: 4px;
+	}
+
+	.cps-pdf-toolbar .cps-chart-btn {
+		padding-inline: 8px;
+	}
+}
+
+/* --- v0.7.0: stage notes ({note: watch the ritard}) --- */
+
+.cps-chart .comment.cps-stage-note {
+	color: var(--text-muted);
+	font-style: italic;
+	font-weight: 500;
+	opacity: 0.9;
+}
+
+.cps-perf-content .cps-chart .comment.cps-stage-note,
+.cps-settings-preview-perf .cps-chart .comment.cps-stage-note {
+	color: #9a9aa0;
+}
+
+/* --- v0.7.0: reference audio --- */
+
+.cps-chart-audio {
+	margin: 8px 0;
+}
+
+.cps-audio-player {
+	width: 100%;
+	max-width: 420px;
+	height: 36px;
+}
+
+.cps-audio-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	text-decoration: none;
+	font-size: var(--font-ui-small);
+	font-weight: 600;
+}
+
+.cps-audio-icon {
+	display: inline-flex;
+	align-items: center;
+}
+
+.cps-audio-missing {
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+	font-style: italic;
+}
+
+/* --- v0.7.0: performance up next strip --- */
+
+.cps-perf-upnext {
+	position: relative;
+	z-index: 6;
+	flex: 0 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	gap: 12px;
+	padding: 6px 16px;
+	background: linear-gradient(to top, rgba(11, 11, 13, 0.96), rgba(11, 11, 13, 0.75));
+	border-top: 1px solid #26262a;
+	color: #9a9aa0;
+	font-size: 15px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	/* Taps fall through to the edge zones and the chart. */
+	pointer-events: none;
+}
+
+.cps-perf-upnext-clock {
+	color: #6fc3ff;
+	font-variant-numeric: tabular-nums;
+	font-weight: 600;
+}
+
+.cps-perf-upnext-text {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* --- v0.7.0: performance light theme (bright rooms, stage lighting) --- */
+
+.cps-performance.cps-perf-light {
+	background: #fafaf7;
+	color: #1a1a1a;
+}
+
+.cps-performance.cps-perf-light .cps-perf-header {
+	border-bottom-color: #dedad2;
+}
+
+.cps-performance.cps-perf-light .cps-perf-group {
+	border-color: #dedad2;
+	background: #f0ede6;
+}
+
+.cps-performance.cps-perf-light .cps-perf-btn {
+	color: #2c2c2c;
+}
+
+.cps-performance.cps-perf-light .cps-perf-btn:hover {
+	background: #e6e2d9;
+}
+
+.cps-performance.cps-perf-light .cps-perf-btn.is-active,
+.cps-performance.cps-perf-light .cps-perf-toggle.is-active {
+	background: var(--interactive-accent, #7c5cff);
+	color: #fff;
+}
+
+.cps-performance.cps-perf-light .cps-perf-pos,
+.cps-performance.cps-perf-light .cps-perf-speed {
+	color: #6f6b63;
+}
+
+/* Light stage palette. */
+.cps-performance.cps-perf-light .cps-perf-content .cps-chart .chord,
+.cps-settings-preview-perf.cps-perf-light .cps-chart .chord {
+	color: #b45309;
+}
+
+.cps-performance.cps-perf-light .cps-perf-content .cps-chart .lyrics,
+.cps-settings-preview-perf.cps-perf-light .cps-chart .lyrics {
+	color: #1a1a1a;
+}
+
+.cps-performance.cps-perf-light .cps-perf-content .cps-chart .comment,
+.cps-performance.cps-perf-light .cps-perf-content .cps-chart .label,
+.cps-performance.cps-perf-light .cps-perf-content .cps-chart .paragraph .label,
+.cps-settings-preview-perf.cps-perf-light .cps-chart .comment,
+.cps-settings-preview-perf.cps-perf-light .cps-chart .label {
+	color: #1467a8;
+}
+
+.cps-performance.cps-perf-light .cps-perf-content .cps-chart h1.title,
+.cps-settings-preview-perf.cps-perf-light .cps-chart h1.title {
+	color: #000000;
+}
+
+.cps-performance.cps-perf-light .cps-perf-content .cps-chart-meta {
+	color: #6f6b63;
+}
+
+.cps-performance.cps-perf-light .cps-perf-content .cps-form-chip {
+	background: #f0ede6;
+	border-color: #dedad2;
+	color: #1467a8;
+}
+
+.cps-performance.cps-perf-light .cps-perf-song {
+	border-bottom-color: #dedad2;
+}
+
+.cps-performance.cps-perf-light .cps-perf-content .cps-prose .cps-prose-body {
+	color: #1a1a1a;
+}
+
+.cps-performance.cps-perf-light .cps-perf-content .cps-prose .cps-prose-body a {
+	color: #1467a8;
+}
+
+.cps-performance.cps-perf-light .cps-perf-content .cps-chart .comment.cps-stage-note {
+	color: #8a867e;
+}
+
+.cps-performance.cps-perf-light .cps-perf-upnext {
+	background: linear-gradient(to top, rgba(250, 250, 247, 0.97), rgba(250, 250, 247, 0.8));
+	border-top-color: #dedad2;
+	color: #6f6b63;
+}
+
+.cps-performance.cps-perf-light .cps-perf-upnext-clock {
+	color: #1467a8;
+}
+
+/* --- v0.6.0: performance header visibility --- */
+
+.cps-performance.cps-perf-noheader .cps-perf-header,
+.cps-performance.cps-perf-noheader .cps-stage-topbar-performance {
+	display: none;
+}
+
+.cps-perf-peek {
+	display: none;
+	position: absolute;
+	top: calc(6px + env(safe-area-inset-top, 0px));
+	right: calc(10px + env(safe-area-inset-right, 0px));
+	z-index: 3;
+	opacity: 0.5;
+}
+
+.cps-perf-peek:hover {
+	opacity: 1;
+}
+
+.cps-performance.cps-perf-noheader .cps-perf-peek {
+	display: flex;
+}
+
+/* Chord autocomplete */
+
+.cps-suggest-item {
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+}
+
+.cps-suggest-symbol {
+	font-weight: 600;
+}
+
+.cps-suggest-numeral {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+}
+
+/* Transpose-to-key modal */
+
+.cps-transpose-delta {
+	color: var(--text-muted);
+}
+
+/* --- Toolbox reference section --- */
+
+.cps-ref {
+	margin-bottom: 8px;
+}
+
+.cps-ref summary {
+	cursor: pointer;
+	font-size: var(--font-ui-small);
+	font-weight: 600;
+	padding: 2px 0;
+}
+
+.cps-ref-target {
+	width: 100%;
+	margin: 6px 0;
+}
+
+.cps-ref-hint {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	margin-top: 4px;
+}
+
+.cps-ref-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: var(--font-ui-small);
+	margin-top: 4px;
+}
+
+.cps-ref-table th {
+	text-align: left;
+	color: var(--text-muted);
+	font-weight: 600;
+	padding: 2px 8px 2px 0;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.cps-ref-table td {
+	padding: 2px 8px 2px 0;
+}
+
+.cps-ref-numeral {
+	color: var(--text-muted);
+}
+
+.cps-ref-easy td {
+	color: var(--text-accent);
+	font-weight: 600;
+}
+
+/* Code block extras */
+
+.cps-codeblock {
+	padding: 8px 0;
+}
+
+.cps-codeblock-controls {
+	margin-bottom: 8px;
+}
+
+/* --- Hover tooltip (5e) --- */
+
+.cps-hover-tooltip {
+	padding: 8px 10px;
+	background: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	box-shadow: var(--shadow-s);
+}
+
+.cps-hover-tooltip .cps-hover-name {
+	text-align: center;
+	font-weight: 700;
+	margin-bottom: 2px;
+}
+
+.cps-hover-tooltip .cps-diagram {
+	width: 110px;
+}
+
+/* CM6 wraps hover tooltips in .cm-tooltip with its own chrome; neutralize it. */
+.cm-tooltip:has(> .cps-hover-tooltip) {
+	background: transparent;
+	border: none;
+}
+
+/* --- Print (Obsidian's Export to PDF uses print styles) --- */
+
+@media print {
+	.cps-chart-controls {
+		display: none;
+	}
+
+	/* Stage cues and rehearsal audio are screen-only. */
+	.cps-chart .comment.cps-stage-note,
+	.cps-chart-audio {
+		display: none !important;
+	}
+
+	.cps-chart,
+	.cps-chart .lyrics,
+	.cps-chart h1.title,
+	.cps-chart-meta {
+		color: black;
+	}
+
+	.cps-chart .chord {
+		color: black;
+		font-weight: 800;
+	}
+
+	.cps-chart h3.label,
+	.cps-chart .comment {
+		color: black;
+	}
+
+	/* Keep a section's chords and lyrics on one page for music stands. */
+	.cps-chart .paragraph {
+		break-inside: avoid;
+		page-break-inside: avoid;
+	}
+
+	.cps-chart-diagrams {
+		break-inside: avoid;
+		page-break-inside: avoid;
+	}
+
+	.cps-chart-diagrams .cps-diagram,
+	.cps-chart-diagrams .cps-strip-name {
+		color: black;
+	}
+}
+
+/* --- v0.2.0: control groups, zoom, autoscroll --- */
+
+.cps-hidden {
+	display: none;
+}
+
+.cps-ctrl-group {
+	display: inline-flex;
+	align-items: center;
+	gap: 2px;
+	padding: 2px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	background: var(--background-secondary);
+}
+
+.cps-ctrl-group .cps-chart-btn {
+	box-shadow: none;
+	background: transparent;
+}
+
+.cps-ctrl-group .cps-chart-btn:hover {
+	background: var(--interactive-hover);
+}
+
+.cps-zoom-label {
+	min-width: 2.6em;
+	text-align: center;
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	font-variant-numeric: tabular-nums;
+}
+
+.cps-scroll-btn svg {
+	width: 14px;
+	height: 14px;
+}
+
+.cps-scroll-btn.is-active {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
+
+/* --- v0.2.0: two-column chart layout --- */
+
+.cps-chart.cps-cols-2 .chord-sheet {
+	column-count: 2;
+	column-gap: 2.5em;
+	column-rule: 1px solid var(--background-modifier-border);
+}
+
+.cps-chart.cps-cols-2 .paragraph {
+	break-inside: avoid;
+	page-break-inside: avoid;
+}
+
+/* --- v0.6.0: three-column chart layout --- */
+
+.cps-chart.cps-cols-3 .chord-sheet {
+	column-count: 3;
+	column-gap: 2em;
+	column-rule: 1px solid var(--background-modifier-border);
+}
+
+.cps-chart.cps-cols-3 .paragraph {
+	break-inside: avoid;
+	page-break-inside: avoid;
+}
+
+/* --- v0.2.0: setlist view --- */
+
+.cps-setlist-select {
+	flex: 1;
+	min-width: 140px;
+	max-width: 340px;
+}
+
+.cps-setlist-pos {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+.cps-setlist-empty {
+	color: var(--text-muted);
+	padding: 24px 8px;
+	text-align: center;
+}
+
+/* Continuous mode: clear seams between stacked songs. */
+.cps-setlist-song {
+	padding-bottom: 24px;
+	margin-bottom: 24px;
+	border-bottom: 2px solid var(--background-modifier-border);
+}
+
+.cps-setlist-song:last-child {
+	border-bottom: none;
+}
+
+/* --- v0.2.0: import modal --- */
+
+.cps-import-hint {
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+	margin-top: 0;
+}
+
+.cps-import-input {
+	margin: 4px 0 8px 0;
+}
+
+.cps-import-count {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	margin-bottom: 12px;
+}
+
+.cps-import-status {
+	font-size: var(--font-ui-small);
+	color: var(--text-normal);
+	min-height: 1.4em;
+	margin: 8px 0;
+}
+
+/* --- v0.2.0: settings live preview --- */
+
+.cps-settings-preview {
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	padding: 12px 16px;
+	margin-bottom: 16px;
+	max-height: 220px;
+	overflow-y: auto;
+}
+
+/* --- v0.3.0: Smart Paste --- */
+
+.cps-paste-area {
+	width: 100%;
+	font-family: var(--font-monospace);
+	font-size: var(--font-ui-small);
+	resize: vertical;
+	margin-bottom: 8px;
+}
+
+/* --- v0.3.0: form (roadmap) --- */
+
+.cps-form-strip {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	margin: 4px 0 10px 0;
+}
+
+.cps-form-chip {
+	display: inline-block;
+	padding: 1px 8px;
+	border-radius: 10px;
+	background: var(--background-secondary);
+	border: 1px solid var(--background-modifier-border);
+	color: var(--cps-section-color, var(--text-accent));
+	font-size: 0.8em;
+	font-weight: 600;
+	font-family: var(--font-interface);
+	white-space: nowrap;
+}
+
+.cps-form-editor {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.cps-form-file {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.cps-form-empty {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-faint);
+}
+
+.cps-form-order {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.cps-form-row {
+	display: grid;
+	grid-template-columns: 22px minmax(0, 1fr) 28px 28px auto;
+	align-items: center;
+	gap: 4px;
+	min-height: 34px;
+	padding: 3px 4px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-s);
+	background: var(--background-secondary);
+}
+
+.cps-form-number,
+.cps-form-status {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+}
+
+.cps-form-label {
+	font-weight: 600;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.cps-form-row-btn {
+	min-width: 28px;
+	height: 28px;
+	padding: 0 6px;
+	box-shadow: none;
+}
+
+.cps-form-remove {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+.cps-form-clear {
+	align-self: flex-end;
+	height: auto;
+	padding: 3px 8px;
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+.cps-form-add {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.cps-form-cue {
+	display: flex;
+	gap: 4px;
+}
+
+.cps-form-cue-input {
+	flex: 1;
+	min-width: 0;
+}
+
+.cps-form-hint {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+.cps-form-warning {
+	padding: 6px 8px;
+	border-radius: var(--radius-s);
+	background: var(--background-modifier-error);
+	color: var(--text-error);
+	font-size: var(--font-ui-smaller);
+}
+
+.cps-form-advanced summary {
+	cursor: pointer;
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	margin-bottom: 5px;
+}
+
+/* --- v0.3.0: performance mode --- */
+
+.cps-performance {
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	display: flex;
+	flex-direction: column;
+	background: #0b0b0d;
+	color: #f2f2f0;
+	padding-top: env(safe-area-inset-top);
+	padding-bottom: env(safe-area-inset-bottom);
+	padding-left: env(safe-area-inset-left);
+	padding-right: env(safe-area-inset-right);
+}
+
+.cps-performance .cps-stage-topbar,
+.cps-performance .cps-stage-tools,
+.cps-performance .cps-stage-drawer {
+	background: #0b0b0d;
+	border-color: #2a2a2e;
+	color: #f2f2f0;
+}
+
+.cps-performance button.cps-stage-icon-btn,
+.cps-performance button.cps-stage-choice,
+.cps-performance button.cps-stage-drawer-row {
+	background: transparent;
+	color: #f2f2f0;
+}
+
+.cps-performance button.cps-stage-icon-btn:hover,
+.cps-performance button.cps-stage-choice:hover,
+.cps-performance button.cps-stage-drawer-row:hover,
+.cps-performance button.cps-stage-drawer-row.is-current {
+	background: #242428;
+}
+
+.cps-performance.cps-perf-light .cps-stage-topbar,
+.cps-performance.cps-perf-light .cps-stage-tools,
+.cps-performance.cps-perf-light .cps-stage-drawer {
+	background: #fafaf7;
+	border-color: #dedad2;
+	color: #1a1a1a;
+}
+
+.cps-performance.cps-perf-light button.cps-stage-icon-btn,
+.cps-performance.cps-perf-light button.cps-stage-choice,
+.cps-performance.cps-perf-light button.cps-stage-drawer-row {
+	background: transparent;
+	color: #1a1a1a;
+}
+
+.cps-performance.cps-perf-light button.cps-stage-icon-btn:hover,
+.cps-performance.cps-perf-light button.cps-stage-choice:hover,
+.cps-performance.cps-perf-light button.cps-stage-drawer-row:hover,
+.cps-performance.cps-perf-light button.cps-stage-drawer-row.is-current {
+	background: #ece8df;
+}
+
+.cps-performance button.cps-stage-choice.is-active,
+.cps-performance.cps-perf-light button.cps-stage-choice.is-active {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
+
+body.mod-macos .cps-stage-topbar-performance {
+	padding-left: calc(var(--frame-left-space, 0px) + 8px);
+}
+
+body.mod-macos .cps-performance .cps-stage-drawer-left .cps-stage-drawer-head {
+	padding-left: calc(var(--frame-left-space, 0px) + 18px);
+}
+
+.cps-perf-header {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 6px 10px;
+	border-bottom: 1px solid #26262a;
+	flex-wrap: wrap;
+	flex-shrink: 0;
+}
+
+.cps-perf-title {
+	font-weight: 700;
+	font-size: 1.05em;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 40%;
+}
+
+.cps-perf-pos {
+	color: #9a9aa0;
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+.cps-perf-group {
+	display: inline-flex;
+	align-items: center;
+	gap: 2px;
+	padding: 2px;
+	border: 1px solid #26262a;
+	border-radius: 8px;
+	background: #161619;
+}
+
+.cps-perf-btn {
+	background: transparent;
+	color: #e8e8e6;
+	border: none;
+	box-shadow: none;
+	min-width: 44px;
+	min-height: 40px;
+	padding: 6px 10px;
+	font-size: 1em;
+	cursor: pointer;
+	border-radius: 6px;
+}
+
+.cps-perf-btn:hover {
+	background: #26262a;
+}
+
+.cps-perf-btn.is-active,
+.cps-perf-toggle.is-active {
+	background: var(--interactive-accent, #7c5cff);
+	color: #fff;
+}
+
+.cps-perf-exit {
+	margin-right: 4px;
+}
+
+.cps-perf-speed {
+	min-width: 2.4em;
+	text-align: center;
+	color: #9a9aa0;
+	font-variant-numeric: tabular-nums;
+	font-size: 0.85em;
+}
+
+.cps-perf-content {
+	flex: 1;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+	padding: 12px 56px 30vh 56px;
+	overscroll-behavior: contain;
+}
+
+.cps-service-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 62vh;
+	padding: clamp(28px, 8vw, 92px);
+	text-align: center;
+}
+
+.cps-service-card-time {
+	color: #6fc3ff;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+}
+
+.cps-service-card-title {
+	max-width: 18ch;
+	margin: 12px 0 10px;
+	font-size: clamp(2rem, 7vw, 5.5rem);
+	line-height: 0.98;
+	letter-spacing: -0.045em;
+	text-wrap: balance;
+}
+
+.cps-service-card-meta {
+	color: #9a9aa0;
+	font-size: clamp(1rem, 2vw, 1.35rem);
+}
+
+.cps-perf-light .cps-service-card-time {
+	color: #1467a8;
+}
+
+.cps-perf-light .cps-service-card-meta {
+	color: #6f6b63;
+}
+
+.cps-perf-dock {
+	position: relative;
+	z-index: 7;
+	display: grid;
+	grid-template-columns: 1fr 1fr minmax(108px, 1.3fr) 1fr 1fr;
+	align-items: stretch;
+	gap: 3px;
+	padding: 6px max(10px, env(safe-area-inset-right)) 6px max(10px, env(safe-area-inset-left));
+	flex: 0 0 auto;
+	background: #0b0b0d;
+	border-top: 1px solid #2a2a2e;
+}
+
+.cps-perf-light .cps-perf-dock {
+	background: #fafaf7;
+	border-top-color: #dedad2;
+}
+
+.cps-performance button.cps-perf-dock-btn {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 2px;
+	min-width: 44px;
+	min-height: 54px;
+	padding: 4px;
+	border: 0;
+	border-radius: 8px;
+	background: transparent;
+	box-shadow: none;
+	color: #e8e8e6;
+	font-size: 11px;
+	font-weight: 650;
+}
+
+.cps-performance.cps-perf-light button.cps-perf-dock-btn {
+	color: #2c2c2c;
+}
+
+.cps-performance button.cps-perf-dock-btn:hover {
+	background: #242428;
+}
+
+.cps-performance.cps-perf-light button.cps-perf-dock-btn:hover {
+	background: #ece8df;
+}
+
+.cps-performance button.cps-perf-dock-btn.is-active {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
+
+.cps-performance button.cps-perf-dock-btn:disabled {
+	opacity: 0.35;
+}
+
+.cps-perf-dock-icon,
+.cps-perf-dock-icon svg {
+	width: 22px;
+	height: 22px;
+}
+
+/* Stage palette: high contrast on black, independent of the app theme. */
+.cps-perf-content .cps-chart .chord,
+.cps-settings-preview-perf .cps-chart .chord {
+	color: #ffb454;
+}
+
+.cps-perf-content .cps-chart .lyrics,
+.cps-settings-preview-perf .cps-chart .lyrics {
+	color: #f2f2f0;
+}
+
+.cps-perf-content .cps-chart .comment,
+.cps-perf-content .cps-chart .label,
+.cps-perf-content .cps-chart .paragraph .label,
+.cps-settings-preview-perf .cps-chart .comment,
+.cps-settings-preview-perf .cps-chart .label {
+	color: #6fc3ff;
+}
+
+.cps-perf-content .cps-chart h1.title,
+.cps-settings-preview-perf .cps-chart h1.title {
+	color: #ffffff;
+}
+
+.cps-perf-content .cps-chart h1.title {
+	margin-top: 0.2em;
+}
+
+.cps-perf-content .cps-chart-meta {
+	color: #9a9aa0;
+}
+
+.cps-perf-content .cps-form-chip {
+	background: #161619;
+	border-color: #2e2e33;
+	color: #6fc3ff;
+}
+
+.cps-perf-song {
+	padding-bottom: 28px;
+	margin-bottom: 28px;
+	border-bottom: 2px solid #26262a;
+}
+
+.cps-perf-song:last-child {
+	border-bottom: none;
+}
+
+/* Edge tap zones: prev/next without hunting for a button. They sit under
+   the header so the controls stay clickable. */
+.cps-perf-tap {
+	position: absolute;
+	top: 72px;
+	bottom: 74px;
+	width: 48px;
+	z-index: 5;
+	opacity: 0;
+}
+
+.cps-perf-tap-left {
+	left: 0;
+}
+
+.cps-perf-tap-right {
+	right: 0;
+}
+
+/* --- v0.3.0: touch (iPad) --- */
+
+@media (pointer: coarse) {
+	.cps-stage-icon-btn,
+	.cps-stage-choice {
+		min-width: 44px;
+		min-height: 44px;
+	}
+
+	button.cps-stage-icon-btn > svg {
+		width: 24px;
+		height: 24px;
+		min-width: 24px;
+		min-height: 24px;
+		flex-basis: 24px;
+	}
+
+	.cps-chart-controls .cps-chart-btn,
+	.cps-chart-controls .cps-transpose-btn {
+		min-height: 40px;
+		min-width: 40px;
+	}
+
+	.cps-snippet-btn,
+	.cps-form-row-btn,
+	.cps-action-btn {
+		min-height: 40px;
+	}
+
+	.cps-perf-btn {
+		min-width: 48px;
+		min-height: 44px;
+	}
+
+	.cps-perf-tap {
+		width: 64px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cps-toolbox-disclosure > summary::after,
+	.cps-action-btn,
+	.cps-stage-icon-btn,
+	.cps-stage-choice,
+	.cps-stage-scrim,
+	.cps-stage-drawer {
+		transition: none;
+	}
+}
+
+/* --- v0.3.1: fingering dock (clickable fingering slide-up panel) --- */
+
+.cps-chord-dock {
+	flex-shrink: 0;
+	border-top: 1px solid var(--background-modifier-border);
+	background: var(--background-secondary);
+	padding: 8px 10px calc(8px + env(safe-area-inset-bottom)) 10px;
+	max-height: 0;
+	opacity: 0;
+	overflow: hidden;
+	padding-top: 0;
+	padding-bottom: 0;
+	transition: max-height 0.22s ease, opacity 0.18s ease, padding 0.22s ease;
+}
+
+.cps-chord-dock.is-open {
+	max-height: 300px;
+	opacity: 1;
+	padding-top: 8px;
+	padding-bottom: calc(8px + env(safe-area-inset-bottom));
+}
+
+.cps-chord-dock .cps-detail-header {
+	margin-bottom: 4px;
+}
+
+.cps-dock-body {
+	overflow-y: auto;
+	max-height: 250px;
+}
+
+/* --- v0.3.1: tappable chart chords --- */
+
+.cps-chords-clickable .chord {
+	cursor: pointer;
+	border-radius: 3px;
+}
+
+.cps-chords-clickable .chord:hover {
+	background: var(--background-modifier-hover);
+}
+
+@media (pointer: coarse) {
+	.cps-chord-dock.is-open {
+		max-height: 340px;
+	}
+}
+
+/* --- v0.4.0: form chip "you are here" --- */
+
+.cps-form-chip.is-current {
+	background: var(--interactive-accent);
+	border-color: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
+
+/* --- v0.4.0: dock chord history --- */
+
+.cps-dock-back.is-hidden {
+	visibility: hidden;
+}
+
+/* --- v0.4.0: setlist key picker --- */
+
+.cps-setlist-key {
+	max-width: 110px;
+}
+
+/* --- v0.4.0: run sheet --- */
+
+.cps-runsheet-view {
+	padding: 12px 16px;
+	overflow-y: auto;
+}
+
+.cps-runsheet-bar {
+	align-items: center;
+}
+
+.cps-runsheet-title {
+	font-weight: 700;
+	font-size: 1.05em;
+	margin-right: 8px;
+}
+
+.cps-runsheet-total {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	margin-right: auto;
+}
+
+.cps-runsheet {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10px;
+	font-family: var(--font-interface);
+}
+
+.cps-runsheet-row,
+.cps-runsheet-divider {
+	display: flex;
+	align-items: baseline;
+	gap: 10px;
+	padding: 6px 8px;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.cps-runsheet-divider {
+	background: var(--background-secondary);
+	border-radius: 6px;
+	border-bottom: none;
+	margin-top: 10px;
+	font-weight: 700;
+	color: var(--cps-section-color, var(--text-accent));
+	text-transform: uppercase;
+	font-size: 0.85em;
+	letter-spacing: 0.04em;
+}
+
+.cps-runsheet-time {
+	flex: 0 0 64px;
+	font-variant-numeric: tabular-nums;
+	color: var(--text-muted);
+	font-weight: 600;
+}
+
+.cps-runsheet-main {
+	flex: 1 1 auto;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	min-width: 0;
+}
+
+.cps-runsheet-song-title {
+	cursor: pointer;
+	font-weight: 600;
+	color: var(--text-normal);
+}
+
+.cps-runsheet-song-title:hover {
+	color: var(--text-accent);
+	text-decoration: underline;
+}
+
+.cps-runsheet-play {
+	padding: 2px 8px;
+	height: auto;
+	line-height: 1;
+}
+
+.cps-runsheet-play svg {
+	width: 12px;
+	height: 12px;
+}
+
+.cps-runsheet-people {
+	flex: 0 1 auto;
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 30%;
+}
+
+.cps-runsheet-length {
+	flex: 0 0 48px;
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+}
+
+@media (pointer: coarse) {
+	.cps-runsheet-row,
+	.cps-runsheet-divider {
+		padding: 10px 8px;
+	}
+}
+
+/* --- Accessibility and narrow-screen layout --- */
+
+:is(
+	.cps-toolbox,
+	.cps-chart-view,
+	.cps-codeblock,
+	.cps-performance,
+	.cps-settings,
+	.cps-chord-dock,
+	.cps-diagram-panel,
+	.cps-runsheet-view
+)
+	:is(button, a[href], input, select, textarea, summary):focus-visible {
+	outline: 3px solid var(--interactive-accent);
+	outline-offset: 2px;
+}
+
+/* Keep the stage focus ring clear against its theme-independent palette. */
+.cps-performance :is(button, a[href], input, select, textarea, summary):focus-visible {
+	outline-color: #6fc3ff;
+}
+
+.cps-performance.cps-perf-light :is(button, a[href], input, select, textarea, summary):focus-visible {
+	outline-color: #1467a8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cps-chord-dock {
+		transition: none;
+	}
+}
+
+@media screen and (max-width: 700px) {
+	.cps-performance .cps-perf-columns {
+		display: none;
+	}
+
+	.cps-chart.cps-cols-2 .chord-sheet,
+	.cps-chart.cps-cols-3 .chord-sheet {
+		column-count: 1;
+		column-gap: normal;
+		column-rule: none;
+	}
+}

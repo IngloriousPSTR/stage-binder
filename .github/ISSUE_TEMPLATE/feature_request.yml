@@ -1,0 +1,29 @@
+name: Feature request
+description: Suggest something the plugin should do
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: Describe the situation, not just the feature. What is slow or awkward today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would help
+      description: How do you picture it working? Rough is fine.
+
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where does this live?
+      options:
+        - Writing songs (toolbox, editor, formatter, import)
+        - Charts and transposing
+        - Setlists
+        - Performance mode (stage, pedals, iPad)
+        - Run sheets and service planning
+        - Somewhere else
