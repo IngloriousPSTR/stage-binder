@@ -34,8 +34,11 @@ export default defineConfig(
 		files: ["src/**/*.ts"],
 		rules: {
 			"obsidianmd/ui/sentence-case": ["warn", {
-				brands: ["ChordPro", "ChordPro Studio", "SongSelect", "Ultimate Guitar", "PraiseCharts", "iA Writer Mono", "Menlo", "AirTurn"],
-				acronyms: ["CCLI", "MIDI", "PDF", "YAML"],
+				brands: [
+					"AirTurn", "AirTurns", "ChordPro", "ChordPro Studio", "Markdown", "Nashville",
+					"PraiseCharts", "SongSelect", "Ultimate Guitar", "iA Writer Mono", "Menlo"
+				],
+				acronyms: ["CC", "CCLI", "MIDI", "PDF", "YAML", "YYYY-MM-DD"],
 				enforceCamelCaseLower: true
 			}]
 		}
