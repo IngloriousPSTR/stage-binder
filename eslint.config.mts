@@ -45,6 +45,9 @@ export default defineConfig(
 	},
 	{
 		files: ["src/ui/settings.ts"],
+		// Declarative settings require Obsidian 1.13.0. The plugin deliberately
+		// retains the imperative settings API while supporting 1.8.7, including
+		// its older slider tooltip behavior.
 		rules: {
 			"obsidianmd/settings-tab/prefer-setting-definitions": "off",
 			"@typescript-eslint/no-deprecated": "off"

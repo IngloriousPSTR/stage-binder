@@ -2,6 +2,16 @@
 
 ChordPro Studio is an Obsidian plugin for writing ChordPro charts, organizing setlists and run sheets, and performing from an iPad or desktop. Songs remain ordinary Markdown or `.chordpro` files in your vault.
 
+## Why
+
+Most music tools manage a list of songs. A service or show is more than a list of songs.
+
+ChordPro Studio keeps the whole plan together: charts, the Form each song is actually played in, performance keys, clock times, assignments, readings and notes, PDFs, images, and the running order. When the set begins, the same files become a touch-friendly performance view.
+
+Charts, setlists, and run sheets remain ordinary files in your Obsidian vault. They stay searchable, work offline, and remain yours if you stop using the plugin tomorrow.
+
+ChordPro Studio was built first for a small church with a volunteer band and no room in the budget for another subscription. The same workflow also fits gigging musicians, bandleaders, and songwriters who need more than a folder of disconnected charts.
+
 ## Features
 
 - Write songs with chord insertion, section helpers, chord autocomplete, and guitar diagrams.
