@@ -14,3 +14,9 @@ data.json
 
 # Local dev vault path used by scripts/install-vault.mjs.
 .vault-path
+
+# Local vault paths for the dev/release install targets.
+.vault-paths.json
+
+# Published artifacts pulled down by scripts/fetch-release.mjs.
+.release-artifacts/

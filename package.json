@@ -10,7 +10,10 @@
 		"test": "npm run test:core && npm run test:ui",
 		"test:core": "node scripts/run-tests.mjs",
 		"test:ui": "node scripts/run-ui-tests.mjs",
-		"install:vault": "npm run build && node scripts/install-vault.mjs"
+		"install:dev": "npm run build && node scripts/install-vault.mjs dev",
+		"install:release": "node scripts/fetch-release.mjs && node scripts/install-vault.mjs release",
+		"seed:release": "node scripts/seed-release-vault.mjs",
+		"install:vault": "npm run install:dev"
 	},
 	"keywords": [
 		"obsidian",
