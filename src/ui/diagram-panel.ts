@@ -3,7 +3,7 @@
 // first-use order. Follows file-open and live edits; tapping a diagram opens
 // the Toolbox fingering dock with that chord's voicings.
 import { ItemView, TFile, WorkspaceLeaf } from "obsidian";
-import type ChordProStudioPlugin from "../main";
+import type StageBinderPlugin from "../main";
 import { usedChords } from "../core/chordpro";
 import { applyFrontmatter } from "../core/frontmatter";
 import { findChord, positionToDiagram } from "../core/chords";
@@ -12,10 +12,10 @@ import { drawDiagram } from "./diagram";
 export const DIAGRAM_PANEL_VIEW_TYPE = "chordpro-studio-diagram-panel";
 
 export class DiagramPanelView extends ItemView {
-	private plugin: ChordProStudioPlugin;
+	private plugin: StageBinderPlugin;
 	private file: TFile | null = null;
 
-	constructor(leaf: WorkspaceLeaf, plugin: ChordProStudioPlugin) {
+	constructor(leaf: WorkspaceLeaf, plugin: StageBinderPlugin) {
 		super(leaf);
 		this.plugin = plugin;
 	}

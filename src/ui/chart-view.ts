@@ -3,7 +3,7 @@
 // shapes, diagram strip (v0.1), zoom, two columns, autoscroll (v0.2), and the
 // form/roadmap toggle plus performance mode entry (v0.3).
 import { ItemView, Notice, TFile, WorkspaceLeaf } from "obsidian";
-import type ChordProStudioPlugin from "../main";
+import type StageBinderPlugin from "../main";
 import {
 	detectAudio,
 	detectAutoscroll,
@@ -32,7 +32,7 @@ import { StageChrome } from "./stage-chrome";
 export const CHART_VIEW_TYPE = "chordpro-studio-chart";
 
 export class ChartView extends ItemView {
-	private plugin: ChordProStudioPlugin;
+	private plugin: StageBinderPlugin;
 	private file: TFile | null = null;
 	private offset = 0;
 	private nashville = false;
@@ -58,7 +58,7 @@ export class ChartView extends ItemView {
 	/** Invalidates a cachedRead when a newer render starts. */
 	private renderGeneration = 0;
 
-	constructor(leaf: WorkspaceLeaf, plugin: ChordProStudioPlugin) {
+	constructor(leaf: WorkspaceLeaf, plugin: StageBinderPlugin) {
 		super(leaf);
 		this.plugin = plugin;
 		this.scroller = new Autoscroller(

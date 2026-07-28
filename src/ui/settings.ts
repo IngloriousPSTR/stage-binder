@@ -1,7 +1,7 @@
 // Plugin settings tab. Global owns chart appearance; Editor, Preview, and
 // Performance contain only behavior specific to those surfaces.
 import { AbstractInputSuggest, App, PluginSettingTab, Setting, TFolder } from "obsidian";
-import type ChordProStudioPlugin from "../main";
+import type StageBinderPlugin from "../main";
 import type { DiagramPlacement } from "../main";
 import { renderChart } from "../core/chordpro";
 import { setChartHtml } from "./render-song";
@@ -55,11 +55,11 @@ class FolderSuggest extends AbstractInputSuggest<TFolder> {
 	}
 }
 
-export class ChordProStudioSettingTab extends PluginSettingTab {
-	private plugin: ChordProStudioPlugin;
+export class StageBinderSettingTab extends PluginSettingTab {
+	private plugin: StageBinderPlugin;
 	private activeTab: TabId = "global";
 
-	constructor(plugin: ChordProStudioPlugin) {
+	constructor(plugin: StageBinderPlugin) {
 		super(plugin.app, plugin);
 		this.plugin = plugin;
 	}

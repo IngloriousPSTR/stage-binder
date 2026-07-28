@@ -3,14 +3,14 @@
 // controls; both are display-only and never touch the note. The host note's
 // frontmatter properties (key, capo, tempo...) feed the render as directives.
 import { setIcon } from "obsidian";
-import type ChordProStudioPlugin from "../main";
+import type StageBinderPlugin from "../main";
 import { detectKey, renderChart, transposeSource } from "../core/chordpro";
 import { metaToDirectives } from "../core/frontmatter";
 import { toNashvilleSource } from "../core/nashville";
 import { appendDiagramStrip, attachChordClicks, setChartHtml } from "./render-song";
 
 export function renderChordproBlock(
-	plugin: ChordProStudioPlugin,
+	plugin: StageBinderPlugin,
 	source: string,
 	el: HTMLElement,
 	frontmatter?: Record<string, unknown> | null

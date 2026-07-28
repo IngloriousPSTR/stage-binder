@@ -3,7 +3,7 @@
 // Ultimate Guitar, PraiseCharts or anywhere else, run one command, get a song
 // note. No site logins, no scraping, works on iPad through the clipboard.
 import { Modal, Notice, Setting, TFile, TFolder } from "obsidian";
-import type ChordProStudioPlugin from "../main";
+import type StageBinderPlugin from "../main";
 import {
 	convertPastedChart,
 	importAsChordpro,
@@ -17,7 +17,7 @@ function sanitizeTitle(title: string): string {
 	return title.replace(/[\\/:#^[\]|?*]/g, "").trim() || "Untitled song";
 }
 
-async function ensureFolder(plugin: ChordProStudioPlugin, folder: string): Promise<void> {
+async function ensureFolder(plugin: StageBinderPlugin, folder: string): Promise<void> {
 	if (!folder) return;
 	let current = "";
 	for (const segment of folder.split("/")) {
@@ -28,7 +28,7 @@ async function ensureFolder(plugin: ChordProStudioPlugin, folder: string): Promi
 	}
 }
 
-function uniquePath(plugin: ChordProStudioPlugin, folder: string, base: string, ext: string): string {
+function uniquePath(plugin: StageBinderPlugin, folder: string, base: string, ext: string): string {
 	const prefix = folder ? folder + "/" : "";
 	let path = `${prefix}${base}.${ext}`;
 	let n = 1;
@@ -42,13 +42,13 @@ function uniquePath(plugin: ChordProStudioPlugin, folder: string, base: string, 
 // --- Import songs from files (v0.2.0) ---------------------------------------
 
 export class ImportSongsModal extends Modal {
-	private plugin: ChordProStudioPlugin;
+	private plugin: StageBinderPlugin;
 	private files: File[] = [];
 	private folder: string;
 	private format: "md" | "chordpro" = "md";
 	private statusEl: HTMLElement | null = null;
 
-	constructor(plugin: ChordProStudioPlugin) {
+	constructor(plugin: StageBinderPlugin) {
 		super(plugin.app);
 		this.plugin = plugin;
 		this.folder = plugin.settings.songsFolder || "Songs";
@@ -135,7 +135,7 @@ export class ImportSongsModal extends Modal {
 // --- Smart Paste (v0.3.0) ----------------------------------------------------
 
 export class SmartPasteModal extends Modal {
-	private plugin: ChordProStudioPlugin;
+	private plugin: StageBinderPlugin;
 	private raw = "";
 	private title = "";
 	private artist = "";
@@ -149,7 +149,7 @@ export class SmartPasteModal extends Modal {
 	private statusEl: HTMLElement | null = null;
 	private detectTimer = 0;
 
-	constructor(plugin: ChordProStudioPlugin) {
+	constructor(plugin: StageBinderPlugin) {
 		super(plugin.app);
 		this.plugin = plugin;
 		this.folder = plugin.settings.songsFolder || "Songs";

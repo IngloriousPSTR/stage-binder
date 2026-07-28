@@ -33,7 +33,7 @@ import { renderChordproBlock } from "./ui/codeblock";
 import { chordHoverExtension } from "./ui/hover";
 import { chordHighlightExtension } from "./ui/chord-highlight";
 import { ChordSuggest } from "./ui/suggest";
-import { ChordProStudioSettingTab } from "./ui/settings";
+import { StageBinderSettingTab } from "./ui/settings";
 import { ImportSongsModal, SmartPasteModal } from "./ui/import-modal";
 import { AudioLinkModal, CcliReportModal, NewSongModal, TransposeKeyModal } from "./ui/modals";
 
@@ -50,7 +50,7 @@ function escapeCell(value: string): string {
 	return value.replace(/\|/g, "\\|").replace(/\r?\n/g, " ").trim();
 }
 
-interface ChordProStudioSettings {
+interface StageBinderSettings {
 	lastKeyId: string;
 	diagramPlacement: DiagramPlacement;
 	/** Tapping a chord in a rendered chart opens the fingering dock. */
@@ -108,7 +108,7 @@ interface ChordProStudioSettings {
 	toolboxOpenSections: string[];
 }
 
-const DEFAULT_SETTINGS: ChordProStudioSettings = {
+const DEFAULT_SETTINGS: StageBinderSettings = {
 	lastKeyId: "C-major",
 	diagramPlacement: "chart-top",
 	chordTapDock: true,
@@ -156,7 +156,7 @@ const DEFAULT_SETTINGS: ChordProStudioSettings = {
 };
 
 // CSS variables driven by the appearance settings (styles.css consumes them).
-const APPEARANCE_VARS: Array<{ cssVar: string; get: (s: ChordProStudioSettings) => string }> = [
+const APPEARANCE_VARS: Array<{ cssVar: string; get: (s: StageBinderSettings) => string }> = [
 	{ cssVar: "--cps-chord-color", get: (s) => s.chordColor },
 	{ cssVar: "--cps-lyrics-color", get: (s) => s.lyricsColor },
 	{ cssVar: "--cps-section-color", get: (s) => s.sectionColor },
@@ -179,8 +179,8 @@ function keyOptionIdFor(tonic: string, minor: boolean): string | null {
 	return option?.id ?? null;
 }
 
-export default class ChordProStudioPlugin extends Plugin {
-	settings: ChordProStudioSettings = DEFAULT_SETTINGS;
+export default class StageBinderPlugin extends Plugin {
+	settings: StageBinderSettings = DEFAULT_SETTINGS;
 	performance: PerformanceMode = new PerformanceMode(this);
 	private lastMarkdownLeaf: WorkspaceLeaf | null = null;
 	/** Mutable so the Editor tab toggles rebuild it and updateOptions applies it. */
@@ -440,7 +440,7 @@ export default class ChordProStudioPlugin extends Plugin {
 		}
 
 		this.registerEditorSuggest(new ChordSuggest(this));
-		this.addSettingTab(new ChordProStudioSettingTab(this));
+		this.addSettingTab(new StageBinderSettingTab(this));
 		this.applyAppearance();
 	}
 

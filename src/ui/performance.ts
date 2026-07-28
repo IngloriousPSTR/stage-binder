@@ -6,7 +6,7 @@
 // scroll). Overlay instead of a workspace leaf so Obsidian chrome, ribbons,
 // and the mobile toolbar never sit between the player and the chart.
 import { Component, Notice, TFile, setIcon } from "obsidian";
-import type ChordProStudioPlugin from "../main";
+import type StageBinderPlugin from "../main";
 import { Autoscroller, blockIndexAtTop, formHighlighter, RenderedSong, renderSongInto, scrollToBlock, SetlistEntry } from "./render-song";
 import type { PdfPageStepDetail } from "./pdf-reader";
 import { buildServiceContext, listSetlistFiles, ServiceContext, ServiceEntry, serviceEntryDuration, serviceEntryTime } from "./service-context";
@@ -23,7 +23,7 @@ export function parseMidiCodes(codes: string): Set<string> {
 }
 
 export class PerformanceMode {
-	private plugin: ChordProStudioPlugin;
+	private plugin: StageBinderPlugin;
 	private overlay: HTMLElement | null = null;
 	private contentEl: HTMLElement | null = null;
 	private scrollBtnEl: HTMLElement | null = null;
@@ -61,7 +61,7 @@ export class PerformanceMode {
 	private renderGeneration = 0;
 	private renderOwner: Component | null = null;
 
-	constructor(plugin: ChordProStudioPlugin) {
+	constructor(plugin: StageBinderPlugin) {
 		this.plugin = plugin;
 		this.scroller = new Autoscroller(
 			() => this.contentEl ?? document.body,

@@ -2,7 +2,7 @@
 // reading actions stay at the top; authoring, arrangement, reference, and
 // output use disclosures.
 import { ItemView, TFile, WorkspaceLeaf, setIcon } from "obsidian";
-import type ChordProStudioPlugin from "../main";
+import type StageBinderPlugin from "../main";
 import { KEY_OPTIONS, diatonicChords, describeChord, chordNotes, Mode } from "../core/theory";
 import { findChord, positionToDiagram, chordRoot, chordVariations } from "../core/chords";
 import { SECTION_LABELS, transposeKeyName } from "../core/chordpro";
@@ -31,7 +31,7 @@ const EASY_SHAPE_KEYS: Record<Mode, Set<string>> = {
 };
 
 export class ToolboxView extends ItemView {
-	private plugin: ChordProStudioPlugin;
+	private plugin: StageBinderPlugin;
 	private currentChartNameEl!: HTMLElement;
 	private currentChartPathEl!: HTMLElement;
 	private previewBtn!: HTMLButtonElement;
@@ -56,7 +56,7 @@ export class ToolboxView extends ItemView {
 	/** Signature of the last rendered form state, to skip no-op rebuilds. */
 	private formSignature = "";
 
-	constructor(leaf: WorkspaceLeaf, plugin: ChordProStudioPlugin) {
+	constructor(leaf: WorkspaceLeaf, plugin: StageBinderPlugin) {
 		super(leaf);
 		this.plugin = plugin;
 	}

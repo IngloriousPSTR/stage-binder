@@ -4,17 +4,17 @@
 // links to their performance keys, and jumps straight into the chart or
 // performance mode. The roadmap's service-workflow vision, first cut.
 import { ItemView, TFile, WorkspaceLeaf, setIcon } from "obsidian";
-import type ChordProStudioPlugin from "../main";
+import type StageBinderPlugin from "../main";
 import { displayText, formatClock, formatDuration, parseRunsheet } from "../core/runsheet";
 import { collectSetlistSongs, SetlistEntry } from "./render-song";
 
 export const RUNSHEET_VIEW_TYPE = "chordpro-studio-runsheet";
 
 export class RunsheetView extends ItemView {
-	private plugin: ChordProStudioPlugin;
+	private plugin: StageBinderPlugin;
 	private file: TFile | null = null;
 
-	constructor(leaf: WorkspaceLeaf, plugin: ChordProStudioPlugin) {
+	constructor(leaf: WorkspaceLeaf, plugin: StageBinderPlugin) {
 		super(leaf);
 		this.plugin = plugin;
 		this.registerEvent(

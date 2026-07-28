@@ -3,7 +3,7 @@
 // of the Toolbox's current key first, then every chords-db voicing for the
 // root the user has typed.
 import { Editor, EditorPosition, EditorSuggest, EditorSuggestContext, EditorSuggestTriggerInfo, TFile } from "obsidian";
-import type ChordProStudioPlugin from "../main";
+import type StageBinderPlugin from "../main";
 import { diatonicChords } from "../core/theory";
 import { chordVariations } from "../core/chords";
 
@@ -14,9 +14,9 @@ interface ChordSuggestion {
 }
 
 export class ChordSuggest extends EditorSuggest<ChordSuggestion> {
-	private plugin: ChordProStudioPlugin;
+	private plugin: StageBinderPlugin;
 
-	constructor(plugin: ChordProStudioPlugin) {
+	constructor(plugin: StageBinderPlugin) {
 		super(plugin.app);
 		this.plugin = plugin;
 	}

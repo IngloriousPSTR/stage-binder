@@ -4,7 +4,7 @@
 // pedal can scroll straight through, plus form/roadmap expansion and the
 // performance mode entry.
 import { ItemView, TFile, WorkspaceLeaf, setIcon } from "obsidian";
-import type ChordProStudioPlugin from "../main";
+import type StageBinderPlugin from "../main";
 import { detectKey } from "../core/chordpro";
 import { applyFrontmatter } from "../core/frontmatter";
 import {
@@ -24,7 +24,7 @@ const KEY_PICKER_TONICS = ["C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab", "A",
 export const SETLIST_VIEW_TYPE = "chordpro-studio-setlist";
 
 export class SetlistView extends ItemView {
-	private plugin: ChordProStudioPlugin;
+	private plugin: StageBinderPlugin;
 	private file: TFile | null = null;
 	songs: SetlistEntry[] = [];
 	index = 0;
@@ -44,7 +44,7 @@ export class SetlistView extends ItemView {
 	private reloadGeneration = 0;
 	private renderGeneration = 0;
 
-	constructor(leaf: WorkspaceLeaf, plugin: ChordProStudioPlugin) {
+	constructor(leaf: WorkspaceLeaf, plugin: StageBinderPlugin) {
 		super(leaf);
 		this.plugin = plugin;
 		this.continuous = plugin.settings.setlistContinuous;
