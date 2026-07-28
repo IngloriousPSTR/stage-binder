@@ -35,7 +35,7 @@ export default defineConfig(
 		rules: {
 			"obsidianmd/ui/sentence-case": ["warn", {
 				brands: [
-					"AirTurn", "AirTurns", "ChordPro", "ChordPro Studio", "Markdown", "Nashville",
+					"AirTurn", "AirTurns", "ChordPro", "Stage Binder", "Markdown", "Nashville",
 					"PraiseCharts", "SongSelect", "Ultimate Guitar", "iA Writer Mono", "Menlo"
 				],
 				acronyms: ["CC", "CCLI", "MIDI", "PDF", "YAML", "YYYY-MM-DD"],

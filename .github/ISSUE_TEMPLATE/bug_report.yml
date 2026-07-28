@@ -34,7 +34,7 @@ body:
     id: versions
     attributes:
       label: Versions
-      placeholder: "ChordPro Studio 1.0.0, Obsidian 1.8.7, macOS 15 / iPadOS 18"
+      placeholder: "Stage Binder 1.0.0, Obsidian 1.8.7, macOS 15 / iPadOS 18"
     validations:
       required: true
 

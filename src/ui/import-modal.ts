@@ -119,7 +119,7 @@ export class ImportSongsModal extends Modal {
 				await this.app.vault.create(path, out);
 				created++;
 			} catch (err) {
-				console.error("ChordPro Studio: import failed for", file.name, err);
+				console.error("Stage Binder: import failed for", file.name, err);
 				failed++;
 			}
 		}
@@ -257,7 +257,7 @@ export class SmartPasteModal extends Modal {
 			].filter((b) => b !== null);
 			this.statusEl?.setText(bits.length > 0 ? `Detected ${bits.join(", ")}.` : "");
 		} catch (err) {
-			console.error("ChordPro Studio: smart paste detection failed", err);
+			console.error("Stage Binder: smart paste detection failed", err);
 		}
 	}
 

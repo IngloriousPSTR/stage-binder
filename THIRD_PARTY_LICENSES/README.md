@@ -1,6 +1,6 @@
 # Third-party licenses
 
-ChordPro Studio adapts code and approaches from these MIT-licensed Obsidian
+Stage Binder adapts code and approaches from these MIT-licensed Obsidian
 plugins. Their license notices are preserved here.
 
 - **obsidian-chord-sheets** (olvidalo): the chords-db position to diagram

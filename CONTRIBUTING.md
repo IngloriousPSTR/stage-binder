@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for looking. ChordPro Studio is a personal tool that grew into something worth sharing, so it is opinionated: it favors one-click actions and calm defaults over configuration.
+Thanks for looking. Stage Binder is a personal tool that grew into something worth sharing, so it is opinionated: it favors one-click actions and calm defaults over configuration.
 
 ## Getting set up
 

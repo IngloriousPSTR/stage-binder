@@ -1,9 +1,9 @@
 {
-	"id": "chordpro-studio",
-	"name": "ChordPro Studio",
+	"id": "stage-binder",
+	"name": "Stage Binder",
 	"version": "1.0.0",
 	"minAppVersion": "1.8.7",
-	"description": "Write ChordPro charts, build setlists and run sheets, transpose songs, and perform from an iPad or desktop.",
+	"description": "Build ChordPro charts, organize setlists and run sheets, transpose on the fly, and perform from a tablet or desktop.",
 	"author": "Chris May",
 	"authorUrl": "https://github.com/IngloriousPSTR",
 	"isDesktopOnly": false

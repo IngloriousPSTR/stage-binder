@@ -1,7 +1,7 @@
 {
-	"name": "chordpro-studio",
+	"name": "stage-binder",
 	"version": "1.0.0",
-	"description": "Write ChordPro charts, build setlists and run sheets, transpose songs, and perform from an iPad or desktop.",
+	"description": "Build ChordPro charts, organize setlists and run sheets, transpose on the fly, and perform from a tablet or desktop.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",

@@ -4,4 +4,4 @@ Please report security vulnerabilities privately through [GitHub's security advi
 
 Do not include private vault content, full song charts, access tokens, or other sensitive data. A minimal synthetic example is preferred.
 
-Supported security fixes target the latest released version of ChordPro Studio.
+Supported security fixes target the latest released version of Stage Binder.

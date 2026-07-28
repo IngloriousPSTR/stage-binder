@@ -1,4 +1,4 @@
-// ChordPro Studio plugin entry point. Registers the Toolbox (right sidebar),
+// Stage Binder plugin entry point. Registers the Toolbox (right sidebar),
 // the chart reading view, the setlist view, performance mode, the ```chordpro
 // code block renderer, the hover tooltip editor extension, the importers, and
 // the commands (formatter, transpose, autoscroll, setlist navigation).
@@ -240,7 +240,7 @@ export default class ChordProStudioPlugin extends Plugin {
 			if (this.settings.diagramPlacement === "sidebar") void this.ensureDiagramPanel(false);
 		});
 
-		this.addRibbonIcon("guitar", "Open ChordPro Studio toolbox", () => {
+		this.addRibbonIcon("guitar", "Open Stage Binder toolbox", () => {
 			void this.activateToolbox();
 		});
 
@@ -587,7 +587,7 @@ export default class ChordProStudioPlugin extends Plugin {
 					}
 				}
 			} catch (err) {
-				console.error("ChordPro Studio: auto-key failed", err);
+				console.error("Stage Binder: auto-key failed", err);
 			}
 		}
 
@@ -817,14 +817,14 @@ export default class ChordProStudioPlugin extends Plugin {
 		const lines: string[] = [
 			`# ${source.basename}`,
 			"",
-			`Generated from [[${source.basename}]] by ChordPro Studio. Rerun "Setlist: create print note" after changing the set, then use File > Export to PDF.`
+			`Generated from [[${source.basename}]] by Stage Binder. Rerun "Setlist: create print note" after changing the set, then use File > Export to PDF.`
 		];
 		for (const entry of songs) {
 			try {
 				const raw = await this.app.vault.read(entry.file);
 				lines.push("", "---", "", "```chordpro", prepareSongText(raw, entry.key).trimEnd(), "```");
 			} catch (err) {
-				console.error("ChordPro Studio: print note failed for", entry.file.path, err);
+				console.error("Stage Binder: print note failed for", entry.file.path, err);
 				lines.push("", `> Could not read ${entry.file.basename}.`);
 			}
 		}
@@ -884,7 +884,7 @@ export default class ChordProStudioPlugin extends Plugin {
 				written++;
 				order.push(`${i + 1}. ${entry.file.basename}${entry.label ? ` in ${entry.label}` : ""}`);
 			} catch (err) {
-				console.error("ChordPro Studio: share export failed for", entry.file.path, err);
+				console.error("Stage Binder: share export failed for", entry.file.path, err);
 				order.push(`${i + 1}. ${entry.file.basename} (export failed)`);
 			}
 		}
@@ -930,7 +930,7 @@ export default class ChordProStudioPlugin extends Plugin {
 			return Array.isArray(parsed.files) ? parsed.files.filter((f): f is string => typeof f === "string") : [];
 		} catch (err) {
 			// A corrupt or unreadable manifest just means no cleanup this run.
-			console.error("ChordPro Studio: could not read share manifest", err);
+			console.error("Stage Binder: could not read share manifest", err);
 			return [];
 		}
 	}
@@ -942,7 +942,7 @@ export default class ChordProStudioPlugin extends Plugin {
 			if (existing instanceof TFile) await this.app.vault.process(existing, () => content);
 			else await this.app.vault.create(path, content);
 		} catch (err) {
-			console.error("ChordPro Studio: could not write share manifest", err);
+			console.error("Stage Binder: could not write share manifest", err);
 		}
 	}
 
@@ -1018,7 +1018,7 @@ export default class ChordProStudioPlugin extends Plugin {
 			new Notice(`CCLI report: ${report.rows.length} songs across ${report.serviceCount} services.`);
 		} catch (err) {
 			notice.hide();
-			console.error("ChordPro Studio: CCLI report failed", err);
+			console.error("Stage Binder: CCLI report failed", err);
 			new Notice("CCLI report failed; see the console for details.");
 		}
 	}

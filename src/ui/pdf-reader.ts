@@ -154,7 +154,7 @@ export async function renderPdfInto(
 			sync();
 		}
 	} catch (error) {
-		console.error("ChordPro Studio: PDF render failed", file.path, error);
+		console.error("Stage Binder: PDF render failed", file.path, error);
 		pages.empty();
 		pages.createDiv({ cls: "cps-pdf-error", text: "This PDF could not be rendered. Open the source file to continue." });
 		const open = pages.createEl("button", { cls: "cps-chart-btn", text: "Open original PDF" });

@@ -61,7 +61,7 @@ export class DiagramPanelView extends ItemView {
 		try {
 			source = applyFrontmatter(await this.app.vault.cachedRead(this.file));
 		} catch (err) {
-			console.error("ChordPro Studio: diagram panel read failed", err);
+			console.error("Stage Binder: diagram panel read failed", err);
 			root.createDiv({ cls: "cps-panel-empty", text: "Could not read the song." });
 			return;
 		}

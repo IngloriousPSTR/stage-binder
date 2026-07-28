@@ -350,7 +350,7 @@ export class ChordProStudioSettingTab extends PluginSettingTab {
 			"Library root. Type to search vault folders. New and imported files are routed into ChordPro, Text, PDF, or Slides subfolders by format.",
 			this.plugin.settings.songsFolder,
 			"Songs",
-			"This folder does not exist yet. ChordPro Studio will create it when a song is added.",
+			"This folder does not exist yet. Stage Binder will create it when a song is added.",
 			async (value) => {
 				this.plugin.settings.songsFolder = value;
 				await this.plugin.saveSettings();

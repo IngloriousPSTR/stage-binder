@@ -66,7 +66,7 @@ export class ToolboxView extends ItemView {
 	}
 
 	getDisplayText(): string {
-		return "ChordPro Studio";
+		return "Stage Binder";
 	}
 
 	getIcon(): string {
@@ -285,7 +285,7 @@ export class ToolboxView extends ItemView {
 			const message = err instanceof Error ? err.message : String(err);
 			this.dockBodyEl.empty();
 			this.dockBodyEl.createDiv({ cls: "cps-detail-empty", text: `Fingering error: ${message}` });
-			console.error("[ChordPro Studio] showChordDock failed for", symbol, err);
+			console.error("[Stage Binder] showChordDock failed for", symbol, err);
 		}
 	}
 
@@ -338,7 +338,7 @@ export class ToolboxView extends ItemView {
 					const message = err instanceof Error ? err.message : String(err);
 					diagramEl.addClass("cps-detail-empty");
 					diagramEl.setText(message);
-					console.error("[ChordPro Studio] diagram render failed for", current, err);
+					console.error("[Stage Binder] diagram render failed for", current, err);
 				}
 
 				const insertBtn = cell.createEl("button", { cls: "cps-diagram-insert", text: "Insert" });

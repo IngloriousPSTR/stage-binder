@@ -1,6 +1,6 @@
-# Getting started with ChordPro Studio
+# Getting started with Stage Binder
 
-ChordPro Studio turns Obsidian into a place to write song charts, arrange them, build setlists and run sheets, and perform from a tablet or a laptop. Your songs stay as plain text files in your own vault. No account, no cloud service, no lock-in.
+Stage Binder turns Obsidian into a place to write song charts, arrange them, build setlists and run sheets, and perform from a tablet or a laptop. Your songs stay as plain text files in your own vault. No account, no cloud service, no lock-in.
 
 This guide takes about fifteen minutes and ends with you running a set from a tablet.
 
@@ -10,17 +10,17 @@ This guide takes about fifteen minutes and ends with you running a set from a ta
 
 **From the Community directory after approval**
 
-Once ChordPro Studio is listed, open **Settings → Community plugins → Browse**, search for "ChordPro Studio", select **Install**, then **Enable**.
+Once Stage Binder is listed, open **Settings → Community plugins → Browse**, search for "Stage Binder", select **Install**, then **Enable**.
 
 **Manually from a release**
 
-Until then, download `main.js`, `manifest.json`, and `styles.css` from the [releases page](https://github.com/IngloriousPSTR/chordpro-studio-obsidian/releases), and put all three into `YourVault/.obsidian/plugins/chordpro-studio/`. Restart Obsidian, then enable the plugin under **Settings → Community plugins**.
+Until then, download `main.js`, `manifest.json`, and `styles.css` from the [releases page](https://github.com/IngloriousPSTR/chordpro-studio-obsidian/releases), and put all three into `YourVault/.obsidian/plugins/stage-binder/`. Restart Obsidian, then enable the plugin under **Settings → Community plugins**.
 
 ---
 
 ## 2. Point it at two folders
 
-Open Settings, ChordPro Studio. On the **Global** tab, scroll to **Library**:
+Open Settings, Stage Binder. On the **Global** tab, scroll to **Library**:
 
 - **Songs folder**: where charts live. Default `Songs`. New and imported files are filed automatically into `ChordPro`, `Text`, `PDF`, or `Slides` subfolders by format.
 - **Setlists folder**: where setlists and run sheets live. Default `Setlists`.
@@ -33,7 +33,7 @@ Everything else has a sensible default. Come back to chart colours, fonts, and s
 
 ## 3. Write your first song
 
-Open the toolbox with the command **ChordPro Studio: Open toolbox**, then use **Create**:
+Open the toolbox with the command **Stage Binder: Open toolbox**, then use **Create**:
 
 - **New song** starts a blank chart
 - **Smart paste** builds a chart from lyrics already on your clipboard, including output from SongSelect, Ultimate Guitar, and PraiseCharts
@@ -65,7 +65,7 @@ Chord names autocomplete as you type, and hovering a chord in the editor shows i
 
 ## 4. Read it as a chart
 
-Run **ChordPro Studio: Preview chart (chords over lyrics)**. The chart renders with chords positioned over the lyrics, chord diagrams across the top, and the form strip beneath the title.
+Run **Stage Binder: Preview chart (chords over lyrics)**. The chart renders with chords positioned over the lyrics, chord diagrams across the top, and the form strip beneath the title.
 
 Open the **Tools** panel from the `...` button above the chart. This is where the live controls live:
 

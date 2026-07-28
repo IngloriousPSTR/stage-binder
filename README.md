@@ -1,8 +1,8 @@
-# ChordPro Studio
+# Stage Binder
 
 **Write the chart. Build the set. Perform the plan.**
 
-ChordPro Studio is an Obsidian plugin for writing ChordPro charts, organizing setlists and run sheets, and performing from an iPad or desktop. Songs remain ordinary Markdown or `.chordpro` files in your vault.
+Stage Binder is an Obsidian plugin for building ChordPro charts, organizing setlists and run sheets, transposing on the fly, and performing from a tablet or desktop. Songs remain ordinary Markdown or `.chordpro` files in your vault: no database, no cloud account, no lock-in.
 
 ![Amazing Grace displayed in a two-column dark Performance view on an iPad, with Form progress, Up Next, and the five-button stage dock.](docs/assets/hero-performance-ipad.png)
 
@@ -12,21 +12,65 @@ ChordPro Studio is an Obsidian plugin for writing ChordPro charts, organizing se
 
 Most music tools manage a list of songs. A service or show is more than a list of songs.
 
-ChordPro Studio keeps the whole plan together: charts, the Form each song is actually played in, performance keys, clock times, assignments, readings and notes, PDFs, images, and the running order. When the set begins, the same files become a touch-friendly performance view.
+Stage Binder keeps the whole plan together: charts, the Form each song is actually played in, performance keys, clock times, assignments, readings and notes, PDFs, images, and the running order. When the set begins, the same files become a touch-friendly performance view.
 
 Charts, setlists, and run sheets remain ordinary files in your Obsidian vault. They stay searchable, work offline, and remain yours if you stop using the plugin tomorrow.
 
-ChordPro Studio was built first for a small church with a volunteer band and no room in the budget for another subscription. The same workflow also fits gigging musicians, bandleaders, and songwriters who need more than a folder of disconnected charts.
+Stage Binder was built first for a small church with a volunteer band and no room in the budget for another subscription. The same workflow also fits gigging musicians, bandleaders, and songwriters who need more than a folder of disconnected charts.
+
+### Why ChordPro?
+
+ChordPro is a plain-text format that puts chord names inline with lyrics using square brackets: `[G]Amazing grace, how [C]sweet`. It has been the standard for musician-readable chord charts since the 1990s, and for good reason.
+
+**Transpose in seconds.** Because chords are symbolic text, not fixed images or formatted cells, Stage Binder can shift every chord in a song up or down by any interval instantly. No retyping, no copy errors, no reformatting. A guitarist who needs the song in Bb instead of G changes one setting and the entire chart updates.
+
+**Capo-aware transposition.** Set a capo fret and the chart shows the open-position shapes you actually play, while the sounding key stays correct for the rest of the band. Pianists see concert pitch; guitarists see capo shapes. Same chart, same source file.
+
+**Nashville Number System.** Toggle any chart to Nashville numbers (1, 4, 5, etc.) so session players and readers comfortable with that system can use the same song without a separate chart.
+
+**Rich metadata, zero lock-in.** ChordPro directives like `{key}`, `{tempo}`, `{artist}`, `{ccli}`, and `{form}` travel with the song as plain text. Your music library is a folder of readable files you own forever.
+
+### Why Obsidian?
+
+Obsidian treats every note as a local file: Markdown, ChordPro, PDF, image. That makes it a natural home for a music library built on plain-text formats.
+
+**Your songs are just files.** A `.chordpro` file in your vault is the same file you could open in any text editor, sync to any device, or check into version control. Obsidian adds structure on top without changing the file underneath.
+
+**Link anything to anything.** Obsidian's `[[wikilink]]` syntax means a setlist is just a note with links to songs. A run sheet links to songs, PDFs, liturgy notes, and images. No import/export step, no separate database. Reorganize by dragging files; links update automatically.
+
+**Metadata that works.** Obsidian's YAML properties (`key`, `artist`, `tempo`, `ccli`) and ChordPro directives both store song metadata as readable text. Use Obsidian's search, Dataview, or Bases to query your entire library: find every song in the key of E, list all songs by a specific artist, or pull a CCLI report across hundreds of songs in seconds.
+
+**One vault, every device.** Sync your vault through iCloud, Obsidian Sync, or any file-sync tool. The same song library is on your laptop for rehearsal prep and your tablet on the music stand.
+
+**Community ecosystem.** Stage Binder builds on Obsidian's plugin API and works alongside the tools you already use: Templates for new-song scaffolding, QuickAdd for rapid chord entry workflows, Dataview for smart setlist queries.
 
 ## Features
 
-- Write songs with chord insertion, section helpers, chord autocomplete, and guitar diagrams.
-- Define a song's **Form**, such as Verse, Chorus, Verse, Chorus, Bridge, Chorus.
-- Preview charts with transpose, Nashville numbers, lyrics-only display, columns, and text sizing.
-- Build setlists from ordinary Obsidian links and assign a performance key to each song.
-- Build timed run sheets with leaders, durations, linked songs, prose notes, PDFs, and images.
-- Perform in a fullscreen, touch-friendly display with autoscroll, page-turner keyboard controls, MIDI pedal support, and light or dark themes.
-- Export transposed ChordPro files, create printable set notes, and prepare CCLI usage reports.
+### Write charts fast
+
+- Multiple ways to insert chords: hotkeys, the command palette, the Stage Binder toolbox, or type `[` in your note to trigger the chord insertion popup.
+- Key-aware chord suggestions. The chord popup, toolbar, and palette all respect the song's `{key}` directive. If your song is in G, you see G, Am, Bm, C, D, Em first, not every chord in Western music.
+- Chord diagrams on demand. Hover over any chord name to see a fingering diagram. Diagrams can also appear at the top of the chart or pinned in the toolbar.
+
+### Define song form
+
+Declare a song's structure with the `{form}` directive: `V1 C V2 C B C`. The performance view follows the form, so the band sees sections in performance order even if the source file only writes each section once.
+
+### Preview and perform
+
+- Live preview with transpose, Nashville numbers, lyrics-only display, multi-column layout, and adjustable text sizing.
+- Fullscreen performance mode designed for stage use: touch-friendly navigation, autoscroll, page-turner keyboard support (AirTurn, PageFlip), MIDI pedal input, and light or dark themes.
+
+### Setlists and run sheets
+
+- Setlists are Markdown notes with Obsidian links in performance order. Assign a performance key to each song right in the setlist; the chart transposes automatically when you open it.
+- Run sheets add structure for full services or shows: start times, section headings, durations, leader assignments, and links to songs, PDFs, liturgy notes, and images.
+
+### Export and reporting
+
+- Export transposed ChordPro files for sharing or printing.
+- Generate printable set notes.
+- Prepare CCLI usage reports from your setlist history.
 
 ## See it in action
 
@@ -34,7 +78,7 @@ ChordPro Studio was built first for a small church with a volunteer band and no 
 
 Preview a chart while adjusting its key, Nashville numbers, lyrics, text size, columns, and autoscroll from one compact Tools panel.
 
-![Amazing Grace in ChordPro Studio Preview with chord diagrams and the Tools panel open.](docs/assets/chart-preview-tools.png)
+![Amazing Grace in Stage Binder Preview with chord diagrams and the Tools panel open.](docs/assets/chart-preview-tools.png)
 
 Build the song's Form as the roadmap you will actually perform.
 
@@ -58,33 +102,33 @@ Keep a source PDF beside a ChordPro file while rebuilding it as a transposable, 
 
 ## Install
 
-After ChordPro Studio is accepted into the Obsidian Community directory:
+After Stage Binder is accepted into the Obsidian Community directory:
 
 1. Open **Settings → Community plugins → Browse**.
-2. Search for **ChordPro Studio**.
+2. Search for **Stage Binder**.
 3. Select **Install**, then **Enable**.
 
 For prerelease or manual testing, download `main.js`, `manifest.json`, and `styles.css` from the latest GitHub release and place them in:
 
 ```text
-<your-vault>/.obsidian/plugins/chordpro-studio/
+<your-vault>/.obsidian/plugins/stage-binder/
 ```
 
-Reload Obsidian, then enable ChordPro Studio under Community plugins.
+Reload Obsidian, then enable Stage Binder under Community plugins.
 
 Requires Obsidian 1.8.7 or later. Desktop and mobile are supported.
 
 ## Quick start
 
 1. Run **New song** from the command palette.
-2. Open the ChordPro Studio toolbox from the guitar ribbon icon.
+2. Open the Stage Binder toolbox from the guitar ribbon icon.
 3. Add section labels and chords, then choose **Preview**.
 4. Create a Markdown note containing links to songs and run **Open setlist**.
 5. Choose **Perform** when you are ready to use the set on stage.
 
-The repository includes one small [public-domain demo set](examples/) that can be copied into a scratch vault. ChordPro Studio never creates demo files automatically.
+The repository includes one small [public-domain demo set](examples/) that can be copied into a scratch vault. Stage Binder never creates demo files automatically.
 
-For the complete first-use walkthrough, read [Getting started with ChordPro Studio](docs/getting-started.md).
+For the complete first-use walkthrough, read [Getting started with Stage Binder](docs/getting-started.md).
 
 ## Song format
 
@@ -129,9 +173,9 @@ start: 7:30 PM
 
 ## Network use and privacy
 
-ChordPro Studio does not include telemetry, analytics, advertising, accounts, payments, or automatic network requests.
+Stage Binder does not include telemetry, analytics, advertising, accounts, payments, or automatic network requests.
 
-The plugin reads files only from the current Obsidian vault. It writes or rewrites files only after an explicit user action, such as creating a song, committing a transpose, exporting a chart, or generating a report. A user may attach an external reference-audio URL to a song; ChordPro Studio displays that URL as a link and connects only when the user chooses to open it.
+The plugin reads files only from the current Obsidian vault. It writes or rewrites files only after an explicit user action, such as creating a song, committing a transpose, exporting a chart, or generating a report. A user may attach an external reference-audio URL to a song; Stage Binder displays that URL as a link and connects only when the user chooses to open it.
 
 ## Development
 
@@ -158,4 +202,4 @@ The files under `examples/` use public-domain works. Their provenance is documen
 
 ## License
 
-ChordPro Studio is released under the [MIT License](LICENSE). Third-party notices are preserved in [THIRD_PARTY_LICENSES](THIRD_PARTY_LICENSES/README.md).
+Stage Binder is released under the [MIT License](LICENSE). Third-party notices are preserved in [THIRD_PARTY_LICENSES](THIRD_PARTY_LICENSES/README.md).
