@@ -303,7 +303,7 @@ test("service context and shared chrome preserve the complete service order", as
 
 test("mixed-format services preserve order and render text and PDFs", async () => {
 	resetDom();
-	window.localStorage.removeItem("chordpro-studio-pdf-layout");
+	window.localStorage.removeItem("stage-binder-pdf-layout");
 	const service = song("Setlists/Testing/Mixed Format Service.md");
 	const chart = song("Songs/ChordPro/Chart.chordpro");
 	const convertedChart = song("Songs/ChordPro/Converted Text Song.chordpro");

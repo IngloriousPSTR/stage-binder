@@ -29,7 +29,7 @@ import {
 import { buildServiceContext, listSetlistFiles, ServiceContext, ServiceEntry } from "./service-context";
 import { StageChrome } from "./stage-chrome";
 
-export const CHART_VIEW_TYPE = "chordpro-studio-chart";
+export const CHART_VIEW_TYPE = "stage-binder-chart";
 
 export class ChartView extends ItemView {
 	private plugin: StageBinderPlugin;

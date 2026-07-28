@@ -9,7 +9,7 @@ import { applyFrontmatter } from "../core/frontmatter";
 import { findChord, positionToDiagram } from "../core/chords";
 import { drawDiagram } from "./diagram";
 
-export const DIAGRAM_PANEL_VIEW_TYPE = "chordpro-studio-diagram-panel";
+export const DIAGRAM_PANEL_VIEW_TYPE = "stage-binder-diagram-panel";
 
 export class DiagramPanelView extends ItemView {
 	private plugin: StageBinderPlugin;

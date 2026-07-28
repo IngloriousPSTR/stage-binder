@@ -21,7 +21,7 @@ import {
 /** Picker tonics, conventional spellings. Odd spellings join on the fly. */
 const KEY_PICKER_TONICS = ["C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"];
 
-export const SETLIST_VIEW_TYPE = "chordpro-studio-setlist";
+export const SETLIST_VIEW_TYPE = "stage-binder-setlist";
 
 export class SetlistView extends ItemView {
 	private plugin: StageBinderPlugin;

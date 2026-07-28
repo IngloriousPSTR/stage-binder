@@ -8,7 +8,7 @@ import type StageBinderPlugin from "../main";
 import { displayText, formatClock, formatDuration, parseRunsheet } from "../core/runsheet";
 import { collectSetlistSongs, SetlistEntry } from "./render-song";
 
-export const RUNSHEET_VIEW_TYPE = "chordpro-studio-runsheet";
+export const RUNSHEET_VIEW_TYPE = "stage-binder-runsheet";
 
 export class RunsheetView extends ItemView {
 	private plugin: StageBinderPlugin;

@@ -10,7 +10,7 @@ import { applyFrontmatter } from "../core/frontmatter";
 import { detectForm, parseSections, parseForm, formToString, fullLabel, canonicalToken, FormToken, BodySection } from "../core/form";
 import { drawDiagram } from "./diagram";
 
-export const TOOLBOX_VIEW_TYPE = "chordpro-studio-toolbox";
+export const TOOLBOX_VIEW_TYPE = "stage-binder-toolbox";
 
 const HEADER_SNIPPETS = ["title", "artist", "key", "capo", "time", "tempo", "note"];
 type ToolboxSection = "create" | "chart" | "order" | "reference" | "output";

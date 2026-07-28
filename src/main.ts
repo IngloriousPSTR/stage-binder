@@ -1026,7 +1026,7 @@ export default class StageBinderPlugin extends Plugin {
 	private async writeCcliReport(report: CcliReport): Promise<string> {
 		const lines: string[] = [
 			"---",
-			"generated: chordpro-studio-ccli-report",
+			"generated: stage-binder-ccli-report",
 			`period: ${report.from} to ${report.to}`,
 			"---",
 			"",

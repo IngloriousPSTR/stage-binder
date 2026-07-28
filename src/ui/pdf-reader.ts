@@ -33,7 +33,7 @@ export interface PdfPageStepDetail {
 	moved: boolean;
 }
 
-const LAYOUT_KEY = "chordpro-studio-pdf-layout";
+const LAYOUT_KEY = "stage-binder-pdf-layout";
 
 function preferredLayout(container: HTMLElement): PdfLayout {
 	try {
