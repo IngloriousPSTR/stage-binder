@@ -1,6 +1,12 @@
 # ChordPro Studio
 
+**Write the chart. Build the set. Perform the plan.**
+
 ChordPro Studio is an Obsidian plugin for writing ChordPro charts, organizing setlists and run sheets, and performing from an iPad or desktop. Songs remain ordinary Markdown or `.chordpro` files in your vault.
+
+![Amazing Grace displayed in a two-column dark Performance view on an iPad, with Form progress, Up Next, and the five-button stage dock.](docs/assets/hero-performance-ipad.png)
+
+[Get started](docs/getting-started.md) · [Download 1.0.0](https://github.com/IngloriousPSTR/chordpro-studio-obsidian/releases/tag/1.0.0) · [Report an issue](https://github.com/IngloriousPSTR/chordpro-studio-obsidian/issues)
 
 ## Why
 
@@ -21,6 +27,34 @@ ChordPro Studio was built first for a small church with a volunteer band and no 
 - Build timed run sheets with leaders, durations, linked songs, prose notes, PDFs, and images.
 - Perform in a fullscreen, touch-friendly display with autoscroll, page-turner keyboard controls, MIDI pedal support, and light or dark themes.
 - Export transposed ChordPro files, create printable set notes, and prepare CCLI usage reports.
+
+## See it in action
+
+### Write and arrange
+
+Preview a chart while adjusting its key, Nashville numbers, lyrics, text size, columns, and autoscroll from one compact Tools panel.
+
+![Amazing Grace in ChordPro Studio Preview with chord diagrams and the Tools panel open.](docs/assets/chart-preview-tools.png)
+
+Build the song's Form as the roadmap you will actually perform.
+
+![The Form editor listing the four verses of Amazing Grace in performance order.](docs/assets/form-workflow.png)
+
+### Build the whole run sheet
+
+Mix songs, Markdown notes, images, PDFs, clock times, roles, and durations in one running order.
+
+![The Acoustic Evening Song set drawer on an iPad, showing timed prose, image, song, and PDF items.](docs/assets/mixed-run-sheet.png)
+
+### Perform from charts and PDFs
+
+Use the same stage controls with transposable charts or fixed PDF material.
+
+![The public-domain Aura Lea PDF displayed in dark Performance mode with Up Next and the five-button stage dock.](docs/assets/pdf-performance.png)
+
+Keep a source PDF beside a ChordPro file while rebuilding it as a transposable, searchable chart.
+
+![A three-pane Obsidian workspace showing ChordPro source, a public-domain source song PDF, and the rendered chart.](docs/assets/pdf-to-chordpro.png)
 
 ## Install
 
@@ -49,6 +83,8 @@ Requires Obsidian 1.8.7 or later. Desktop and mobile are supported.
 5. Choose **Perform** when you are ready to use the set on stage.
 
 The repository includes one small [public-domain demo set](examples/) that can be copied into a scratch vault. ChordPro Studio never creates demo files automatically.
+
+For the complete first-use walkthrough, read [Getting started with ChordPro Studio](docs/getting-started.md).
 
 ## Song format
 
@@ -88,7 +124,7 @@ start: 7:30 PM
 ## Set one
 
 - [[Songs/Amazing Grace.chordpro]] in G (4 min) @Band
-- Changeover (2 min) @Stage manager
+- Changeover (2 min) @Stage
 ```
 
 ## Network use and privacy
