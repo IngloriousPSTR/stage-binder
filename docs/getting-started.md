@@ -14,7 +14,7 @@ Once Stage Binder is listed, open **Settings → Community plugins → Browse**,
 
 **Manually from a release**
 
-Until then, download `main.js`, `manifest.json`, and `styles.css` from the [releases page](https://github.com/IngloriousPSTR/chordpro-studio-obsidian/releases), and put all three into `YourVault/.obsidian/plugins/stage-binder/`. Restart Obsidian, then enable the plugin under **Settings → Community plugins**.
+Until then, download `main.js`, `manifest.json`, and `styles.css` from the [releases page](https://github.com/IngloriousPSTR/stage-binder/releases), and put all three into `YourVault/.obsidian/plugins/stage-binder/`. Restart Obsidian, then enable the plugin under **Settings → Community plugins**.
 
 ---
 
@@ -170,4 +170,4 @@ The screen stays awake while you are performing. Keyboard-style page-turn pedals
 - Build a set that mixes a chart, a PDF, and a plain note
 - Run it once on a tablet before you rely on it at a gig
 
-Found a problem or want a feature? Open an issue on [GitHub](https://github.com/IngloriousPSTR/chordpro-studio-obsidian/issues).
+Found a problem or want a feature? Open an issue on [GitHub](https://github.com/IngloriousPSTR/stage-binder/issues).

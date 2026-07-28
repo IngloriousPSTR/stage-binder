@@ -6,7 +6,7 @@ Stage Binder is an Obsidian plugin for building ChordPro charts, organizing setl
 
 ![Amazing Grace displayed in a two-column dark Performance view on an iPad, with Form progress, Up Next, and the five-button stage dock.](docs/assets/hero-performance-ipad.png)
 
-[Get started](docs/getting-started.md) · [Download 1.0.0](https://github.com/IngloriousPSTR/chordpro-studio-obsidian/releases/tag/1.0.0) · [Report an issue](https://github.com/IngloriousPSTR/chordpro-studio-obsidian/issues)
+[Get started](docs/getting-started.md) · [Download 1.0.0](https://github.com/IngloriousPSTR/stage-binder/releases/tag/1.0.0) · [Report an issue](https://github.com/IngloriousPSTR/stage-binder/issues)
 
 ## Why
 

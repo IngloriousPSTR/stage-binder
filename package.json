@@ -26,12 +26,12 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/IngloriousPSTR/chordpro-studio-obsidian.git"
+		"url": "git+https://github.com/IngloriousPSTR/stage-binder.git"
 	},
 	"bugs": {
-		"url": "https://github.com/IngloriousPSTR/chordpro-studio-obsidian/issues"
+		"url": "https://github.com/IngloriousPSTR/stage-binder/issues"
 	},
-	"homepage": "https://github.com/IngloriousPSTR/chordpro-studio-obsidian#readme",
+	"homepage": "https://github.com/IngloriousPSTR/stage-binder#readme",
 	"devDependencies": {
 		"@codemirror/state": "^6.5.0",
 		"@codemirror/view": "^6.38.6",
