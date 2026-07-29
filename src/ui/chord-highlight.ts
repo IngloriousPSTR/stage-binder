@@ -1,12 +1,12 @@
 // Colorize [Chord] tokens in the source editor (v0.6.0, Editor settings tab).
 // A CM6 ViewPlugin decorating visible ranges only; the token filter matches
 // hover.ts so the two features always agree on what a chord is. Color comes
-// from the --cps-editor-chord-color variable (falls back to the chord color).
+// from the --sb-editor-chord-color variable (falls back to the chord color).
 import { RangeSetBuilder } from "@codemirror/state";
 import { Decoration, DecorationSet, EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view";
 import { isChordSymbol } from "../core/chords";
 
-const CHORD_MARK = Decoration.mark({ class: "cps-editor-chord" });
+const CHORD_MARK = Decoration.mark({ class: "sb-editor-chord" });
 
 function buildDecorations(view: EditorView): DecorationSet {
 	const builder = new RangeSetBuilder<Decoration>();

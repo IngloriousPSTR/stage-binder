@@ -70,11 +70,11 @@ export class RunsheetView extends ItemView {
 	async render(): Promise<void> {
 		const root = this.contentEl;
 		root.empty();
-		root.addClass("cps-runsheet-view");
+		root.addClass("sb-runsheet-view");
 
 		if (!this.file) {
 			root.createDiv({
-				cls: "cps-setlist-empty",
+				cls: "sb-setlist-empty",
 				text: "No note selected. Open your order-of-service note and run “Open run sheet”."
 			});
 			return;
@@ -88,55 +88,55 @@ export class RunsheetView extends ItemView {
 			if (entry.line !== undefined) songByLine.set(entry.line, { entry, index });
 		});
 
-		const bar = root.createDiv({ cls: "cps-chart-controls cps-runsheet-bar" });
-		bar.createSpan({ cls: "cps-runsheet-title", text: this.file.basename });
+		const bar = root.createDiv({ cls: "sb-chart-controls sb-runsheet-bar" });
+		bar.createSpan({ cls: "sb-runsheet-title", text: this.file.basename });
 		if (runsheet.totalSeconds > 0) {
 			bar.createSpan({
-				cls: "cps-runsheet-total",
+				cls: "sb-runsheet-total",
 				text: `${formatDuration(runsheet.totalSeconds)} planned`
 			});
 		}
 		if (runsheet.items.some((item) => item.kind === "item")) {
-			const perfBtn = bar.createEl("button", { cls: "cps-chart-btn cps-perform-btn", text: "Perform" });
+			const perfBtn = bar.createEl("button", { cls: "sb-chart-btn sb-perform-btn", text: "Perform" });
 			perfBtn.setAttribute("aria-label", "Enter performance mode with this service");
 			perfBtn.addEventListener("click", () => void this.plugin.performance.open(songs, 0, undefined, this.file));
 		}
 
 		if (runsheet.items.length === 0) {
 			root.createDiv({
-				cls: "cps-setlist-empty",
+				cls: "sb-setlist-empty",
 				text: "Nothing to schedule yet. Add list items like “- Welcome @Chris (2 min)”; headings become section breaks, and a start property (start: 9:30 AM) turns durations into clock times."
 			});
 			return;
 		}
 
-		const table = root.createDiv({ cls: "cps-runsheet" });
+		const table = root.createDiv({ cls: "sb-runsheet" });
 		for (const item of runsheet.items) {
 			if (item.kind === "divider") {
-				const divider = table.createDiv({ cls: "cps-runsheet-divider" });
-				divider.createSpan({ cls: "cps-runsheet-time", text: formatClock(runsheet, item.offsetSeconds) });
-				divider.createSpan({ cls: "cps-runsheet-heading", text: displayText(item.text) });
+				const divider = table.createDiv({ cls: "sb-runsheet-divider" });
+				divider.createSpan({ cls: "sb-runsheet-time", text: formatClock(runsheet, item.offsetSeconds) });
+				divider.createSpan({ cls: "sb-runsheet-heading", text: displayText(item.text) });
 				continue;
 			}
 
-			const row = table.createDiv({ cls: "cps-runsheet-row" });
-			row.createSpan({ cls: "cps-runsheet-time", text: formatClock(runsheet, item.offsetSeconds) });
+			const row = table.createDiv({ cls: "sb-runsheet-row" });
+			row.createSpan({ cls: "sb-runsheet-time", text: formatClock(runsheet, item.offsetSeconds) });
 
-			const main = row.createDiv({ cls: "cps-runsheet-main" });
+			const main = row.createDiv({ cls: "sb-runsheet-main" });
 			const song = songByLine.get(item.line);
 			if (song) {
-				row.addClass("cps-runsheet-song");
+				row.addClass("sb-runsheet-song");
 				let label = displayText(item.text);
 				if (song.entry.label) {
 					// The key shows as a chip; drop the raw "in G" remnant.
 					label = label.replace(new RegExp("\\bin\\s+" + song.entry.label + "\\b"), "").replace(/\s{2,}/g, " ").trim();
 				}
-				const title = main.createSpan({ cls: "cps-runsheet-song-title", text: label || song.entry.file.basename });
+				const title = main.createSpan({ cls: "sb-runsheet-song-title", text: label || song.entry.file.basename });
 				title.addEventListener("click", () => void this.plugin.openChartPreview(song.entry.file, this.file));
 				if (song.entry.label) {
-					main.createSpan({ cls: "cps-form-chip cps-runsheet-key", text: song.entry.label });
+					main.createSpan({ cls: "sb-form-chip sb-runsheet-key", text: song.entry.label });
 				}
-				const play = main.createEl("button", { cls: "cps-chart-btn cps-runsheet-play" });
+				const play = main.createEl("button", { cls: "sb-chart-btn sb-runsheet-play" });
 				setIcon(play, "play");
 				play.setAttribute("aria-label", "Perform from this song");
 				play.addEventListener("click", () => void this.plugin.performance.open(songs, song.index, undefined, this.file, song.entry.line));
@@ -145,11 +145,11 @@ export class RunsheetView extends ItemView {
 			}
 
 			row.createSpan({
-				cls: "cps-runsheet-people",
+				cls: "sb-runsheet-people",
 				text: item.people.join(", ")
 			});
 			row.createSpan({
-				cls: "cps-runsheet-length",
+				cls: "sb-runsheet-length",
 				text: item.seconds !== null ? formatDuration(item.seconds) : ""
 			});
 		}

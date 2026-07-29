@@ -73,10 +73,10 @@ export class ChordSuggest extends EditorSuggest<ChordSuggestion> {
 	}
 
 	renderSuggestion(suggestion: ChordSuggestion, el: HTMLElement): void {
-		el.addClass("cps-suggest-item");
-		el.createSpan({ cls: "cps-suggest-symbol", text: suggestion.symbol });
+		el.addClass("sb-suggest-item");
+		el.createSpan({ cls: "sb-suggest-symbol", text: suggestion.symbol });
 		if (suggestion.numeral) {
-			el.createSpan({ cls: "cps-suggest-numeral", text: suggestion.numeral });
+			el.createSpan({ cls: "sb-suggest-numeral", text: suggestion.numeral });
 		}
 	}
 

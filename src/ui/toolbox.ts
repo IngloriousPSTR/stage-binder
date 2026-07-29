@@ -76,9 +76,9 @@ export class ToolboxView extends ItemView {
 	async onOpen(): Promise<void> {
 		const root = this.contentEl;
 		root.empty();
-		root.addClass("cps-toolbox");
+		root.addClass("sb-toolbox");
 
-		const scroll = root.createDiv({ cls: "cps-toolbox-scroll" });
+		const scroll = root.createDiv({ cls: "sb-toolbox-scroll" });
 		this.buildCurrentChart(scroll);
 		const create = this.buildDisclosure(scroll, "create");
 		this.buildCreateActions(create);
@@ -113,14 +113,14 @@ export class ToolboxView extends ItemView {
 
 	private buildDisclosure(root: HTMLElement, id: ToolboxSection): HTMLElement {
 		const config = TOOLBOX_SECTIONS[id];
-		const details = root.createEl("details", { cls: "cps-toolbox-disclosure" });
+		const details = root.createEl("details", { cls: "sb-toolbox-disclosure" });
 		details.dataset.section = id;
 		details.open = this.normalizedOpenSections().has(id);
 		const summary = details.createEl("summary");
-		const icon = summary.createSpan({ cls: "cps-disclosure-icon" });
+		const icon = summary.createSpan({ cls: "sb-disclosure-icon" });
 		setIcon(icon, config.icon);
 		summary.createSpan({ text: config.label });
-		const body = details.createDiv({ cls: "cps-toolbox-disclosure-body" });
+		const body = details.createDiv({ cls: "sb-toolbox-disclosure-body" });
 		details.addEventListener("toggle", () => {
 			const open = this.normalizedOpenSections();
 			if (details.open) open.add(id);
@@ -132,11 +132,11 @@ export class ToolboxView extends ItemView {
 	}
 
 	private buildCurrentChart(root: HTMLElement): void {
-		const header = root.createEl("section", { cls: "cps-current-chart" });
-		header.createDiv({ cls: "cps-current-chart-label", text: "Current chart" });
-		this.currentChartNameEl = header.createDiv({ cls: "cps-current-chart-name" });
-		this.currentChartPathEl = header.createDiv({ cls: "cps-current-chart-path" });
-		const actions = header.createDiv({ cls: "cps-current-chart-actions" });
+		const header = root.createEl("section", { cls: "sb-current-chart" });
+		header.createDiv({ cls: "sb-current-chart-label", text: "Current chart" });
+		this.currentChartNameEl = header.createDiv({ cls: "sb-current-chart-name" });
+		this.currentChartPathEl = header.createDiv({ cls: "sb-current-chart-path" });
+		const actions = header.createDiv({ cls: "sb-current-chart-actions" });
 		this.previewBtn = this.createActionButton(actions, "eye", "Preview", "Open chart preview");
 		this.previewBtn.addEventListener("click", () => void this.plugin.openChartPreview());
 		this.performBtn = this.createActionButton(actions, "presentation", "Perform", "Enter performance mode");
@@ -144,9 +144,9 @@ export class ToolboxView extends ItemView {
 	}
 
 	private createActionButton(root: HTMLElement, iconName: string, label: string, ariaLabel = label): HTMLButtonElement {
-		const button = root.createEl("button", { cls: "cps-action-btn" });
+		const button = root.createEl("button", { cls: "sb-action-btn" });
 		button.setAttribute("aria-label", ariaLabel);
-		const icon = button.createSpan({ cls: "cps-action-icon" });
+		const icon = button.createSpan({ cls: "sb-action-icon" });
 		setIcon(icon, iconName);
 		button.createSpan({ text: label });
 		return button;
@@ -163,9 +163,9 @@ export class ToolboxView extends ItemView {
 	}
 
 	private buildCreateActions(root: HTMLElement): void {
-		const section = root.createDiv({ cls: "cps-section" });
-		section.createDiv({ cls: "cps-section-hint", text: "Start a chart or clean up lyrics already on the clipboard." });
-		const grid = section.createDiv({ cls: "cps-action-grid" });
+		const section = root.createDiv({ cls: "sb-section" });
+		section.createDiv({ cls: "sb-section-hint", text: "Start a chart or clean up lyrics already on the clipboard." });
+		const grid = section.createDiv({ cls: "sb-action-grid" });
 		const actions: Array<[string, string, () => void, string]> = [
 			["file-plus-2", "New song", () => this.plugin.runNewSong(), "mod-cta"],
 			["clipboard-paste", "Smart paste", () => this.plugin.runSmartPaste(), ""],
@@ -190,10 +190,10 @@ export class ToolboxView extends ItemView {
 	// --- 5a: key selector and diatonic chords ---
 
 	private buildKeySection(root: HTMLElement): void {
-		const section = root.createDiv({ cls: "cps-section" });
-		section.createDiv({ cls: "cps-section-title", text: "Key" });
+		const section = root.createDiv({ cls: "sb-section" });
+		section.createDiv({ cls: "sb-section-title", text: "Key" });
 
-		const select = section.createEl("select", { cls: "dropdown cps-key-select" });
+		const select = section.createEl("select", { cls: "dropdown sb-key-select" });
 		this.keySelect = select;
 		for (const option of KEY_OPTIONS) {
 			select.createEl("option", { text: option.label, value: option.id });
@@ -206,7 +206,7 @@ export class ToolboxView extends ItemView {
 			this.renderReference();
 		});
 
-		this.chordGridEl = section.createDiv({ cls: "cps-chord-grid" });
+		this.chordGridEl = section.createDiv({ cls: "sb-chord-grid" });
 	}
 
 	private currentKey(): { tonic: string; mode: Mode } {
@@ -220,17 +220,17 @@ export class ToolboxView extends ItemView {
 		this.chordGridEl.empty();
 
 		for (const chord of chords) {
-			const btn = this.chordGridEl.createDiv({ cls: "cps-chord-btn" });
+			const btn = this.chordGridEl.createDiv({ cls: "sb-chord-btn" });
 			btn.setAttribute("title", `${describeChord(chord.symbol)}: ${chord.notes.join(" ")}`);
 
-			const insertArea = btn.createDiv({ cls: "cps-chord-insert" });
-			insertArea.createDiv({ cls: "cps-chord-numeral", text: chord.numeral });
-			insertArea.createDiv({ cls: "cps-chord-name", text: chord.symbol });
+			const insertArea = btn.createDiv({ cls: "sb-chord-insert" });
+			insertArea.createDiv({ cls: "sb-chord-numeral", text: chord.numeral });
+			insertArea.createDiv({ cls: "sb-chord-name", text: chord.symbol });
 			insertArea.addEventListener("click", () => {
 				this.plugin.insertText(`[${chord.symbol}]`);
 			});
 
-			const detailBtn = btn.createDiv({ cls: "cps-chord-detail-btn" });
+			const detailBtn = btn.createDiv({ cls: "sb-chord-detail-btn" });
 			setIcon(detailBtn, "guitar");
 			detailBtn.setAttribute("aria-label", `Show ${chord.symbol} fingerings`);
 			detailBtn.addEventListener("click", (evt) => {
@@ -243,18 +243,18 @@ export class ToolboxView extends ItemView {
 	// --- 5b: fingering dock (roadmap: clickable fingering slide-up panel) ---
 
 	private buildDock(root: HTMLElement): void {
-		this.dockEl = root.createDiv({ cls: "cps-chord-dock" });
-		const header = this.dockEl.createDiv({ cls: "cps-detail-header" });
-		this.dockBackEl = header.createDiv({ cls: "cps-detail-close cps-dock-back" });
+		this.dockEl = root.createDiv({ cls: "sb-chord-dock" });
+		const header = this.dockEl.createDiv({ cls: "sb-detail-header" });
+		this.dockBackEl = header.createDiv({ cls: "sb-detail-close sb-dock-back" });
 		setIcon(this.dockBackEl, "arrow-left");
 		this.dockBackEl.setAttribute("aria-label", "Back to the previous chord");
 		this.dockBackEl.addEventListener("click", () => this.dockBack());
-		header.createSpan({ cls: "cps-detail-name cps-dock-title" });
-		const closeBtn = header.createDiv({ cls: "cps-detail-close" });
+		header.createSpan({ cls: "sb-detail-name sb-dock-title" });
+		const closeBtn = header.createDiv({ cls: "sb-detail-close" });
 		setIcon(closeBtn, "x");
 		closeBtn.setAttribute("aria-label", "Close fingering panel");
 		closeBtn.addEventListener("click", () => this.hideDock());
-		this.dockBodyEl = this.dockEl.createDiv({ cls: "cps-dock-body" });
+		this.dockBodyEl = this.dockEl.createDiv({ cls: "sb-dock-body" });
 	}
 
 	hideDock(): void {
@@ -284,7 +284,7 @@ export class ToolboxView extends ItemView {
 		} catch (err) {
 			const message = err instanceof Error ? err.message : String(err);
 			this.dockBodyEl.empty();
-			this.dockBodyEl.createDiv({ cls: "cps-detail-empty", text: `Fingering error: ${message}` });
+			this.dockBodyEl.createDiv({ cls: "sb-detail-empty", text: `Fingering error: ${message}` });
 			console.error("[Stage Binder] showChordDock failed for", symbol, err);
 		}
 	}
@@ -296,7 +296,7 @@ export class ToolboxView extends ItemView {
 		}
 		this.dockSymbol = symbol;
 		this.syncDockBack();
-		const titleEl = this.dockEl.querySelector(".cps-dock-title");
+		const titleEl = this.dockEl.querySelector(".sb-dock-title");
 		const body = this.dockBodyEl;
 		body.empty();
 
@@ -307,13 +307,13 @@ export class ToolboxView extends ItemView {
 		// The tapped spelling stays selectable even when chords-db spells it
 		// differently ("AM7" vs "Amaj7"); findChord resolves the alias.
 		if (!variations.includes(symbol)) variations.unshift(symbol);
-		const select = body.createEl("select", { cls: "dropdown cps-variation-select" });
+		const select = body.createEl("select", { cls: "dropdown sb-variation-select" });
 		for (const variation of variations) {
 			select.createEl("option", { text: variation, value: variation });
 		}
 		select.value = symbol;
 
-		const notesEl = body.createDiv({ cls: "cps-detail-notes" });
+		const notesEl = body.createDiv({ cls: "sb-detail-notes" });
 		const diagramsEl = body.createDiv();
 		const render = (current: string): void => {
 			if (titleEl instanceof HTMLElement) titleEl.setText(current);
@@ -322,26 +322,26 @@ export class ToolboxView extends ItemView {
 
 			const dbChord = findChord(current);
 			if (!dbChord || dbChord.positions.length === 0) {
-				diagramsEl.createDiv({ cls: "cps-detail-empty", text: `No diagrams found for ${current}.` });
+				diagramsEl.createDiv({ cls: "sb-detail-empty", text: `No diagrams found for ${current}.` });
 				return;
 			}
 
-			const row = diagramsEl.createDiv({ cls: "cps-diagram-row" });
+			const row = diagramsEl.createDiv({ cls: "sb-diagram-row" });
 			for (const position of dbChord.positions) {
-				const cell = row.createDiv({ cls: "cps-diagram-cell" });
-				const diagramEl = cell.createDiv({ cls: "cps-diagram" });
+				const cell = row.createDiv({ cls: "sb-diagram-cell" });
+				const diagramEl = cell.createDiv({ cls: "sb-diagram" });
 				// A diagram that fails to draw must not take the dock down with
 				// it: report the failure in place and keep the panel usable.
 				try {
 					drawDiagram(diagramEl, positionToDiagram(current, position));
 				} catch (err) {
 					const message = err instanceof Error ? err.message : String(err);
-					diagramEl.addClass("cps-detail-empty");
+					diagramEl.addClass("sb-detail-empty");
 					diagramEl.setText(message);
 					console.error("[Stage Binder] diagram render failed for", current, err);
 				}
 
-				const insertBtn = cell.createEl("button", { cls: "cps-diagram-insert", text: "Insert" });
+				const insertBtn = cell.createEl("button", { cls: "sb-diagram-insert", text: "Insert" });
 				insertBtn.addEventListener("click", () => {
 					this.plugin.insertText(`[${current}]`);
 				});
@@ -360,12 +360,12 @@ export class ToolboxView extends ItemView {
 	// --- Form editor (v0.3.0 roadmap) ---
 
 	private buildFormSection(root: HTMLElement): void {
-		const section = root.createDiv({ cls: "cps-section" });
+		const section = root.createDiv({ cls: "sb-section" });
 		section.createDiv({
-			cls: "cps-section-hint",
+			cls: "sb-section-hint",
 			text: "The form is the song's roadmap: the order you play sections such as Verse, Chorus, Bridge, then Chorus again."
 		});
-		this.formEl = section.createDiv({ cls: "cps-form-editor" });
+		this.formEl = section.createDiv({ cls: "sb-form-editor" });
 	}
 
 	/**
@@ -418,33 +418,33 @@ export class ToolboxView extends ItemView {
 		el.empty();
 
 		if (!file) {
-			el.createDiv({ cls: "cps-form-empty", text: "Open a song to build its form." });
+			el.createDiv({ cls: "sb-form-empty", text: "Open a song to build its form." });
 			return;
 		}
 
-		el.createDiv({ cls: "cps-form-file", text: file.basename });
+		el.createDiv({ cls: "sb-form-file", text: file.basename });
 		el.createDiv({
-			cls: "cps-form-hint",
+			cls: "sb-form-hint",
 			text: "Arrange the sections in performance order. Add a section again when it repeats."
 		});
 
 		if (this.formTokens.length === 0) {
-			el.createDiv({ cls: "cps-form-empty", text: "No form yet." });
+			el.createDiv({ cls: "sb-form-empty", text: "No form yet." });
 		} else {
-			const list = el.createDiv({ cls: "cps-form-order" });
+			const list = el.createDiv({ cls: "sb-form-order" });
 			this.formTokens.forEach((token, index) => {
-				const row = list.createDiv({ cls: "cps-form-row" });
-				row.createSpan({ cls: "cps-form-number", text: `${index + 1}.` });
-				row.createSpan({ cls: "cps-form-label", text: fullLabel(token) });
-				const up = row.createEl("button", { cls: "cps-form-row-btn", text: "↑" });
+				const row = list.createDiv({ cls: "sb-form-row" });
+				row.createSpan({ cls: "sb-form-number", text: `${index + 1}.` });
+				row.createSpan({ cls: "sb-form-label", text: fullLabel(token) });
+				const up = row.createEl("button", { cls: "sb-form-row-btn", text: "↑" });
 				up.setAttribute("aria-label", `Move ${fullLabel(token)} earlier`);
 				up.disabled = index === 0;
 				up.addEventListener("click", () => this.moveToken(index, -1));
-				const down = row.createEl("button", { cls: "cps-form-row-btn", text: "↓" });
+				const down = row.createEl("button", { cls: "sb-form-row-btn", text: "↓" });
 				down.setAttribute("aria-label", `Move ${fullLabel(token)} later`);
 				down.disabled = index === this.formTokens.length - 1;
 				down.addEventListener("click", () => this.moveToken(index, 1));
-				const remove = row.createEl("button", { cls: "cps-form-row-btn cps-form-remove", text: "Remove" });
+				const remove = row.createEl("button", { cls: "sb-form-row-btn sb-form-remove", text: "Remove" });
 				remove.setAttribute("aria-label", `Remove ${fullLabel(token)} from form`);
 				remove.addEventListener("click", () => {
 					this.formTokens.splice(index, 1);
@@ -452,20 +452,20 @@ export class ToolboxView extends ItemView {
 					void this.commitForm();
 				});
 			});
-			el.createDiv({ cls: "cps-form-status", text: "Saved automatically" });
+			el.createDiv({ cls: "sb-form-status", text: "Saved automatically" });
 		}
 
 		if (this.formSections.length === 0) {
 			// Nothing to tap yet: the note declares no sections. Offer the
 			// section inserts right here instead of pointing at another tab.
 			el.createDiv({
-				cls: "cps-form-empty",
+				cls: "sb-form-empty",
 				text: "This song has no section headers yet. Add the sections you need to the note first."
 			});
-			const grid = el.createDiv({ cls: "cps-snippet-grid" });
+			const grid = el.createDiv({ cls: "sb-snippet-grid" });
 			for (const name of this.sectionInsertNames()) {
 				const label = fullLabel(canonicalToken(name));
-				const btn = grid.createEl("button", { cls: "cps-snippet-btn", text: label });
+				const btn = grid.createEl("button", { cls: "sb-snippet-btn", text: label });
 				btn.addEventListener("click", () => {
 					this.plugin.insertSection(`{comment: ${label}}`);
 				});
@@ -473,7 +473,7 @@ export class ToolboxView extends ItemView {
 		} else {
 			if (this.formTokens.length === 0) {
 				const conflicts = this.fileOrderConflicts();
-				const useOrder = el.createEl("button", { cls: "cps-action-btn mod-cta", text: "Use sections in file order" });
+				const useOrder = el.createEl("button", { cls: "sb-action-btn mod-cta", text: "Use sections in file order" });
 				useOrder.disabled = conflicts.length > 0;
 				useOrder.addEventListener("click", () => {
 					this.formTokens = this.formSections.map((section) => canonicalToken(section.label));
@@ -481,16 +481,16 @@ export class ToolboxView extends ItemView {
 				});
 				if (conflicts.length > 0) {
 					el.createDiv({
-						cls: "cps-form-warning",
+						cls: "sb-form-warning",
 						text: `Rename repeated sections with different lyrics before using file order: ${conflicts.join(", ")}.`
 					});
 				}
 			}
-			el.createDiv({ cls: "cps-form-hint", text: "Add to form:" });
-			const addRow = el.createDiv({ cls: "cps-form-add" });
+			el.createDiv({ cls: "sb-form-hint", text: "Add to form:" });
+			const addRow = el.createDiv({ cls: "sb-form-add" });
 			for (const section of this.formSections) {
 				const token = canonicalToken(section.label);
-				const btn = addRow.createEl("button", { cls: "cps-snippet-btn", text: "Add " + section.label });
+				const btn = addRow.createEl("button", { cls: "sb-snippet-btn", text: "Add " + section.label });
 				btn.setAttribute("title", "Append " + fullLabel(token));
 				btn.addEventListener("click", () => {
 					this.formTokens.push(token);
@@ -499,15 +499,15 @@ export class ToolboxView extends ItemView {
 				});
 			}
 		}
-		const advanced = el.createEl("details", { cls: "cps-form-advanced" });
+		const advanced = el.createEl("details", { cls: "sb-form-advanced" });
 		advanced.createEl("summary", { text: "Advanced: add a custom cue" });
-		const cueWrap = advanced.createDiv({ cls: "cps-form-cue" });
+		const cueWrap = advanced.createDiv({ cls: "sb-form-cue" });
 		const cueInput = cueWrap.createEl("input", {
 			type: "text",
-			cls: "cps-form-cue-input",
+			cls: "sb-form-cue-input",
 			attr: { placeholder: "Custom cue (Ending, Prayer...)" }
 		});
-		const cueAdd = cueWrap.createEl("button", { cls: "cps-snippet-btn", text: "+" });
+		const cueAdd = cueWrap.createEl("button", { cls: "sb-snippet-btn", text: "+" });
 		const addCue = () => {
 			const value = cueInput.value.trim();
 			if (!value) return;
@@ -525,7 +525,7 @@ export class ToolboxView extends ItemView {
 		});
 		if (this.formTokens.length > 0) {
 			const clear = el.createEl("button", {
-				cls: "cps-form-clear",
+				cls: "sb-form-clear",
 				text: this.formClearArmed ? "Confirm clear form" : "Clear form"
 			});
 			clear.addEventListener("click", () => {
@@ -585,13 +585,13 @@ export class ToolboxView extends ItemView {
 	}
 
 	private buildSectionInserts(root: HTMLElement): void {
-		const section = root.createDiv({ cls: "cps-section" });
-		section.createDiv({ cls: "cps-section-title", text: "Sections" });
-		const grid = section.createDiv({ cls: "cps-snippet-grid" });
+		const section = root.createDiv({ cls: "sb-section" });
+		section.createDiv({ cls: "sb-section-title", text: "Sections" });
+		const grid = section.createDiv({ cls: "sb-snippet-grid" });
 		for (const name of this.sectionInsertNames()) {
 			const label = fullLabel(canonicalToken(name));
 			const directive = `{comment: ${label}}`;
-			const btn = grid.createEl("button", { cls: "cps-snippet-btn", text: label });
+			const btn = grid.createEl("button", { cls: "sb-snippet-btn", text: label });
 			btn.addEventListener("click", () => {
 				this.plugin.insertSection(directive);
 			});
@@ -599,11 +599,11 @@ export class ToolboxView extends ItemView {
 	}
 
 	private buildHeaderInserts(root: HTMLElement): void {
-		const section = root.createDiv({ cls: "cps-section" });
-		section.createDiv({ cls: "cps-section-title", text: "Song details" });
-		const grid = section.createDiv({ cls: "cps-snippet-grid" });
+		const section = root.createDiv({ cls: "sb-section" });
+		section.createDiv({ cls: "sb-section-title", text: "Song details" });
+		const grid = section.createDiv({ cls: "sb-snippet-grid" });
 		for (const name of HEADER_SNIPPETS) {
-			const btn = grid.createEl("button", { cls: "cps-snippet-btn", text: name[0].toUpperCase() + name.slice(1) });
+			const btn = grid.createEl("button", { cls: "sb-snippet-btn", text: name[0].toUpperCase() + name.slice(1) });
 			btn.setAttribute("title", `Insert {${name}: }`);
 			btn.addEventListener("click", () => {
 				// Cursor lands between ": " and "}" so typing starts immediately.
@@ -615,10 +615,10 @@ export class ToolboxView extends ItemView {
 	// --- Reference: capo table + transpose map (roadmap 2026-07-09) ---
 
 	private buildReferenceSection(root: HTMLElement): void {
-		const section = root.createDiv({ cls: "cps-section" });
+		const section = root.createDiv({ cls: "sb-section" });
 		const audioBtn = this.createActionButton(section, "audio-lines", "Reference audio", "Set reference audio");
 		audioBtn.addEventListener("click", () => this.plugin.runSetAudioLink());
-		section.createDiv({ cls: "cps-section-hint", text: "Link a recording or compare keys and capo positions." });
+		section.createDiv({ cls: "sb-section-hint", text: "Link a recording or compare keys and capo positions." });
 		this.referenceEl = section.createDiv();
 	}
 
@@ -630,14 +630,14 @@ export class ToolboxView extends ItemView {
 		// Capo table: standard capo key chart direction (roadmap 2026-07-14 bug
 		// fix). Keep playing the current key's shapes; each fret raises the
 		// sounding key one semitone: C shapes with capo 1 sound in C#/Db.
-		const capoDetails = this.referenceEl.createEl("details", { cls: "cps-ref" });
+		const capoDetails = this.referenceEl.createEl("details", { cls: "sb-ref" });
 		capoDetails.createEl("summary", { text: "Capo table" });
 		const keyLabel = tonic + (minor ? "m" : "");
 		capoDetails.createDiv({
-			cls: "cps-ref-hint",
+			cls: "sb-ref-hint",
 			text: `Playing ${keyLabel} shapes with a capo:`
 		});
-		const capoTable = capoDetails.createEl("table", { cls: "cps-ref-table" });
+		const capoTable = capoDetails.createEl("table", { cls: "sb-ref-table" });
 		const capoHead = capoTable.createEl("tr");
 		capoHead.createEl("th", { text: "Capo" });
 		capoHead.createEl("th", { text: "Sounds in" });
@@ -651,13 +651,13 @@ export class ToolboxView extends ItemView {
 		// The reverse question a worship guitarist actually asks: the song
 		// sounds in the current key; where can the capo go so the fingered
 		// shapes fall in an open-chord key?
-		const shapeDetails = this.referenceEl.createEl("details", { cls: "cps-ref" });
+		const shapeDetails = this.referenceEl.createEl("details", { cls: "sb-ref" });
 		shapeDetails.createEl("summary", { text: "Easy shapes finder" });
 		shapeDetails.createDiv({
-			cls: "cps-ref-hint",
+			cls: "sb-ref-hint",
 			text: `To sound in ${keyLabel}, play:`
 		});
-		const shapeTable = shapeDetails.createEl("table", { cls: "cps-ref-table" });
+		const shapeTable = shapeDetails.createEl("table", { cls: "sb-ref-table" });
 		const shapeHead = shapeTable.createEl("tr");
 		shapeHead.createEl("th", { text: "Capo" });
 		shapeHead.createEl("th", { text: "Shapes" });
@@ -665,7 +665,7 @@ export class ToolboxView extends ItemView {
 			const shape = transposeKeyName(tonic, minor, -capo);
 			const row = shapeTable.createEl("tr");
 			if (EASY_SHAPE_KEYS[mode].has(shape)) {
-				row.addClass("cps-ref-easy");
+				row.addClass("sb-ref-easy");
 				row.setAttribute("title", "Open-chord friendly");
 			}
 			row.createEl("td", { text: capo === 0 ? "none" : String(capo) });
@@ -673,11 +673,11 @@ export class ToolboxView extends ItemView {
 		}
 
 		// Transpose map: current key's diatonic chords next to a target key's.
-		const mapDetails = this.referenceEl.createEl("details", { cls: "cps-ref" });
+		const mapDetails = this.referenceEl.createEl("details", { cls: "sb-ref" });
 		mapDetails.createEl("summary", { text: "Transpose map" });
 		const mapBody = mapDetails.createDiv();
 
-		const targetSelect = mapBody.createEl("select", { cls: "dropdown cps-ref-target" });
+		const targetSelect = mapBody.createEl("select", { cls: "dropdown sb-ref-target" });
 		const sameMode = KEY_OPTIONS.filter((k) => k.mode === mode);
 		for (const option of sameMode) {
 			targetSelect.createEl("option", { text: `to ${option.label}`, value: option.id });
@@ -691,14 +691,14 @@ export class ToolboxView extends ItemView {
 			const target = KEY_OPTIONS.find((k) => k.id === targetSelect.value) ?? sameMode[0];
 			const from = diatonicChords(tonic, mode);
 			const to = diatonicChords(target.tonic, target.mode);
-			const table = tableEl.createEl("table", { cls: "cps-ref-table" });
+			const table = tableEl.createEl("table", { cls: "sb-ref-table" });
 			const head = table.createEl("tr");
 			head.createEl("th", { text: "" });
 			head.createEl("th", { text: tonic + (minor ? "m" : "") });
 			head.createEl("th", { text: target.tonic + (minor ? "m" : "") });
 			from.forEach((chord, i) => {
 				const row = table.createEl("tr");
-				row.createEl("td", { cls: "cps-ref-numeral", text: chord.numeral });
+				row.createEl("td", { cls: "sb-ref-numeral", text: chord.numeral });
 				row.createEl("td", { text: chord.symbol });
 				row.createEl("td", { text: to[i]?.symbol ?? "" });
 			});
@@ -713,9 +713,9 @@ export class ToolboxView extends ItemView {
 	// --- Output ---
 
 	private buildOutput(root: HTMLElement): void {
-		const section = root.createDiv({ cls: "cps-section" });
-		section.createDiv({ cls: "cps-section-hint", text: "Prepare the current chart or service for another device." });
-		const grid = section.createDiv({ cls: "cps-action-grid" });
+		const section = root.createDiv({ cls: "sb-section" });
+		section.createDiv({ cls: "sb-section-hint", text: "Prepare the current chart or service for another device." });
+		const grid = section.createDiv({ cls: "sb-action-grid" });
 		const actions: Array<[string, string, () => void, string]> = [
 			["file-output", "Export chart", () => this.plugin.runExportChordpro(), ""],
 			["folder-output", "Export set", () => this.plugin.runExportShareFolder(), ""]

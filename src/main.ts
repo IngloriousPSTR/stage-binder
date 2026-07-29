@@ -157,17 +157,17 @@ const DEFAULT_SETTINGS: StageBinderSettings = {
 
 // CSS variables driven by the appearance settings (styles.css consumes them).
 const APPEARANCE_VARS: Array<{ cssVar: string; get: (s: StageBinderSettings) => string }> = [
-	{ cssVar: "--cps-chord-color", get: (s) => s.chordColor },
-	{ cssVar: "--cps-lyrics-color", get: (s) => s.lyricsColor },
-	{ cssVar: "--cps-section-color", get: (s) => s.sectionColor },
-	{ cssVar: "--cps-title-color", get: (s) => s.titleColor },
-	{ cssVar: "--cps-chord-scale", get: (s) => (s.chordScale === 100 ? "" : String(s.chordScale / 100)) },
-	{ cssVar: "--cps-lyrics-scale", get: (s) => (s.lyricsScale === 100 ? "" : String(s.lyricsScale / 100)) },
-	{ cssVar: "--cps-chart-font", get: (s) => s.chartFont || "" },
-	{ cssVar: "--cps-chord-weight", get: (s) => (s.chordWeight === 700 ? "" : String(s.chordWeight)) },
-	{ cssVar: "--cps-line-height", get: (s) => (s.lineHeight === 135 ? "" : String(s.lineHeight / 100)) },
-	{ cssVar: "--cps-diagram-scale", get: (s) => (s.diagramScale === 100 ? "" : String(s.diagramScale / 100)) },
-	{ cssVar: "--cps-editor-chord-color", get: (s) => s.editorChordColor }
+	{ cssVar: "--sb-chord-color", get: (s) => s.chordColor },
+	{ cssVar: "--sb-lyrics-color", get: (s) => s.lyricsColor },
+	{ cssVar: "--sb-section-color", get: (s) => s.sectionColor },
+	{ cssVar: "--sb-title-color", get: (s) => s.titleColor },
+	{ cssVar: "--sb-chord-scale", get: (s) => (s.chordScale === 100 ? "" : String(s.chordScale / 100)) },
+	{ cssVar: "--sb-lyrics-scale", get: (s) => (s.lyricsScale === 100 ? "" : String(s.lyricsScale / 100)) },
+	{ cssVar: "--sb-chart-font", get: (s) => s.chartFont || "" },
+	{ cssVar: "--sb-chord-weight", get: (s) => (s.chordWeight === 700 ? "" : String(s.chordWeight)) },
+	{ cssVar: "--sb-line-height", get: (s) => (s.lineHeight === 135 ? "" : String(s.lineHeight / 100)) },
+	{ cssVar: "--sb-diagram-scale", get: (s) => (s.diagramScale === 100 ? "" : String(s.diagramScale / 100)) },
+	{ cssVar: "--sb-editor-chord-color", get: (s) => s.editorChordColor }
 ];
 
 /** The KEY_OPTIONS id whose tonic sounds like this key, or null. */

@@ -85,7 +85,7 @@ function appWithReads(reads: (file: TFile) => Promise<string> | string): any {
 
 test("UI harness provides Obsidian DOM helpers", () => {
 	resetDom();
-	const root = document.body.createDiv({ cls: "cps-chart-view" });
+	const root = document.body.createDiv({ cls: "sb-chart-view" });
 	root.createEl("button", { text: "Perform" });
 	assert.equal(root.querySelector("button")?.textContent, "Perform");
 });
@@ -113,8 +113,8 @@ test("chart view discards a stale song read", async () => {
 
 	assert.match(view.contentEl.textContent ?? "", /current lyric/);
 	assert.doesNotMatch(view.contentEl.textContent ?? "", /stale lyric/);
-	assert.equal(view.contentEl.querySelectorAll(".cps-stage-topbar-preview").length, 1);
-	assert.equal(view.contentEl.querySelectorAll(".cps-perf-dock").length, 0);
+	assert.equal(view.contentEl.querySelectorAll(".sb-stage-topbar-preview").length, 1);
+	assert.equal(view.contentEl.querySelectorAll(".sb-perf-dock").length, 0);
 	assert.deepEqual(synced, [oldSong.path, newSong.path]);
 });
 
@@ -255,8 +255,8 @@ test("service context and shared chrome preserve the complete service order", as
 	assert.equal(order.getAttribute("aria-expanded"), "true");
 	assert.equal(orderDrawer.getAttribute("aria-hidden"), "false");
 	assert.equal(main.inert, true);
-	assert.equal(orderDrawer.querySelectorAll(".cps-stage-drawer-row").length, 5);
-	assert.equal(orderDrawer.querySelectorAll<HTMLButtonElement>(".cps-stage-drawer-row:disabled").length, 1);
+	assert.equal(orderDrawer.querySelectorAll(".sb-stage-drawer-row").length, 5);
+	assert.equal(orderDrawer.querySelectorAll<HTMLButtonElement>(".sb-stage-drawer-row:disabled").length, 1);
 	assert.match(orderDrawer.textContent ?? "", /Heidi/);
 
 	const songs = host.querySelector<HTMLButtonElement>('button[aria-label="Open song set"]')!;
@@ -264,7 +264,7 @@ test("service context and shared chrome preserve the complete service order", as
 	const songsDrawer = host.querySelector<HTMLElement>('[aria-label="Song set"]')!;
 	assert.equal(orderDrawer.getAttribute("aria-hidden"), "true");
 	assert.equal(songsDrawer.getAttribute("aria-hidden"), "false");
-	assert.equal(songsDrawer.querySelectorAll(".cps-stage-drawer-row").length, 4);
+	assert.equal(songsDrawer.querySelectorAll(".sb-stage-drawer-row").length, 4);
 	assert.match(songsDrawer.textContent ?? "", /pdf/i);
 	assert.match(songsDrawer.textContent ?? "", /image/i);
 	assert.equal(chrome.closeTopLayer(), true);
@@ -282,8 +282,8 @@ test("service context and shared chrome preserve the complete service order", as
 	preview.contentEl.querySelector<HTMLButtonElement>('button[aria-label="Toggle lyrics-only view"]')!.click();
 	await settle();
 	assert.equal(preview.getState().lyricsOnly, true);
-	assert.ok(preview.contentEl.querySelector(".cps-chart.cps-lyrics-only"));
-	assert.equal(preview.contentEl.querySelectorAll(".cps-perf-dock").length, 0);
+	assert.ok(preview.contentEl.querySelector(".sb-chart.sb-lyrics-only"));
+	assert.equal(preview.contentEl.querySelectorAll(".sb-perf-dock").length, 0);
 	await preview.onClose();
 	preview.contentEl.remove();
 
@@ -291,13 +291,13 @@ test("service context and shared chrome preserve the complete service order", as
 	const mode = new PerformanceMode(pluginFor(app));
 	const chartEntry = { file: chart, key: "G", label: "G", line: 5 };
 	await mode.open([chartEntry] as never, 0, false, service as never);
-	assert.match(document.querySelector(".cps-stage-title")?.textContent ?? "", /Welcome/);
-	assert.ok(document.querySelector(".cps-service-card"));
-	assert.equal(document.querySelectorAll(".cps-perf-dock-btn").length, 5);
+	assert.match(document.querySelector(".sb-stage-title")?.textContent ?? "", /Welcome/);
+	assert.ok(document.querySelector(".sb-service-card"));
+	assert.equal(document.querySelectorAll(".sb-perf-dock-btn").length, 5);
 	mode.close();
 	await mode.open([chartEntry] as never, 0, false, service as never, 5);
-	assert.match(document.querySelector(".cps-stage-title")?.textContent ?? "", /Amazing Grace/);
-	assert.match(document.querySelector(".cps-performance")?.textContent ?? "", /Amazing grace/);
+	assert.match(document.querySelector(".sb-stage-title")?.textContent ?? "", /Amazing Grace/);
+	assert.match(document.querySelector(".sb-performance")?.textContent ?? "", /Amazing grace/);
 	mode.close();
 });
 
@@ -369,12 +369,12 @@ test("mixed-format services preserve order and render text and PDFs", async () =
 	for (const entry of entries) await renderSongInto(rendered, app, plugin, entry.file as never);
 	assert.match(rendered.textContent ?? "", /chordpro lyric/);
 	assert.match(rendered.textContent ?? "", /converted text lyric/);
-	assert.ok(rendered.querySelector(".cps-prose"));
-	assert.ok(rendered.querySelector(".cps-attachment"));
-	assert.equal(rendered.querySelectorAll(".cps-pdf-page").length, 2);
-	const previewReader = rendered.querySelector<HTMLElement>(".cps-pdf-reader")!;
+	assert.ok(rendered.querySelector(".sb-prose"));
+	assert.ok(rendered.querySelector(".sb-attachment"));
+	assert.equal(rendered.querySelectorAll(".sb-pdf-page").length, 2);
+	const previewReader = rendered.querySelector<HTMLElement>(".sb-pdf-reader")!;
 	assert.ok(previewReader.classList.contains("is-vertical"));
-	previewReader.querySelector<HTMLButtonElement>(".cps-pdf-layout")!.click();
+	previewReader.querySelector<HTMLButtonElement>(".sb-pdf-layout")!.click();
 	assert.ok(previewReader.classList.contains("is-horizontal"));
 
 
@@ -383,21 +383,21 @@ test("mixed-format services preserve order and render text and PDFs", async () =
 	await mode.open(entries as never, 0, false, service as never);
 	const next = document.querySelector<HTMLButtonElement>('[data-action="element-next"]');
 	assert.ok(next);
-	assert.match(document.querySelector(".cps-stage-title")?.textContent ?? "", /Chart/);
+	assert.match(document.querySelector(".sb-stage-title")?.textContent ?? "", /Chart/);
 	next.click();
 	await new Promise((resolve) => setTimeout(resolve, 0));
-	assert.match(document.querySelector(".cps-stage-title")?.textContent ?? "", /Converted Text Song/);
+	assert.match(document.querySelector(".sb-stage-title")?.textContent ?? "", /Converted Text Song/);
 	next.click();
 	await new Promise((resolve) => setTimeout(resolve, 0));
-	assert.match(document.querySelector(".cps-stage-title")?.textContent ?? "", /Spoken/);
+	assert.match(document.querySelector(".sb-stage-title")?.textContent ?? "", /Spoken/);
 	next.click();
 	await new Promise((resolve) => setTimeout(resolve, 0));
-	assert.match(document.querySelector(".cps-stage-title")?.textContent ?? "", /Score/);
-	assert.ok(document.querySelector(".cps-performance .cps-attachment"));
-	assert.ok(document.querySelector(".cps-performance .cps-pdf-reader.is-horizontal"));
-	assert.match(document.querySelector(".cps-performance .cps-pdf-status")?.textContent ?? "", /Page 1 of 2/);
+	assert.match(document.querySelector(".sb-stage-title")?.textContent ?? "", /Score/);
+	assert.ok(document.querySelector(".sb-performance .sb-attachment"));
+	assert.ok(document.querySelector(".sb-performance .sb-pdf-reader.is-horizontal"));
+	assert.match(document.querySelector(".sb-performance .sb-pdf-status")?.textContent ?? "", /Page 1 of 2/);
 	await mode.next();
-	assert.match(document.querySelector(".cps-performance .cps-pdf-status")?.textContent ?? "", /Page 2 of 2/);
+	assert.match(document.querySelector(".sb-performance .sb-pdf-status")?.textContent ?? "", /Page 2 of 2/);
 	mode.close();
 });
 
@@ -423,7 +423,7 @@ test("performance mode does not open a ghost overlay from stale work", async () 
 	oldSourceRead.resolve("- [[Old]] (3 min)");
 	await oldOpen;
 
-	assert.equal(document.querySelectorAll(".cps-performance").length, 1);
+	assert.equal(document.querySelectorAll(".sb-performance").length, 1);
 	assert.match(document.body.textContent ?? "", /current stage lyric/);
 	mode.close();
 });
@@ -444,18 +444,18 @@ test("performance mode cycles the live chart column layout", async () => {
 	assert.ok(button);
 	button.click();
 	await new Promise((resolve) => setTimeout(resolve, 0));
-	assert.ok(document.querySelector(".cps-performance .cps-chart.cps-cols-2"));
+	assert.ok(document.querySelector(".sb-performance .sb-chart.sb-cols-2"));
 	mode.close();
 });
 
 test("accessibility and narrow-screen CSS contracts remain in the plugin stylesheet", () => {
 	const css = readFileSync("styles.css", "utf8");
 	assert.match(css, /:focus-visible\s*\{/);
-	assert.match(css, /button\.cps-stage-icon-btn\s*>\s*svg\s*\{[\s\S]*?width:\s*20px;[\s\S]*?height:\s*20px;/);
-	assert.match(css, /@media\s*\(pointer:\s*coarse\)[\s\S]*?button\.cps-stage-icon-btn\s*>\s*svg\s*\{[\s\S]*?width:\s*24px;[\s\S]*?height:\s*24px;/);
-	assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*?\.cps-chord-dock\s*\{[\s\S]*?transition:\s*none/);
-	assert.match(css, /@media\s+screen\s+and\s+\(max-width:\s*700px\)[\s\S]*?\.cps-performance \.cps-perf-columns[\s\S]*?display:\s*none/);
-	assert.match(css, /@media\s+screen\s+and\s+\(max-width:\s*700px\)[\s\S]*?\.cps-chart\.cps-cols-2[\s\S]*?\.cps-chart\.cps-cols-3[\s\S]*?column-count:\s*1/);
+	assert.match(css, /button\.sb-stage-icon-btn\s*>\s*svg\s*\{[\s\S]*?width:\s*20px;[\s\S]*?height:\s*20px;/);
+	assert.match(css, /@media\s*\(pointer:\s*coarse\)[\s\S]*?button\.sb-stage-icon-btn\s*>\s*svg\s*\{[\s\S]*?width:\s*24px;[\s\S]*?height:\s*24px;/);
+	assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*?\.sb-chord-dock\s*\{[\s\S]*?transition:\s*none/);
+	assert.match(css, /@media\s+screen\s+and\s+\(max-width:\s*700px\)[\s\S]*?\.sb-performance \.sb-perf-columns[\s\S]*?display:\s*none/);
+	assert.match(css, /@media\s+screen\s+and\s+\(max-width:\s*700px\)[\s\S]*?\.sb-chart\.sb-cols-2[\s\S]*?\.sb-chart\.sb-cols-3[\s\S]*?column-count:\s*1/);
 });
 
 test("plugin settings provide vault folder search and stage file-type controls", () => {
@@ -516,12 +516,12 @@ test("toolbox uses job-based sections and migrates saved disclosure ids", async 
 	const view = new ToolboxView(new WorkspaceLeaf(app) as never, plugin as never);
 	await view.onOpen();
 	assert.equal(view.contentEl.querySelectorAll('[role="tab"]').length, 0);
-	const sections = Array.from(view.contentEl.querySelectorAll<HTMLDetailsElement>(".cps-toolbox-disclosure"));
+	const sections = Array.from(view.contentEl.querySelectorAll<HTMLDetailsElement>(".sb-toolbox-disclosure"));
 	assert.deepEqual(sections.map((section) => section.querySelector("summary")?.textContent), ["Create", "Chart", "Form", "Reference", "Display & output"]);
 	assert.deepEqual(sections.map((section) => section.open), [false, true, true, false, false]);
 	assert.match(sections[0].textContent ?? "", /New song[\s\S]*Smart paste[\s\S]*Format lyrics/);
 	assert.match(sections[1].textContent ?? "", /Key[\s\S]*Sections[\s\S]*Song details/);
-	const sectionButtons = Array.from(sections[1].querySelectorAll<HTMLButtonElement>(".cps-snippet-btn"));
+	const sectionButtons = Array.from(sections[1].querySelectorAll<HTMLButtonElement>(".sb-snippet-btn"));
 	assert.equal(sectionButtons.filter((button) => button.textContent === "Instrumental").length, 1);
 	assert.equal(sectionButtons.filter((button) => button.textContent === "Outro").length, 1);
 	assert.match(sections[2].textContent ?? "", /roadmap:[\s\S]*Open a song to build its form/);
@@ -552,9 +552,9 @@ test("toolbox current chart actions follow the active song", async () => {
 	const view = new ToolboxView(new WorkspaceLeaf(app) as never, plugin as never);
 	await view.onOpen();
 
-	const current = view.contentEl.querySelector<HTMLElement>(".cps-current-chart")!;
+	const current = view.contentEl.querySelector<HTMLElement>(".sb-current-chart")!;
 	assert.match(current.textContent ?? "", /Current chart[\s\S]*Grace[\s\S]*Songs/);
-	const actions = Array.from(current.querySelectorAll<HTMLButtonElement>(".cps-action-btn"));
+	const actions = Array.from(current.querySelectorAll<HTMLButtonElement>(".sb-action-btn"));
 	assert.deepEqual(actions.map((button) => button.textContent), ["Preview", "Perform"]);
 	assert.ok(actions.every((button) => !button.disabled));
 	actions[0].click();
@@ -582,8 +582,8 @@ test("form adds comment-labeled sections with direct controls", async () => {
 	const view = new ToolboxView(new WorkspaceLeaf(app) as never, plugin as never);
 	await view.onOpen();
 
-	const editor = view.contentEl.querySelector<HTMLElement>(".cps-form-editor")!;
-	const addButtons = () => Array.from(editor.querySelectorAll<HTMLButtonElement>(".cps-form-add .cps-snippet-btn"));
+	const editor = view.contentEl.querySelector<HTMLElement>(".sb-form-editor")!;
+	const addButtons = () => Array.from(editor.querySelectorAll<HTMLButtonElement>(".sb-form-add .sb-snippet-btn"));
 	assert.deepEqual(addButtons().map((btn) => btn.textContent), ["Add Verse 1", "Add Chorus"]);
 	assert.match(editor.textContent ?? "", /Arrange the sections in performance order/);
 
@@ -594,7 +594,7 @@ test("form adds comment-labeled sections with direct controls", async () => {
 	addButtons()[1].click();
 	await settle();
 
-	const rows = () => Array.from(editor.querySelectorAll<HTMLElement>(".cps-form-row .cps-form-label"));
+	const rows = () => Array.from(editor.querySelectorAll<HTMLElement>(".sb-form-row .sb-form-label"));
 	assert.deepEqual(rows().map((row) => row.textContent), ["Verse 1", "Chorus", "Chorus"]);
 	assert.equal(written[written.length - 1], "V1 C C");
 	assert.match(editor.textContent ?? "", /Saved automatically/);
@@ -615,15 +615,15 @@ test("form rows move and remove without a selection step", async () => {
 	const view = new ToolboxView(new WorkspaceLeaf(app) as never, plugin as never);
 	await view.onOpen();
 
-	const editor = view.contentEl.querySelector<HTMLElement>(".cps-form-editor")!;
-	const rows = () => Array.from(editor.querySelectorAll<HTMLElement>(".cps-form-row"));
-	assert.deepEqual(rows().map((row) => row.querySelector(".cps-form-label")?.textContent), ["Verse 1", "Chorus", "Bridge"]);
-	rows()[0].querySelectorAll<HTMLButtonElement>(".cps-form-row-btn")[1].click();
+	const editor = view.contentEl.querySelector<HTMLElement>(".sb-form-editor")!;
+	const rows = () => Array.from(editor.querySelectorAll<HTMLElement>(".sb-form-row"));
+	assert.deepEqual(rows().map((row) => row.querySelector(".sb-form-label")?.textContent), ["Verse 1", "Chorus", "Bridge"]);
+	rows()[0].querySelectorAll<HTMLButtonElement>(".sb-form-row-btn")[1].click();
 	await settle();
-	assert.deepEqual(rows().map((row) => row.querySelector(".cps-form-label")?.textContent), ["Chorus", "Verse 1", "Bridge"]);
-	rows()[1].querySelector<HTMLButtonElement>(".cps-form-remove")!.click();
+	assert.deepEqual(rows().map((row) => row.querySelector(".sb-form-label")?.textContent), ["Chorus", "Verse 1", "Bridge"]);
+	rows()[1].querySelector<HTMLButtonElement>(".sb-form-remove")!.click();
 	await settle();
-	assert.deepEqual(rows().map((row) => row.querySelector(".cps-form-label")?.textContent), ["Chorus", "Bridge"]);
+	assert.deepEqual(rows().map((row) => row.querySelector(".sb-form-label")?.textContent), ["Chorus", "Bridge"]);
 	assert.equal(written[written.length - 1], "C B");
 });
 
@@ -642,9 +642,9 @@ test("form tab offers section inserts when the song declares no sections", async
 	const view = new ToolboxView(new WorkspaceLeaf(app) as never, plugin as never);
 	await view.onOpen();
 
-	const editor = view.contentEl.querySelector<HTMLElement>(".cps-form-editor")!;
+	const editor = view.contentEl.querySelector<HTMLElement>(".sb-form-editor")!;
 	assert.match(editor.textContent ?? "", /no section headers yet/);
-	const inserts = Array.from(editor.querySelectorAll<HTMLButtonElement>(".cps-snippet-grid .cps-snippet-btn"));
+	const inserts = Array.from(editor.querySelectorAll<HTMLButtonElement>(".sb-snippet-grid .sb-snippet-btn"));
 	assert.deepEqual(inserts.slice(0, 6).map((btn) => btn.textContent), ["Intro", "Verse 1", "Verse 2", "Pre-Chorus", "Chorus", "Bridge"]);
 	inserts[1].click();
 	assert.deepEqual(inserted, ["{comment: Verse 1}"]);
@@ -662,7 +662,7 @@ test("form can use detected sections in file order", async () => {
 	const { ToolboxView } = await import("../src/ui/toolbox");
 	const view = new ToolboxView(new WorkspaceLeaf(app) as never, plugin as never);
 	await view.onOpen();
-	view.contentEl.querySelector<HTMLButtonElement>(".cps-form-editor .mod-cta")!.click();
+	view.contentEl.querySelector<HTMLButtonElement>(".sb-form-editor .mod-cta")!.click();
 	await settle();
 	assert.equal(written.at(-1), "In V1 C");
 });

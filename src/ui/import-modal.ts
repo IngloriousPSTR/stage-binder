@@ -59,14 +59,14 @@ export class ImportSongsModal extends Modal {
 		const { contentEl } = this;
 
 		contentEl.createEl("p", {
-			cls: "cps-import-hint",
+			cls: "sb-import-hint",
 			text: "Pick ChordPro or plain-text chart files (.txt, .cho, .chordpro, .pro, .crd). Title and key are read from directives, or from filenames like my-song-chordpro-G.txt."
 		});
 
-		const picker = contentEl.createEl("input", { type: "file", cls: "cps-import-input" });
+		const picker = contentEl.createEl("input", { type: "file", cls: "sb-import-input" });
 		picker.setAttribute("multiple", "multiple");
 		picker.setAttribute("accept", ".txt,.cho,.chordpro,.pro,.crd,.chopro");
-		const count = contentEl.createDiv({ cls: "cps-import-count", text: "No files selected." });
+		const count = contentEl.createDiv({ cls: "sb-import-count", text: "No files selected." });
 		picker.addEventListener("change", () => {
 			this.files = Array.from(picker.files ?? []);
 			count.setText(this.files.length === 0 ? "No files selected." : `${this.files.length} file(s) selected.`);
@@ -83,7 +83,7 @@ export class ImportSongsModal extends Modal {
 			dropdown.onChange((v) => (this.format = v === "chordpro" ? "chordpro" : "md"));
 		});
 
-		this.statusEl = contentEl.createDiv({ cls: "cps-import-status" });
+		this.statusEl = contentEl.createDiv({ cls: "sb-import-status" });
 
 		new Setting(contentEl).addButton((btn) => {
 			btn.setButtonText("Import").setCta().onClick(() => void this.runImport());
@@ -160,12 +160,12 @@ export class SmartPasteModal extends Modal {
 		const { contentEl } = this;
 
 		contentEl.createEl("p", {
-			cls: "cps-import-hint",
+			cls: "sb-import-hint",
 			text: "Copy a chart from SongSelect, Ultimate Guitar, PraiseCharts or anywhere else, then paste it here. Chords over lyrics, [Verse] markers, key lines and CCLI numbers convert to ChordPro automatically."
 		});
 
 		this.textarea = contentEl.createEl("textarea", {
-			cls: "cps-paste-area",
+			cls: "sb-paste-area",
 			attr: { rows: "10", placeholder: "Paste the chart here..." }
 		});
 		this.textarea.addEventListener("input", () => {
@@ -199,7 +199,7 @@ export class SmartPasteModal extends Modal {
 			dropdown.onChange((v) => (this.format = v === "chordpro" ? "chordpro" : "md"));
 		});
 
-		this.statusEl = contentEl.createDiv({ cls: "cps-import-status" });
+		this.statusEl = contentEl.createDiv({ cls: "sb-import-status" });
 
 		new Setting(contentEl).addButton((btn) => {
 			btn.setButtonText("Import").setCta().onClick(() => void this.runImport());

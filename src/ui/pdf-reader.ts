@@ -42,7 +42,7 @@ function preferredLayout(container: HTMLElement): PdfLayout {
 	} catch {
 		// Storage can be unavailable in restricted webviews.
 	}
-	return container.closest(".cps-perf-content") ? "horizontal" : "vertical";
+	return container.closest(".sb-perf-content") ? "horizontal" : "vertical";
 }
 
 /** Render a vault PDF as responsive pages instead of Obsidian's nested viewer. */
@@ -52,18 +52,18 @@ export async function renderPdfInto(
 	file: TFile,
 	isCurrent: (() => boolean) | undefined
 ): Promise<void> {
-	const reader = container.createDiv({ cls: "cps-pdf-reader" });
-	const toolbar = reader.createDiv({ cls: "cps-pdf-toolbar" });
-	const previous = toolbar.createEl("button", { cls: "cps-chart-btn" });
-	const status = toolbar.createSpan({ cls: "cps-pdf-status", text: "Loading PDF..." });
-	const next = toolbar.createEl("button", { cls: "cps-chart-btn" });
-	const layoutButton = toolbar.createEl("button", { cls: "cps-chart-btn cps-pdf-layout" });
+	const reader = container.createDiv({ cls: "sb-pdf-reader" });
+	const toolbar = reader.createDiv({ cls: "sb-pdf-toolbar" });
+	const previous = toolbar.createEl("button", { cls: "sb-chart-btn" });
+	const status = toolbar.createSpan({ cls: "sb-pdf-status", text: "Loading PDF..." });
+	const next = toolbar.createEl("button", { cls: "sb-chart-btn" });
+	const layoutButton = toolbar.createEl("button", { cls: "sb-chart-btn sb-pdf-layout" });
 	setIcon(previous, "chevron-left");
 	setIcon(next, "chevron-right");
 	previous.setAttribute("aria-label", "Previous PDF page");
 	next.setAttribute("aria-label", "Next PDF page");
 	status.setAttribute("aria-live", "polite");
-	const pages = reader.createDiv({ cls: "cps-pdf-pages" });
+	const pages = reader.createDiv({ cls: "sb-pdf-pages" });
 	pages.setAttribute("tabindex", "0");
 	pages.setAttribute("aria-label", `${file.basename} PDF pages`);
 	let layout = preferredLayout(container);
@@ -105,7 +105,7 @@ export async function renderPdfInto(
 			? { left: pageEls[current]?.offsetLeft ?? 0, top: 0, behavior: "auto" }
 			: { left: 0, top: pageEls[current]?.offsetTop ?? 0, behavior: "auto" });
 	});
-	reader.addEventListener("cps-pdf-page", (event) => {
+	reader.addEventListener("sb-pdf-page", (event) => {
 		const detail = (event as CustomEvent<PdfPageStepDetail>).detail;
 		detail.found = true;
 		detail.moved = goTo(current + detail.delta);
@@ -140,7 +140,7 @@ export async function renderPdfInto(
 			const base = page.getViewport({ scale: 1 });
 			const targetWidth = Math.max(900, Math.min(1800, (container.clientWidth || 900) * Math.min(window.devicePixelRatio || 1, 2)));
 			const viewport = page.getViewport({ scale: targetWidth / base.width });
-			const pageEl = pages.createDiv({ cls: "cps-pdf-page" });
+			const pageEl = pages.createDiv({ cls: "sb-pdf-page" });
 			pageEl.setAttribute("aria-label", `Page ${number} of ${pdf.numPages}`);
 			const canvas = pageEl.createEl("canvas");
 			canvas.width = Math.ceil(viewport.width);
@@ -156,8 +156,8 @@ export async function renderPdfInto(
 	} catch (error) {
 		console.error("Stage Binder: PDF render failed", file.path, error);
 		pages.empty();
-		pages.createDiv({ cls: "cps-pdf-error", text: "This PDF could not be rendered. Open the source file to continue." });
-		const open = pages.createEl("button", { cls: "cps-chart-btn", text: "Open original PDF" });
+		pages.createDiv({ cls: "sb-pdf-error", text: "This PDF could not be rendered. Open the source file to continue." });
+		const open = pages.createEl("button", { cls: "sb-chart-btn", text: "Open original PDF" });
 		open.addEventListener("click", () => void app.workspace.getLeaf(false).openFile(file));
 		status.setText("PDF unavailable");
 	}

@@ -50,10 +50,10 @@ export class DiagramPanelView extends ItemView {
 	async render(): Promise<void> {
 		const root = this.contentEl;
 		root.empty();
-		root.addClass("cps-diagram-panel");
+		root.addClass("sb-diagram-panel");
 
 		if (!this.file) {
-			root.createDiv({ cls: "cps-panel-empty", text: "Open a song to see its chords." });
+			root.createDiv({ cls: "sb-panel-empty", text: "Open a song to see its chords." });
 			return;
 		}
 
@@ -62,32 +62,32 @@ export class DiagramPanelView extends ItemView {
 			source = applyFrontmatter(await this.app.vault.cachedRead(this.file));
 		} catch (err) {
 			console.error("Stage Binder: diagram panel read failed", err);
-			root.createDiv({ cls: "cps-panel-empty", text: "Could not read the song." });
+			root.createDiv({ cls: "sb-panel-empty", text: "Could not read the song." });
 			return;
 		}
 
-		root.createDiv({ cls: "cps-panel-title", text: this.file.basename });
+		root.createDiv({ cls: "sb-panel-title", text: this.file.basename });
 
 		const symbols = usedChords(source);
 		if (symbols.length === 0) {
-			root.createDiv({ cls: "cps-panel-empty", text: "No chords in this note yet." });
+			root.createDiv({ cls: "sb-panel-empty", text: "No chords in this note yet." });
 			return;
 		}
 
-		const grid = root.createDiv({ cls: "cps-chart-diagrams" });
+		const grid = root.createDiv({ cls: "sb-chart-diagrams" });
 		for (const symbol of symbols) {
 			const dbChord = findChord(symbol);
 			if (!dbChord || dbChord.positions.length === 0) continue;
-			const cell = grid.createDiv({ cls: "cps-strip-cell cps-panel-cell" });
+			const cell = grid.createDiv({ cls: "sb-strip-cell sb-panel-cell" });
 			cell.setAttribute("aria-label", `Open ${symbol} voicings`);
-			cell.createDiv({ cls: "cps-strip-name", text: symbol });
-			const diagramEl = cell.createDiv({ cls: "cps-diagram cps-strip-diagram" });
+			cell.createDiv({ cls: "sb-strip-name", text: symbol });
+			const diagramEl = cell.createDiv({ cls: "sb-diagram sb-strip-diagram" });
 			drawDiagram(diagramEl, positionToDiagram(symbol, dbChord.positions[0]));
 			cell.addEventListener("click", () => void this.plugin.openChordDock(symbol));
 		}
 		if (grid.childElementCount === 0) {
 			grid.remove();
-			root.createDiv({ cls: "cps-panel-empty", text: "No fingerings found for this song's chords." });
+			root.createDiv({ cls: "sb-panel-empty", text: "No fingerings found for this song's chords." });
 		}
 	}
 }

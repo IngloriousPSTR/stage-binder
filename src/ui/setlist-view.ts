@@ -231,7 +231,7 @@ export class SetlistView extends ItemView {
 		this.index = next;
 		this.speedOverride = null;
 		if (this.continuous) {
-			const block = this.contentEl.querySelector(`[data-cps-song="${next}"]`);
+			const block = this.contentEl.querySelector(`[data-sb-song="${next}"]`);
 			if (block instanceof HTMLElement) scrollToBlock(this.contentEl, block);
 			this.syncPos();
 			return;
@@ -245,25 +245,25 @@ export class SetlistView extends ItemView {
 		const isCurrent = () => generation === this.renderGeneration;
 		const root = this.contentEl;
 		root.empty();
-		root.addClass("cps-chart-view");
-		root.addClass("cps-setlist-view");
+		root.addClass("sb-chart-view");
+		root.addClass("sb-setlist-view");
 
 		if (!this.file) {
 			root.createDiv({
-				cls: "cps-setlist-empty",
+				cls: "sb-setlist-empty",
 				text: "No setlist note selected. Open a note that links to songs and run “Open setlist”."
 			});
 			return;
 		}
 
-		const bar = root.createDiv({ cls: "cps-chart-controls cps-setlist-bar" });
+		const bar = root.createDiv({ cls: "sb-chart-controls sb-setlist-bar" });
 
-		const prev = bar.createEl("button", { cls: "cps-chart-btn" });
+		const prev = bar.createEl("button", { cls: "sb-chart-btn" });
 		setIcon(prev, "chevron-left");
 		prev.setAttribute("aria-label", "Previous song");
 		prev.addEventListener("click", () => void this.go(-1));
 
-		const select = bar.createEl("select", { cls: "dropdown cps-setlist-select" });
+		const select = bar.createEl("select", { cls: "dropdown sb-setlist-select" });
 		this.songs.forEach((song, idx) => {
 			select.createEl("option", {
 				text: `${idx + 1}. ${song.file.basename}${song.label ? " (" + song.label + ")" : ""}`,
@@ -282,14 +282,14 @@ export class SetlistView extends ItemView {
 			}
 		});
 
-		const next = bar.createEl("button", { cls: "cps-chart-btn" });
+		const next = bar.createEl("button", { cls: "sb-chart-btn" });
 		setIcon(next, "chevron-right");
 		next.setAttribute("aria-label", "Next song");
 		next.addEventListener("click", () => void this.go(1));
 
 		// Performance key picker for the current song: writes the "in G"
 		// override on the setlist line instead of making you edit text.
-		this.keySelectEl = bar.createEl("select", { cls: "dropdown cps-setlist-key" });
+		this.keySelectEl = bar.createEl("select", { cls: "dropdown sb-setlist-key" });
 		this.keySelectEl.setAttribute("aria-label", "Performance key for the current song");
 		this.keySelectEl.createEl("option", { text: "Song key", value: "" });
 		for (const tonic of KEY_PICKER_TONICS) {
@@ -299,21 +299,21 @@ export class SetlistView extends ItemView {
 			void this.setKeyOverride(this.index, this.keySelectEl?.value || null);
 		});
 
-		this.posEl = bar.createSpan({ cls: "cps-setlist-pos" });
+		this.posEl = bar.createSpan({ cls: "sb-setlist-pos" });
 		this.syncPos();
 
 		const contBtn = bar.createEl("button", {
-			cls: "cps-chart-btn cps-toggle-btn" + (this.continuous ? " is-active" : ""),
+			cls: "sb-chart-btn sb-toggle-btn" + (this.continuous ? " is-active" : ""),
 			text: "All songs"
 		});
 		contBtn.setAttribute("aria-label", "Toggle continuous scroll (all songs in one pane)");
 		contBtn.addEventListener("click", () => void this.toggleContinuous());
 
-		const zoomGroup = bar.createDiv({ cls: "cps-ctrl-group" });
-		const zoomOut = zoomGroup.createEl("button", { cls: "cps-chart-btn", text: "A−" });
+		const zoomGroup = bar.createDiv({ cls: "sb-ctrl-group" });
+		const zoomOut = zoomGroup.createEl("button", { cls: "sb-chart-btn", text: "A−" });
 		zoomOut.setAttribute("aria-label", "Smaller text");
-		zoomGroup.createSpan({ cls: "cps-zoom-label", text: this.zoom + "%" });
-		const zoomIn = zoomGroup.createEl("button", { cls: "cps-chart-btn", text: "A+" });
+		zoomGroup.createSpan({ cls: "sb-zoom-label", text: this.zoom + "%" });
+		const zoomIn = zoomGroup.createEl("button", { cls: "sb-chart-btn", text: "A+" });
 		zoomIn.setAttribute("aria-label", "Larger text");
 		zoomOut.addEventListener("click", () => {
 			this.zoom = Math.max(50, this.zoom - 10);
@@ -324,26 +324,26 @@ export class SetlistView extends ItemView {
 			void this.render();
 		});
 
-		const scrollGroup = bar.createDiv({ cls: "cps-ctrl-group" });
-		this.scrollBtnEl = scrollGroup.createEl("button", { cls: "cps-chart-btn cps-scroll-btn" });
+		const scrollGroup = bar.createDiv({ cls: "sb-ctrl-group" });
+		this.scrollBtnEl = scrollGroup.createEl("button", { cls: "sb-chart-btn sb-scroll-btn" });
 		this.scrollBtnEl.setAttribute("aria-label", "Toggle autoscroll");
 		this.scrollBtnEl.addEventListener("click", () => this.toggleAutoscroll());
-		const slower = scrollGroup.createEl("button", { cls: "cps-chart-btn", text: "−" });
+		const slower = scrollGroup.createEl("button", { cls: "sb-chart-btn", text: "−" });
 		slower.setAttribute("aria-label", "Autoscroll slower");
 		slower.addEventListener("click", () => this.nudgeAutoscroll(-5));
-		this.speedEl = scrollGroup.createSpan({ cls: "cps-zoom-label" });
-		const faster = scrollGroup.createEl("button", { cls: "cps-chart-btn", text: "+" });
+		this.speedEl = scrollGroup.createSpan({ cls: "sb-zoom-label" });
+		const faster = scrollGroup.createEl("button", { cls: "sb-chart-btn", text: "+" });
 		faster.setAttribute("aria-label", "Autoscroll faster");
 		faster.addEventListener("click", () => this.nudgeAutoscroll(5));
 		this.syncScrollUi();
 
-		const perfBtn = bar.createEl("button", { cls: "cps-chart-btn cps-perform-btn", text: "Perform" });
+		const perfBtn = bar.createEl("button", { cls: "sb-chart-btn sb-perform-btn", text: "Perform" });
 		perfBtn.setAttribute("aria-label", "Enter performance mode");
 		perfBtn.addEventListener("click", () => void this.plugin.enterPerformanceMode());
 
 		if (this.songs.length === 0) {
 			root.createDiv({
-				cls: "cps-setlist-empty",
+				cls: "sb-setlist-empty",
 				text: "No songs found. Link songs with [[wikilinks]]. Add “in G” or “(G)” after a link to set a performance key."
 			});
 			return;
@@ -373,8 +373,8 @@ export class SetlistView extends ItemView {
 		if (this.continuous) {
 			for (let i = 0; i < this.songs.length; i++) {
 				const entry = this.songs[i];
-				const block = root.createDiv({ cls: "cps-setlist-song" });
-				block.setAttribute("data-cps-song", String(i));
+				const block = root.createDiv({ cls: "sb-setlist-song" });
+				block.setAttribute("data-sb-song", String(i));
 				const rendered = await renderSongInto(block, this.app, this, entry.file, {
 					...opts,
 					targetKey: entry.key,
@@ -386,7 +386,7 @@ export class SetlistView extends ItemView {
 				if (updater) this.formUpdaters.push(updater);
 			}
 			this.syncScrollUi();
-			const target = this.contentEl.querySelector(`[data-cps-song="${this.index}"]`);
+			const target = this.contentEl.querySelector(`[data-sb-song="${this.index}"]`);
 			if (target instanceof HTMLElement && this.index > 0) scrollToBlock(this.contentEl, target);
 			return;
 		}
@@ -408,7 +408,7 @@ export class SetlistView extends ItemView {
 	/** In continuous mode: which song block currently tops the viewport. */
 	private trackVisibleSong(): void {
 		if (!this.continuous) return;
-		const current = blockIndexAtTop(this.contentEl, "[data-cps-song]");
+		const current = blockIndexAtTop(this.contentEl, "[data-sb-song]");
 		if (current !== this.index) {
 			this.index = current;
 			// Speed follows the song under the needle; a live +/- adjustment

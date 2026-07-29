@@ -213,7 +213,7 @@ export class ChartView extends ItemView {
 		}
 		const root = this.contentEl;
 		root.empty();
-		root.addClass("cps-chart-view", "cps-preview-view");
+		root.addClass("sb-chart-view", "sb-preview-view");
 
 		if (!this.file) {
 			root.createDiv({ text: "No song file selected." });
@@ -237,7 +237,7 @@ export class ChartView extends ItemView {
 		if (this.nashville) displaySource = toNashvilleSource(displaySource);
 		const chart = renderChart(displaySource, 0);
 
-		const main = root.createEl("main", { cls: "cps-stage-main cps-preview-main" });
+		const main = root.createEl("main", { cls: "sb-stage-main sb-preview-main" });
 		this.chartScrollEl = main;
 		const currentIndex = this.serviceContext?.entries.findIndex((entry) => entry.file?.path === file.path) ?? -1;
 		this.chrome = new StageChrome({
@@ -260,9 +260,9 @@ export class ChartView extends ItemView {
 			if (evt.key === "Escape" && this.chrome?.closeTopLayer()) evt.stopPropagation();
 		};
 
-		const body = main.createDiv({ cls: "cps-chart" });
+		const body = main.createDiv({ cls: "sb-chart" });
 		setChartHtml(body, chart.html);
-		body.toggleClass("cps-lyrics-only", this.lyricsOnly);
+		body.toggleClass("sb-lyrics-only", this.lyricsOnly);
 		if (this.plugin.settings.chordTapDock) {
 			attachChordClicks(body, (symbol) => void this.plugin.openChordDock(symbol));
 		}
@@ -271,8 +271,8 @@ export class ChartView extends ItemView {
 		if (audio) appendAudioLine(body, this.app, this.file.path, audio);
 		if (form && this.formOn && this.plugin.settings.formStripPreview) appendFormStrip(body, form);
 
-		body.toggleClass("cps-cols-2", this.cols === 2);
-		body.toggleClass("cps-cols-3", this.cols === 3);
+		body.toggleClass("sb-cols-2", this.cols === 2);
+		body.toggleClass("sb-cols-3", this.cols === 3);
 		body.style.fontSize = this.zoom === 100 ? "" : this.zoom / 100 + "em";
 
 		if (this.plugin.settings.diagramPlacement === "chart-top" && !this.nashville) {
@@ -292,12 +292,12 @@ export class ChartView extends ItemView {
 
 	private renderTools(panel: HTMLElement, currentKey: string | null, hasKey: boolean, capo: number, hasForm: boolean): void {
 		const row = (label: string) => {
-			const el = panel.createDiv({ cls: "cps-stage-tool-row" });
-			el.createSpan({ cls: "cps-stage-tool-label", text: label });
-			return el.createDiv({ cls: "cps-stage-tool-actions" });
+			const el = panel.createDiv({ cls: "sb-stage-tool-row" });
+			el.createSpan({ cls: "sb-stage-tool-label", text: label });
+			return el.createDiv({ cls: "sb-stage-tool-actions" });
 		};
 		const button = (parent: HTMLElement, text: string, label: string, action: () => void, active?: boolean) => {
-			const el = parent.createEl("button", { cls: "cps-stage-choice" + (active === true ? " is-active" : ""), text });
+			const el = parent.createEl("button", { cls: "sb-stage-choice" + (active === true ? " is-active" : ""), text });
 			el.setAttribute("aria-label", label);
 			if (active !== undefined) el.setAttribute("aria-pressed", String(active));
 			el.addEventListener("click", action);
@@ -306,7 +306,7 @@ export class ChartView extends ItemView {
 
 		const chart = row("Chart");
 		button(chart, "−", "Transpose down a semitone", () => void this.setOffset(this.offset - 1));
-		chart.createSpan({ cls: "cps-stage-key", text: `Key: ${currentKey ?? "—"}` });
+		chart.createSpan({ cls: "sb-stage-key", text: `Key: ${currentKey ?? "—"}` });
 		button(chart, "+", "Transpose up a semitone", () => void this.setOffset(this.offset + 1));
 		if (hasKey) button(chart, "145", "Toggle Nashville numbers", () => { this.nashville = !this.nashville; void this.render(); }, this.nashville);
 		button(chart, "Lyrics", "Toggle lyrics-only view", () => { this.lyricsOnly = !this.lyricsOnly; void this.render(); }, this.lyricsOnly);
@@ -323,7 +323,7 @@ export class ChartView extends ItemView {
 
 		const text = row("Text");
 		button(text, "A−", "Smaller text", () => { this.zoom = Math.max(50, this.zoom - 10); void this.render(); });
-		text.createSpan({ cls: "cps-stage-value", text: `${this.zoom}%` });
+		text.createSpan({ cls: "sb-stage-value", text: `${this.zoom}%` });
 		button(text, "A+", "Larger text", () => { this.zoom = Math.min(250, this.zoom + 10); void this.render(); });
 
 		const columns = row("Columns");
@@ -332,7 +332,7 @@ export class ChartView extends ItemView {
 		const playback = row("Autoscroll");
 		this.scrollBtnEl = button(playback, "Auto", "Toggle autoscroll", () => this.toggleAutoscroll(), this.scroller.active);
 		button(playback, "−", "Autoscroll slower", () => this.nudgeAutoscroll(-5));
-		this.speedEl = playback.createSpan({ cls: "cps-stage-value", text: String(this.effectiveSpeed()) });
+		this.speedEl = playback.createSpan({ cls: "sb-stage-value", text: String(this.effectiveSpeed()) });
 		button(playback, "+", "Autoscroll faster", () => this.nudgeAutoscroll(5));
 
 		const view = row("View");

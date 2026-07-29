@@ -74,7 +74,7 @@ export class StageBinderSettingTab extends PluginSettingTab {
 		onChange: (value: string) => Promise<void>
 	): void {
 		const setting = new Setting(containerEl).setName(name).setDesc(description);
-		const warning = setting.descEl.createDiv({ cls: "cps-folder-warning" });
+		const warning = setting.descEl.createDiv({ cls: "sb-folder-warning" });
 		const normalize = (path: string) => path.trim().replace(/^\/+|\/+$/g, "") || fallback;
 		const validate = (path: string) => {
 			warning.hidden = this.app.vault.getAbstractFileByPath(path) instanceof TFolder;
@@ -97,12 +97,12 @@ export class StageBinderSettingTab extends PluginSettingTab {
 	display(): void {
 		const { containerEl } = this;
 		containerEl.empty();
-		containerEl.addClass("cps-settings");
+		containerEl.addClass("sb-settings");
 
-		const bar = containerEl.createDiv({ cls: "cps-settings-tabs" });
+		const bar = containerEl.createDiv({ cls: "sb-settings-tabs" });
 		for (const tab of TABS) {
 			const btn = bar.createEl("button", {
-				cls: "cps-settings-tab" + (tab.id === this.activeTab ? " is-active" : ""),
+				cls: "sb-settings-tab" + (tab.id === this.activeTab ? " is-active" : ""),
 				text: tab.label
 			});
 			btn.addEventListener("click", () => {
@@ -120,12 +120,12 @@ export class StageBinderSettingTab extends PluginSettingTab {
 
 	/** Live chart preview. */
 	private chartPreview(container: HTMLElement, scope: "global" | ViewId): void {
-		const preview = container.createDiv({ cls: "cps-settings-preview" });
+		const preview = container.createDiv({ cls: "sb-settings-preview" });
 		if (scope === "performance") {
-			preview.addClass("cps-settings-preview-perf");
-			if (this.plugin.settings.perfTheme === "light") preview.addClass("cps-perf-light");
+			preview.addClass("sb-settings-preview-perf");
+			if (this.plugin.settings.perfTheme === "light") preview.addClass("sb-perf-light");
 		}
-		const chart = preview.createDiv({ cls: "cps-chart" });
+		const chart = preview.createDiv({ cls: "sb-chart" });
 		setChartHtml(chart, renderChart(PREVIEW_SOURCE, 0).html);
 	}
 
@@ -420,9 +420,9 @@ export class StageBinderSettingTab extends PluginSettingTab {
 	// --- Editor tab -------------------------------------------------------------
 
 	private displayEditor(containerEl: HTMLElement): void {
-		const preview = containerEl.createDiv({ cls: "cps-settings-preview cps-settings-editor-preview" });
+		const preview = containerEl.createDiv({ cls: "sb-settings-preview sb-settings-editor-preview" });
 		if (!this.plugin.settings.editorChordColors) preview.addClass("is-off");
-		const line = preview.createDiv({ cls: "cps-editor-preview-line" });
+		const line = preview.createDiv({ cls: "sb-editor-preview-line" });
 		const parts: Array<[string, string | null]> = [
 			["Amazing ", null],
 			["[G]", "chord"],
@@ -433,7 +433,7 @@ export class StageBinderSettingTab extends PluginSettingTab {
 			["sound", null]
 		];
 		for (const [text, kind] of parts) {
-			if (kind === "chord") line.createSpan({ cls: "cps-editor-chord", text });
+			if (kind === "chord") line.createSpan({ cls: "sb-editor-chord", text });
 			else line.appendText(text);
 		}
 

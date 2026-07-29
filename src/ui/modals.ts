@@ -275,7 +275,7 @@ export class TransposeKeyModal extends SuggestModal<TransposeTarget> {
 		el.createSpan({ text: target.option.label });
 		const delta =
 			target.semitones === 0 ? "current key" : target.semitones > 0 ? `+${target.semitones}` : `${target.semitones}`;
-		el.createSpan({ cls: "cps-transpose-delta", text: ` (${delta})` });
+		el.createSpan({ cls: "sb-transpose-delta", text: ` (${delta})` });
 	}
 
 	onChooseSuggestion(target: TransposeTarget): void {

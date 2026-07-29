@@ -38,10 +38,10 @@ const META_DIRECTIVE_LINE_RE = /^\{\s*(?:form|autoscroll|audio)\s*:\s*[^}]*\}\s*
 
 // Stage notes (roadmap 2026-07-14): {note: watch the ritard} renders as a dim
 // italic cue. Preprocess rewrites it into a marked comment; setChartHtml then
-// turns marked comments into .cps-stage-note elements. The marker never
+// turns marked comments into .sb-stage-note elements. The marker never
 // reaches the screen.
 const NOTE_DIRECTIVE_LINE_RE = /^\{\s*note\s*:\s*([^}]*)\}\s*$/i;
-export const STAGE_NOTE_MARK = "⚑cps-note⚑ ";
+export const STAGE_NOTE_MARK = "⚑sb-note⚑ ";
 
 // Only these get a real ChordSheetJS environment (they gain semantic CSS
 // classes); the rest render as labeled comments.

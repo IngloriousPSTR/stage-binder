@@ -36,13 +36,13 @@ export function chordHoverExtension(): Extension {
 					above: true,
 					create: () => {
 						const dom = createDiv();
-						dom.classList.add("cps-hover-tooltip");
+						dom.classList.add("sb-hover-tooltip");
 						const name = createDiv();
-						name.classList.add("cps-hover-name");
+						name.classList.add("sb-hover-name");
 						name.textContent = symbol;
 						dom.appendChild(name);
 						const diagramEl = createDiv();
-						diagramEl.classList.add("cps-diagram");
+						diagramEl.classList.add("sb-diagram");
 						dom.appendChild(diagramEl);
 						drawDiagram(diagramEl, positionToDiagram(symbol, dbChord.positions[0]));
 						return { dom };

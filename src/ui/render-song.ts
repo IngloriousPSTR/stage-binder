@@ -125,12 +125,12 @@ function tagStageNotes(chartEl: HTMLElement): void {
 		const text = comment.textContent ?? "";
 		if (!text.startsWith(STAGE_NOTE_MARK)) continue;
 		comment.setText(text.slice(STAGE_NOTE_MARK.length));
-		comment.addClass("cps-stage-note");
+		comment.addClass("sb-stage-note");
 	}
 }
 
 function placeAfterTitle(chartEl: HTMLElement, el: HTMLElement): void {
-	const meta = chartEl.querySelector(".cps-form-strip") ?? chartEl.querySelector(".cps-chart-meta");
+	const meta = chartEl.querySelector(".sb-form-strip") ?? chartEl.querySelector(".sb-chart-meta");
 	const title = chartEl.querySelector("h1.title");
 	if (meta) meta.after(el);
 	else if (title) title.after(el);
@@ -146,7 +146,7 @@ export function appendMetaLine(chartEl: HTMLElement, chart: Chart, capo: number,
 		chart.meta.tempo ? `Tempo: ${chart.meta.tempo}` : null
 	].filter((p): p is string => p !== null);
 	if (parts.length === 0) return;
-	const metaEl = createDiv({ cls: "cps-chart-meta", text: parts.join("  ·  ") });
+	const metaEl = createDiv({ cls: "sb-chart-meta", text: parts.join("  ·  ") });
 	const title = chartEl.querySelector("h1.title");
 	if (title) title.after(metaEl);
 	else chartEl.prepend(metaEl);
@@ -156,11 +156,11 @@ export function appendMetaLine(chartEl: HTMLElement, chart: Chart, capo: number,
 export function appendFormStrip(chartEl: HTMLElement, form: string): void {
 	const tokens = parseForm(form);
 	if (tokens.length === 0) return;
-	const strip = createDiv({ cls: "cps-form-strip" });
+	const strip = createDiv({ cls: "sb-form-strip" });
 	for (const token of tokens) {
-		strip.createSpan({ cls: "cps-form-chip", text: shortLabel(token) });
+		strip.createSpan({ cls: "sb-form-chip", text: shortLabel(token) });
 	}
-	const meta = chartEl.querySelector(".cps-chart-meta");
+	const meta = chartEl.querySelector(".sb-chart-meta");
 	const title = chartEl.querySelector("h1.title");
 	if (meta) meta.after(strip);
 	else if (title) title.after(strip);
@@ -177,26 +177,26 @@ export const AUDIO_EXTENSIONS = new Set(["mp3", "m4a", "wav", "ogg", "flac", "we
  * performance overlay and print both skip it.
  */
 export function appendAudioLine(chartEl: HTMLElement, app: App, sourcePath: string, audio: string): void {
-	const wrap = createDiv({ cls: "cps-chart-audio" });
+	const wrap = createDiv({ cls: "sb-chart-audio" });
 	// Accept a bare path, a [[wikilink]], or a [[wikilink|alias]].
 	const value = audio.replace(/^!?\[\[/, "").replace(/\]\]$/, "").split("|")[0].trim();
 
 	if (/^https?:\/\//i.test(value)) {
-		const link = wrap.createEl("a", { cls: "cps-audio-link", href: value });
-		const icon = link.createSpan({ cls: "cps-audio-icon" });
+		const link = wrap.createEl("a", { cls: "sb-audio-link", href: value });
+		const icon = link.createSpan({ cls: "sb-audio-icon" });
 		setIcon(icon, "play-circle");
 		link.createSpan({ text: "Listen: reference audio" });
 		link.setAttribute("aria-label", `Open reference audio: ${value}`);
 	} else {
 		const dest = app.metadataCache.getFirstLinkpathDest(value, sourcePath);
 		if (dest && AUDIO_EXTENSIONS.has(dest.extension.toLowerCase())) {
-			const player = wrap.createEl("audio", { cls: "cps-audio-player" });
+			const player = wrap.createEl("audio", { cls: "sb-audio-player" });
 			player.controls = true;
 			player.preload = "none";
 			player.src = app.vault.getResourcePath(dest);
 		} else {
 			wrap.createSpan({
-				cls: "cps-audio-missing",
+				cls: "sb-audio-missing",
 				text: dest ? `Not an audio file: ${value}` : `Audio not found: ${value}`
 			});
 		}
@@ -208,13 +208,13 @@ export function appendAudioLine(chartEl: HTMLElement, app: App, sourcePath: stri
 export function appendDiagramStrip(chartEl: HTMLElement, displaySource: string): void {
 	const symbols = usedChords(displaySource);
 	if (symbols.length === 0) return;
-	const strip = createDiv({ cls: "cps-chart-diagrams" });
+	const strip = createDiv({ cls: "sb-chart-diagrams" });
 	for (const symbol of symbols) {
 		const dbChord = findChord(symbol);
 		if (!dbChord || dbChord.positions.length === 0) continue;
-		const cell = strip.createDiv({ cls: "cps-strip-cell" });
-		cell.createDiv({ cls: "cps-strip-name", text: symbol });
-		const diagramEl = cell.createDiv({ cls: "cps-diagram cps-strip-diagram" });
+		const cell = strip.createDiv({ cls: "sb-strip-cell" });
+		cell.createDiv({ cls: "sb-strip-name", text: symbol });
+		const diagramEl = cell.createDiv({ cls: "sb-diagram sb-strip-diagram" });
 		drawDiagram(diagramEl, positionToDiagram(symbol, dbChord.positions[0]));
 	}
 	if (strip.childElementCount === 0) return;
@@ -248,7 +248,7 @@ export interface SongChartOptions {
 
 /** Delegated click handler: tapping a chord symbol in a chart reports it. */
 export function attachChordClicks(chartEl: HTMLElement, onChord: (symbol: string) => void): void {
-	chartEl.addClass("cps-chords-clickable");
+	chartEl.addClass("sb-chords-clickable");
 	chartEl.addEventListener("click", (evt) => {
 		const target = evt.target;
 		if (!(target instanceof HTMLElement)) return;
@@ -281,10 +281,10 @@ export async function renderSongInto(
 	// is a service asset, not a song. PDFs use the CPS page reader so their
 	// navigation stays predictable in the setlist and performance views.
 	if (isServiceAttachment(file)) {
-		const el = container.createDiv({ cls: "cps-chart cps-attachment" });
+		const el = container.createDiv({ cls: "sb-chart sb-attachment" });
 		if (opts.zoom && opts.zoom !== 100) el.style.fontSize = opts.zoom / 100 + "em";
 		el.createEl("h1", { cls: "title", text: file.basename });
-		const bodyEl = el.createDiv({ cls: "cps-attachment-body" });
+		const bodyEl = el.createDiv({ cls: "sb-attachment-body" });
 		if (file.extension.toLowerCase() === "pdf") {
 			await renderPdfInto(bodyEl, app, file, opts.isCurrent);
 			if (opts.isCurrent?.() === false) return null;
@@ -308,10 +308,10 @@ export async function renderSongInto(
 	// prayers, announcements) is not a song: render it as prose instead of
 	// pushing it through the chart pipeline (v0.6.0).
 	if (file.extension === "md" && usedChords(resolved).length === 0) {
-		const el = container.createDiv({ cls: "cps-chart cps-prose" });
+		const el = container.createDiv({ cls: "sb-chart sb-prose" });
 		if (opts.zoom && opts.zoom !== 100) el.style.fontSize = opts.zoom / 100 + "em";
 		el.createEl("h1", { cls: "title", text: file.basename });
-		const bodyEl = el.createDiv({ cls: "cps-prose-body" });
+		const bodyEl = el.createDiv({ cls: "sb-prose-body" });
 		await MarkdownRenderer.render(app, splitFrontmatter(raw).body, bodyEl, file.path, owner);
 		if (opts.isCurrent?.() === false) return null;
 		return {
@@ -337,9 +337,9 @@ export async function renderSongInto(
 	if (opts.nashville) displaySource = toNashvilleSource(displaySource);
 	const chart = renderChart(displaySource, 0);
 
-	const el = container.createDiv({ cls: "cps-chart" });
+	const el = container.createDiv({ cls: "sb-chart" });
 	setChartHtml(el, chart.html);
-	el.toggleClass("cps-lyrics-only", opts.lyricsOnly === true);
+	el.toggleClass("sb-lyrics-only", opts.lyricsOnly === true);
 	if (opts.zoom && opts.zoom !== 100) el.style.fontSize = opts.zoom / 100 + "em";
 	if (opts.onChordClick) attachChordClicks(el, opts.onChordClick);
 
@@ -390,11 +390,11 @@ function formAnchors(chartEl: HTMLElement, tokens: FormToken[]): HTMLElement[] |
 	// A paragraph holding nothing but a stage note is a cue, not a section
 	// start; matching it would shift every following anchor by one.
 	const noteOnly = (c: HTMLElement) =>
-		c.querySelector(".cps-stage-note") !== null &&
-		c.querySelector(".lyrics, .chord, .label, .comment:not(.cps-stage-note)") === null;
+		c.querySelector(".sb-stage-note") !== null &&
+		c.querySelector(".lyrics, .chord, .label, .comment:not(.sb-stage-note)") === null;
 	let candidates = Array.from(chartEl.querySelectorAll<HTMLElement>(".paragraph")).filter((c) => !noteOnly(c));
 	if (candidates.length === 0) {
-		candidates = Array.from(chartEl.querySelectorAll<HTMLElement>(".comment:not(.cps-stage-note)"));
+		candidates = Array.from(chartEl.querySelectorAll<HTMLElement>(".comment:not(.sb-stage-note)"));
 	}
 	const anchors: HTMLElement[] = [];
 	let from = 0;
@@ -428,7 +428,7 @@ export function formHighlighter(
 	rendered: { el: HTMLElement; form: string | null }
 ): (() => void) | null {
 	if (!rendered.form) return null;
-	const strip = rendered.el.querySelector<HTMLElement>(".cps-form-strip");
+	const strip = rendered.el.querySelector<HTMLElement>(".sb-form-strip");
 	if (!strip) return null;
 	const chips = Array.from(strip.children).filter((c): c is HTMLElement => c.instanceOf(HTMLElement));
 	const tokens = parseForm(rendered.form);

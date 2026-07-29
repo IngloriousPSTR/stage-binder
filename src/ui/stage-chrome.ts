@@ -36,41 +36,41 @@ export class StageChrome {
 	constructor(options: StageChromeOptions) {
 		this.options = options;
 		const id = ++chromeId;
-		this.topbar = options.host.createEl("header", { cls: `cps-stage-topbar cps-stage-topbar-${options.surface}` });
+		this.topbar = options.host.createEl("header", { cls: `sb-stage-topbar sb-stage-topbar-${options.surface}` });
 		this.orderBtn = this.iconButton(this.topbar, "panel-left", "Open order of service");
-		this.orderBtn.setAttribute("aria-controls", `cps-order-${id}`);
+		this.orderBtn.setAttribute("aria-controls", `sb-order-${id}`);
 		this.orderBtn.setAttribute("aria-expanded", "false");
-		const heading = this.topbar.createDiv({ cls: "cps-stage-heading" });
-		this.titleEl = heading.createDiv({ cls: "cps-stage-title", text: options.title });
-		this.positionEl = heading.createDiv({ cls: "cps-stage-position", text: options.position ?? "" });
+		const heading = this.topbar.createDiv({ cls: "sb-stage-heading" });
+		this.titleEl = heading.createDiv({ cls: "sb-stage-title", text: options.title });
+		this.positionEl = heading.createDiv({ cls: "sb-stage-position", text: options.position ?? "" });
 		this.toolsBtn = this.iconButton(this.topbar, "more-horizontal", "Open tools");
-		this.toolsBtn.setAttribute("aria-controls", `cps-tools-${id}`);
+		this.toolsBtn.setAttribute("aria-controls", `sb-tools-${id}`);
 		this.toolsBtn.setAttribute("aria-expanded", "false");
 		this.songsBtn = this.iconButton(this.topbar, "panel-right", "Open song set");
-		this.songsBtn.setAttribute("aria-controls", `cps-songs-${id}`);
+		this.songsBtn.setAttribute("aria-controls", `sb-songs-${id}`);
 		this.songsBtn.setAttribute("aria-expanded", "false");
 		if (options.onExit) {
 			const exit = this.iconButton(this.topbar, "x", "Exit performance mode");
-			exit.addClass("cps-stage-exit");
+			exit.addClass("sb-stage-exit");
 			exit.addEventListener("click", options.onExit);
 		}
 
-		this.toolsPanel = options.host.createDiv({ cls: "cps-stage-tools" });
-		this.toolsPanel.id = `cps-tools-${id}`;
+		this.toolsPanel = options.host.createDiv({ cls: "sb-stage-tools" });
+		this.toolsPanel.id = `sb-tools-${id}`;
 		this.toolsPanel.setAttribute("role", "dialog");
 		this.toolsPanel.setAttribute("aria-label", "Chart and reading tools");
 		this.toolsPanel.hidden = true;
 
-		this.scrim = options.host.createDiv({ cls: "cps-stage-scrim" });
-		this.orderDrawer = options.host.createEl("aside", { cls: "cps-stage-drawer cps-stage-drawer-left" });
-		this.orderDrawer.id = `cps-order-${id}`;
+		this.scrim = options.host.createDiv({ cls: "sb-stage-scrim" });
+		this.orderDrawer = options.host.createEl("aside", { cls: "sb-stage-drawer sb-stage-drawer-left" });
+		this.orderDrawer.id = `sb-order-${id}`;
 		this.orderDrawer.setAttribute("role", "dialog");
 		this.orderDrawer.setAttribute("aria-modal", "true");
 		this.orderDrawer.setAttribute("aria-label", "Order of service");
 		this.orderDrawer.setAttribute("aria-hidden", "true");
 		this.orderDrawer.inert = true;
-		this.songsDrawer = options.host.createEl("aside", { cls: "cps-stage-drawer cps-stage-drawer-right" });
-		this.songsDrawer.id = `cps-songs-${id}`;
+		this.songsDrawer = options.host.createEl("aside", { cls: "sb-stage-drawer sb-stage-drawer-right" });
+		this.songsDrawer.id = `sb-songs-${id}`;
 		this.songsDrawer.setAttribute("role", "dialog");
 		this.songsDrawer.setAttribute("aria-modal", "true");
 		this.songsDrawer.setAttribute("aria-label", "Song set");
@@ -85,7 +85,7 @@ export class StageChrome {
 	}
 
 	private iconButton(parent: HTMLElement, icon: string, label: string): HTMLButtonElement {
-		const button = parent.createEl("button", { cls: "cps-stage-icon-btn" });
+		const button = parent.createEl("button", { cls: "sb-stage-icon-btn" });
 		setIcon(button, icon);
 		button.setAttribute("aria-label", label);
 		return button;
@@ -132,14 +132,14 @@ export class StageChrome {
 
 	private renderDrawer(drawer: HTMLElement, title: string, filesOnly: boolean): void {
 		drawer.empty();
-		const head = drawer.createDiv({ cls: "cps-stage-drawer-head" });
-		const heading = head.createDiv({ cls: "cps-stage-drawer-heading" });
+		const head = drawer.createDiv({ cls: "sb-stage-drawer-head" });
+		const heading = head.createDiv({ cls: "sb-stage-drawer-heading" });
 		const copy = heading.createDiv();
-		copy.createDiv({ cls: "cps-stage-eyebrow", text: this.options.surface === "performance" ? "Performance" : "Chart preview" });
+		copy.createDiv({ cls: "sb-stage-eyebrow", text: this.options.surface === "performance" ? "Performance" : "Chart preview" });
 		copy.createEl("h2", { text: title });
 		const close = this.iconButton(heading, "x", `Close ${title.toLowerCase()}`);
 		close.addEventListener("click", () => this.closeAll());
-		const picker = head.createEl("select", { cls: "dropdown cps-stage-service-picker" });
+		const picker = head.createEl("select", { cls: "dropdown sb-stage-service-picker" });
 		picker.setAttribute("aria-label", "Choose service from Setlists folder");
 		picker.createEl("option", { text: "Choose service…", value: "" });
 		for (const file of this.options.services) picker.createEl("option", { text: file.basename, value: file.path });
@@ -149,14 +149,14 @@ export class StageChrome {
 			if (file) this.options.onChooseService(file);
 		});
 
-		const list = drawer.createDiv({ cls: "cps-stage-drawer-list" });
+		const list = drawer.createDiv({ cls: "sb-stage-drawer-list" });
 		const context = this.options.context;
 		if (!context) {
-			list.createDiv({ cls: "cps-stage-empty", text: "Choose a service to populate this panel." });
+			list.createDiv({ cls: "sb-stage-empty", text: "Choose a service to populate this panel." });
 			return;
 		}
 		if (context.entries.length === 0) {
-			list.createDiv({ cls: "cps-stage-empty", text: "No service items found." });
+			list.createDiv({ cls: "sb-stage-empty", text: "No service items found." });
 			return;
 		}
 		if (filesOnly) {
@@ -165,7 +165,7 @@ export class StageChrome {
 		}
 		for (const row of context.rows) {
 			if (row.kind === "divider") {
-				list.createDiv({ cls: "cps-stage-drawer-divider", text: row.title });
+				list.createDiv({ cls: "sb-stage-drawer-divider", text: row.title });
 			} else {
 				this.appendEntry(list, context, row);
 			}
@@ -174,14 +174,14 @@ export class StageChrome {
 
 	private appendEntry(list: HTMLElement, context: ServiceContext, entry: ServiceEntry): void {
 		const index = context.entries.indexOf(entry);
-		const button = list.createEl("button", { cls: "cps-stage-drawer-row" });
+		const button = list.createEl("button", { cls: "sb-stage-drawer-row" });
 		button.dataset.entry = String(index);
 		button.toggleClass("is-current", index === this.options.currentIndex);
-		button.createSpan({ cls: "cps-stage-row-time", text: serviceEntryTime(context, entry) });
-		button.createSpan({ cls: "cps-stage-row-title", text: entry.title });
-		button.createSpan({ cls: "cps-stage-row-kind", text: entry.fileKind ?? "Service item" });
-		button.createSpan({ cls: "cps-stage-row-duration", text: serviceEntryDuration(entry) });
-		button.createSpan({ cls: "cps-stage-row-host", text: entry.item.people.join(", ") });
+		button.createSpan({ cls: "sb-stage-row-time", text: serviceEntryTime(context, entry) });
+		button.createSpan({ cls: "sb-stage-row-title", text: entry.title });
+		button.createSpan({ cls: "sb-stage-row-kind", text: entry.fileKind ?? "Service item" });
+		button.createSpan({ cls: "sb-stage-row-duration", text: serviceEntryDuration(entry) });
+		button.createSpan({ cls: "sb-stage-row-host", text: entry.item.people.join(", ") });
 		if (entry.kind === "card" && !this.options.cardsSelectable) {
 			button.disabled = true;
 			button.setAttribute("aria-label", `${entry.title}, informational service item`);
