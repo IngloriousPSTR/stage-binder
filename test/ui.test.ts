@@ -666,3 +666,28 @@ test("form can use detected sections in file order", async () => {
 	await settle();
 	assert.equal(written.at(-1), "In V1 C");
 });
+
+// --- standalone stage files (PDF/image) in Performance ----------------------
+// Regression guard for the 1.0.1 fix: Performance opened for a standalone
+// ChordPro song but not a standalone PDF, because the fallback path used
+// getActiveSongFile(), which accepts only md and chordpro. PDFs inside a
+// setlist were unaffected, which is why this went unnoticed.
+
+test("stage file gating accepts PDFs and images when those formats are enabled", async () => {
+	const { isStageFileEnabled } = await import("../src/ui/render-song");
+	const all = { chordpro: true, markdown: true, pdf: true, images: true };
+	assert.equal(isStageFileEnabled(song("Songs/Score.pdf") as never, all), true);
+	assert.equal(isStageFileEnabled(song("Songs/Chart.png") as never, all), true);
+	assert.equal(isStageFileEnabled(song("Songs/Grace.chordpro") as never, all), true);
+	assert.equal(isStageFileEnabled(song("Songs/Grace.md") as never, all), true);
+});
+
+test("stage file gating honours the included-format settings", async () => {
+	const { isStageFileEnabled } = await import("../src/ui/render-song");
+	const noPdf = { chordpro: true, markdown: true, pdf: false, images: true };
+	const noImages = { chordpro: true, markdown: true, pdf: true, images: false };
+	assert.equal(isStageFileEnabled(song("Songs/Score.pdf") as never, noPdf), false);
+	assert.equal(isStageFileEnabled(song("Songs/Chart.png") as never, noImages), false);
+	// A disabled format must not leak through the image branch either.
+	assert.equal(isStageFileEnabled(song("Songs/Notes.txt") as never, noPdf), false);
+});

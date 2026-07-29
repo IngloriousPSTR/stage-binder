@@ -27,7 +27,7 @@ import { ChartView, CHART_VIEW_TYPE } from "./ui/chart-view";
 import { SetlistView, SETLIST_VIEW_TYPE } from "./ui/setlist-view";
 import { RunsheetView, RUNSHEET_VIEW_TYPE } from "./ui/runsheet-view";
 import { PerformanceMode } from "./ui/performance";
-import { AUDIO_EXTENSIONS, collectSetlistSongs, isSongFile, SetlistEntry } from "./ui/render-song";
+import { AUDIO_EXTENSIONS, collectSetlistSongs, isSongFile, isStageFileEnabled, SetlistEntry } from "./ui/render-song";
 import type { StageFileTypes } from "./ui/render-song";
 import { renderChordproBlock } from "./ui/codeblock";
 import { chordHoverExtension } from "./ui/hover";
@@ -571,6 +571,25 @@ export default class StageBinderPlugin extends Plugin {
 		return null;
 	}
 
+	/**
+	 * The file Performance should play when no setlist or chart claims the
+	 * click. Wider than getActiveSongFile(): a PDF or image opened on its own
+	 * is a legitimate stage item, gated on the same included-file-formats
+	 * settings the setlist path already honours through isStageFileEnabled().
+	 *
+	 * Deliberately separate from getActiveSongFile() rather than widening it.
+	 * The Toolbox and Chart Preview share that method and genuinely need an
+	 * editable text file; handing either a PDF would be a worse bug than the
+	 * one this fixes.
+	 */
+	getActivePerformableFile(): TFile | null {
+		const song = this.getActiveSongFile();
+		if (song) return song;
+		const active = this.app.workspace.getActiveFile();
+		if (active && isStageFileEnabled(active, this.getStageFileTypes())) return active;
+		return null;
+	}
+
 	private async onFileOpen(file: TFile | null): Promise<void> {
 		if (!file || (file.extension !== "md" && file.extension !== "chordpro")) return;
 
@@ -740,7 +759,7 @@ export default class StageBinderPlugin extends Plugin {
 			return;
 		}
 
-		const file = this.getActiveSongFile();
+		const file = this.getActivePerformableFile();
 		if (!file) {
 			new Notice("Open a song or setlist first.");
 			return;
