@@ -691,3 +691,19 @@ test("stage file gating honours the included-format settings", async () => {
 	// A disabled format must not leak through the image branch either.
 	assert.equal(isStageFileEnabled(song("Songs/Notes.txt") as never, noPdf), false);
 });
+
+test("performance resolves the active stage file before background views", () => {
+	const main = readFileSync("src/main.ts", "utf8");
+	const resolver = main.slice(
+		main.indexOf("getActivePerformableFile():"),
+		main.indexOf("private async onFileOpen")
+	);
+	assert.ok(resolver.indexOf("getActiveFile()") < resolver.indexOf("getActiveSongFile()"));
+
+	const dispatcher = main.slice(
+		main.indexOf("async enterPerformanceMode():"),
+		main.indexOf("private async openPerformanceFile")
+	);
+	assert.ok(dispatcher.indexOf("const activeFile =") < dispatcher.indexOf("const backgroundChart ="));
+	assert.ok(dispatcher.indexOf("const activeFile =") < dispatcher.indexOf("const backgroundSetlist ="));
+});

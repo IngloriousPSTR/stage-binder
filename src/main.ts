@@ -583,11 +583,10 @@ export default class StageBinderPlugin extends Plugin {
 	 * one this fixes.
 	 */
 	getActivePerformableFile(): TFile | null {
-		const song = this.getActiveSongFile();
-		if (song) return song;
 		const active = this.app.workspace.getActiveFile();
-		if (active && isStageFileEnabled(active, this.getStageFileTypes())) return active;
-		return null;
+		if (active) return isStageFileEnabled(active, this.getStageFileTypes()) ? active : null;
+		const song = this.getActiveSongFile();
+		return song && isStageFileEnabled(song, this.getStageFileTypes()) ? song : null;
 	}
 
 	private async onFileOpen(file: TFile | null): Promise<void> {
@@ -725,25 +724,26 @@ export default class StageBinderPlugin extends Plugin {
 			return;
 		}
 
-		const chart = this.chartView();
-		const chartFile = chart?.getFile();
-		if (chart && chartFile) {
-			const service = chart.getServiceFile();
-			if (service) {
-				const serviceSongs = await collectSetlistSongs(this.app, service, this.getStageFileTypes());
-				if (serviceSongs.length > 0) {
-					const at = serviceSongs.findIndex((entry) => entry.file.path === chartFile.path);
-					await this.performance.open(
-						serviceSongs,
-						at >= 0 ? at : 0,
-						undefined,
-						service,
-						at >= 0 ? serviceSongs[at]?.line : undefined
-					);
-					return;
-				}
+		const chart = this.app.workspace.getActiveViewOfType(ChartView);
+		if (chart?.getFile()) {
+			await this.openPerformanceChart(chart);
+			return;
+		}
+
+		const activeFile = this.app.workspace.getActiveFile();
+		if (activeFile) {
+			const file = this.getActivePerformableFile();
+			if (!file) {
+				new Notice("This file type is not enabled for performance.");
+				return;
 			}
-			await this.performance.open([{ file: chartFile, key: null, label: null }]);
+			await this.openPerformanceFile(file);
+			return;
+		}
+
+		const backgroundChart = this.chartView();
+		if (backgroundChart?.getFile()) {
+			await this.openPerformanceChart(backgroundChart);
 			return;
 		}
 
@@ -764,6 +764,31 @@ export default class StageBinderPlugin extends Plugin {
 			new Notice("Open a song or setlist first.");
 			return;
 		}
+		await this.openPerformanceFile(file);
+	}
+
+	private async openPerformanceChart(chart: ChartView): Promise<void> {
+		const file = chart.getFile();
+		if (!file) return;
+		const service = chart.getServiceFile();
+		if (service) {
+			const serviceSongs = await collectSetlistSongs(this.app, service, this.getStageFileTypes());
+			if (serviceSongs.length > 0) {
+				const at = serviceSongs.findIndex((entry) => entry.file.path === file.path);
+				await this.performance.open(
+					serviceSongs,
+					at >= 0 ? at : 0,
+					undefined,
+					service,
+					at >= 0 ? serviceSongs[at]?.line : undefined
+				);
+				return;
+			}
+		}
+		await this.performance.open([{ file, key: null, label: null }]);
+	}
+
+	private async openPerformanceFile(file: TFile): Promise<void> {
 		let songs: SetlistEntry[] = [];
 		if (file.extension === "md") {
 			songs = await collectSetlistSongs(this.app, file, this.getStageFileTypes());
