@@ -6,7 +6,7 @@ Stage Binder is an Obsidian plugin for building ChordPro charts, organizing setl
 
 ![Amazing Grace displayed in a two-column dark Performance view on an iPad, with Form progress, Up Next, and the five-button stage dock.](docs/assets/hero-performance-ipad.png)
 
-[Get started](docs/getting-started.md) · [Download 1.0.0](https://github.com/IngloriousPSTR/stage-binder/releases/tag/1.0.0) · [Report an issue](https://github.com/IngloriousPSTR/stage-binder/issues)
+[Get started](docs/getting-started.md) · [Download the latest release](https://github.com/IngloriousPSTR/stage-binder/releases/latest) · [Report an issue](https://github.com/IngloriousPSTR/stage-binder/issues)
 
 ## Why
 
@@ -102,7 +102,7 @@ Keep a source PDF beside a ChordPro file while rebuilding it as a transposable, 
 
 ## Install
 
-After Stage Binder is accepted into the Obsidian Community directory:
+Install Stage Binder from the Obsidian Community directory:
 
 1. Open **Settings → Community plugins → Browse**.
 2. Search for **Stage Binder**.
@@ -193,6 +193,15 @@ CHORDPRO_VAULT="/absolute/path/to/scratch-vault" npm run install:vault
 ```
 
 Do not test development builds in a vault containing irreplaceable material.
+
+### Verify release provenance
+
+Tagged releases include GitHub artifact attestations for `main.js` and `styles.css`. After downloading the release assets, verify both files with:
+
+```bash
+gh attestation verify main.js --repo IngloriousPSTR/stage-binder
+gh attestation verify styles.css --repo IngloriousPSTR/stage-binder
+```
 
 ## Security and copyright
 

@@ -45,7 +45,11 @@ export function chordHoverExtension(): Extension {
 						diagramEl.classList.add("sb-diagram");
 						dom.appendChild(diagramEl);
 						drawDiagram(diagramEl, positionToDiagram(symbol, dbChord.positions[0]));
-						return { dom };
+						return {
+							dom,
+							mount: () => dom.parentElement?.classList.add("sb-hover-tooltip-host"),
+							destroy: () => dom.parentElement?.classList.remove("sb-hover-tooltip-host")
+						};
 					}
 				};
 			}

@@ -1395,7 +1395,7 @@ button.sb-stage-drawer-row:disabled {
 }
 
 /* CM6 wraps hover tooltips in .cm-tooltip with its own chrome; neutralize it. */
-.cm-tooltip:has(> .sb-hover-tooltip) {
+.cm-tooltip.sb-hover-tooltip-host {
 	background: transparent;
 	border: none;
 }
@@ -1410,7 +1410,7 @@ button.sb-stage-drawer-row:disabled {
 	/* Stage cues and rehearsal audio are screen-only. */
 	.sb-chart .comment.sb-stage-note,
 	.sb-chart-audio {
-		display: none !important;
+		display: none;
 	}
 
 	.sb-chart,

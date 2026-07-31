@@ -7,6 +7,7 @@
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
 		"lint": "eslint src",
+		"version:check": "node scripts/check-version.mjs",
 		"test": "npm run test:core && npm run test:ui",
 		"test:core": "node scripts/run-tests.mjs",
 		"test:ui": "node scripts/run-ui-tests.mjs",
