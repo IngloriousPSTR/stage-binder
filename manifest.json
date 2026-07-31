@@ -1,7 +1,7 @@
 {
 	"id": "stage-binder",
 	"name": "Stage Binder",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"minAppVersion": "1.8.7",
 	"description": "Build ChordPro charts, organize setlists and run sheets, transpose on the fly, and perform from a tablet or desktop.",
 	"author": "Chris May",

@@ -1,6 +1,6 @@
 {
 	"name": "stage-binder",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Build ChordPro charts, organize setlists and run sheets, transpose on the fly, and perform from a tablet or desktop.",
 	"main": "main.js",
 	"scripts": {
