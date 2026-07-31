@@ -27,7 +27,7 @@ import { ChartView, CHART_VIEW_TYPE } from "./ui/chart-view";
 import { SetlistView, SETLIST_VIEW_TYPE } from "./ui/setlist-view";
 import { RunsheetView, RUNSHEET_VIEW_TYPE } from "./ui/runsheet-view";
 import { PerformanceMode } from "./ui/performance";
-import { AUDIO_EXTENSIONS, collectSetlistSongs, isSongFile, SetlistEntry } from "./ui/render-song";
+import { AUDIO_EXTENSIONS, collectSetlistSongs, isSongFile, isStageFileEnabled, SetlistEntry } from "./ui/render-song";
 import type { StageFileTypes } from "./ui/render-song";
 import { renderChordproBlock } from "./ui/codeblock";
 import { chordHoverExtension } from "./ui/hover";
@@ -571,6 +571,24 @@ export default class StageBinderPlugin extends Plugin {
 		return null;
 	}
 
+	/**
+	 * The file Performance should play when no setlist or chart claims the
+	 * click. Wider than getActiveSongFile(): a PDF or image opened on its own
+	 * is a legitimate stage item, gated on the same included-file-formats
+	 * settings the setlist path already honours through isStageFileEnabled().
+	 *
+	 * Deliberately separate from getActiveSongFile() rather than widening it.
+	 * The Toolbox and Chart Preview share that method and genuinely need an
+	 * editable text file; handing either a PDF would be a worse bug than the
+	 * one this fixes.
+	 */
+	getActivePerformableFile(): TFile | null {
+		const active = this.app.workspace.getActiveFile();
+		if (active) return isStageFileEnabled(active, this.getStageFileTypes()) ? active : null;
+		const song = this.getActiveSongFile();
+		return song && isStageFileEnabled(song, this.getStageFileTypes()) ? song : null;
+	}
+
 	private async onFileOpen(file: TFile | null): Promise<void> {
 		if (!file || (file.extension !== "md" && file.extension !== "chordpro")) return;
 
@@ -706,25 +724,26 @@ export default class StageBinderPlugin extends Plugin {
 			return;
 		}
 
-		const chart = this.chartView();
-		const chartFile = chart?.getFile();
-		if (chart && chartFile) {
-			const service = chart.getServiceFile();
-			if (service) {
-				const serviceSongs = await collectSetlistSongs(this.app, service, this.getStageFileTypes());
-				if (serviceSongs.length > 0) {
-					const at = serviceSongs.findIndex((entry) => entry.file.path === chartFile.path);
-					await this.performance.open(
-						serviceSongs,
-						at >= 0 ? at : 0,
-						undefined,
-						service,
-						at >= 0 ? serviceSongs[at]?.line : undefined
-					);
-					return;
-				}
+		const chart = this.app.workspace.getActiveViewOfType(ChartView);
+		if (chart?.getFile()) {
+			await this.openPerformanceChart(chart);
+			return;
+		}
+
+		const activeFile = this.app.workspace.getActiveFile();
+		if (activeFile) {
+			const file = this.getActivePerformableFile();
+			if (!file) {
+				new Notice("This file type is not enabled for performance.");
+				return;
 			}
-			await this.performance.open([{ file: chartFile, key: null, label: null }]);
+			await this.openPerformanceFile(file);
+			return;
+		}
+
+		const backgroundChart = this.chartView();
+		if (backgroundChart?.getFile()) {
+			await this.openPerformanceChart(backgroundChart);
 			return;
 		}
 
@@ -740,11 +759,36 @@ export default class StageBinderPlugin extends Plugin {
 			return;
 		}
 
-		const file = this.getActiveSongFile();
+		const file = this.getActivePerformableFile();
 		if (!file) {
 			new Notice("Open a song or setlist first.");
 			return;
 		}
+		await this.openPerformanceFile(file);
+	}
+
+	private async openPerformanceChart(chart: ChartView): Promise<void> {
+		const file = chart.getFile();
+		if (!file) return;
+		const service = chart.getServiceFile();
+		if (service) {
+			const serviceSongs = await collectSetlistSongs(this.app, service, this.getStageFileTypes());
+			if (serviceSongs.length > 0) {
+				const at = serviceSongs.findIndex((entry) => entry.file.path === file.path);
+				await this.performance.open(
+					serviceSongs,
+					at >= 0 ? at : 0,
+					undefined,
+					service,
+					at >= 0 ? serviceSongs[at]?.line : undefined
+				);
+				return;
+			}
+		}
+		await this.performance.open([{ file, key: null, label: null }]);
+	}
+
+	private async openPerformanceFile(file: TFile): Promise<void> {
 		let songs: SetlistEntry[] = [];
 		if (file.extension === "md") {
 			songs = await collectSetlistSongs(this.app, file, this.getStageFileTypes());

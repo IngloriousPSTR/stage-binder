@@ -17,6 +17,7 @@ import { join } from "node:path";
 const PLUGIN_ID = "stage-binder";
 const FILES = ["main.js", "manifest.json", "styles.css"];
 const TARGETS = ["dev", "release"];
+const DEV_SUFFIX = " (dev)";
 
 const target = (process.argv[2] || "dev").trim();
 if (!TARGETS.includes(target)) {
@@ -90,6 +91,21 @@ mkdirSync(pluginDir, { recursive: true });
 for (const file of FILES) {
 	copyFileSync(join(sourceDir, file), join(pluginDir, file));
 	console.log(`Copied ${file} -> ${pluginDir}`);
+}
+
+// Mark dev installs in Obsidian's plugin list so it is obvious at a glance
+// which vault is running unreleased work. The name is cosmetic; the plugin ID
+// and version are untouched, and the repo's own manifest.json is never
+// modified. Release installs stay verbatim: that vault must show exactly what
+// a user downloading from GitHub would see.
+if (target === "dev") {
+	const manifestPath = join(pluginDir, "manifest.json");
+	const manifest = readJson(manifestPath);
+	if (manifest && !manifest.name.endsWith(DEV_SUFFIX)) {
+		manifest.name += DEV_SUFFIX;
+		writeFileSync(manifestPath, `${JSON.stringify(manifest, null, "\t")}\n`);
+		console.log(`Marked as "${manifest.name}" in the plugin list`);
+	}
 }
 
 // Make sure the vault has the plugin switched on, without disturbing others.
