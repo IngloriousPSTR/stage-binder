@@ -1,8 +1,28 @@
 # Changelog
 
+## 1.0.2 - 2026-08-03
+
+### Changed
+
+- Refreshed public installation and latest-release documentation.
+- Replaced deprecated slider tooltip calls while preserving inline values.
+- Reworked chord-hover and print CSS to avoid `:has()` and `!important` without changing behavior.
+- Added release attestations for `main.js` and `styles.css`.
+- Added version consistency checks and regression coverage for Community-review findings.
+
+### Documentation
+
+- Documented the intentional multicolumn layout and deferred the Obsidian 1.13 declarative-settings migration to a focused follow-up.
+
+## 1.0.1 - 2026-07-31
+
+### Added
+
+- Open standalone PDF and image files directly in Performance mode.
+
 ## 1.0.0 - 2026-07-25
 
-Initial public release of ChordPro Studio.
+Initial public release of Stage Binder.
 
 ### Added
 
