@@ -450,12 +450,17 @@ test("performance mode cycles the live chart column layout", async () => {
 
 test("accessibility and narrow-screen CSS contracts remain in the plugin stylesheet", () => {
 	const css = readFileSync("styles.css", "utf8");
+	const hover = readFileSync("src/ui/hover.ts", "utf8");
 	assert.match(css, /:focus-visible\s*\{/);
 	assert.match(css, /button\.sb-stage-icon-btn\s*>\s*svg\s*\{[\s\S]*?width:\s*20px;[\s\S]*?height:\s*20px;/);
 	assert.match(css, /@media\s*\(pointer:\s*coarse\)[\s\S]*?button\.sb-stage-icon-btn\s*>\s*svg\s*\{[\s\S]*?width:\s*24px;[\s\S]*?height:\s*24px;/);
 	assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*?\.sb-chord-dock\s*\{[\s\S]*?transition:\s*none/);
 	assert.match(css, /@media\s+screen\s+and\s+\(max-width:\s*700px\)[\s\S]*?\.sb-performance \.sb-perf-columns[\s\S]*?display:\s*none/);
 	assert.match(css, /@media\s+screen\s+and\s+\(max-width:\s*700px\)[\s\S]*?\.sb-chart\.sb-cols-2[\s\S]*?\.sb-chart\.sb-cols-3[\s\S]*?column-count:\s*1/);
+	assert.match(css, /\.cm-tooltip\.sb-hover-tooltip-host\s*\{/);
+	assert.doesNotMatch(css, /:has\(/);
+	assert.doesNotMatch(css, /!important/);
+	assert.match(hover, /mount: \(\) => dom\.parentElement\?\.classList\.add\("sb-hover-tooltip-host"\)/);
 });
 
 test("plugin settings provide vault folder search and stage file-type controls", () => {
@@ -465,6 +470,7 @@ test("plugin settings provide vault folder search and stage file-type controls",
 	assert.match(settings, /"Songs folder"/);
 	assert.match(settings, /"Setlists folder"/);
 	assert.match(settings, /"Stage file types"/);
+	assert.doesNotMatch(settings, /setDynamicTooltip/);
 	for (const label of ["ChordPro", "Markdown", "PDF", "Images"]) {
 		assert.match(settings, new RegExp(`stageType\\("${label}"`));
 	}

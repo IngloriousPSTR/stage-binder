@@ -189,7 +189,6 @@ export class StageBinderSettingTab extends PluginSettingTab {
 				slider
 					.setLimits(110, 200, 5)
 					.setValue(this.plugin.settings.lineHeight)
-					.setDynamicTooltip()
 					.onChange(async (value) => {
 						this.plugin.settings.lineHeight = value;
 						await this.plugin.saveSettings();
@@ -228,7 +227,6 @@ export class StageBinderSettingTab extends PluginSettingTab {
 				slider
 					.setLimits(5, 150, 5)
 					.setValue(this.plugin.settings.autoscrollSpeed)
-					.setDynamicTooltip()
 					.onChange(async (value) => {
 						this.plugin.settings.autoscrollSpeed = value;
 						await this.plugin.saveSettings();
@@ -260,7 +258,6 @@ export class StageBinderSettingTab extends PluginSettingTab {
 				slider
 					.setLimits(70, 160, 5)
 					.setValue(this.plugin.settings.diagramScale)
-					.setDynamicTooltip()
 					.onChange(async (value) => {
 						this.plugin.settings.diagramScale = value;
 						await this.plugin.saveSettings();
@@ -555,7 +552,6 @@ export class StageBinderSettingTab extends PluginSettingTab {
 				slider
 					.setLimits(80, 300, 10)
 					.setValue(this.plugin.settings.performanceZoom)
-					.setDynamicTooltip()
 					.onChange(async (value) => {
 						this.plugin.settings.performanceZoom = value;
 						await this.plugin.saveSettings();
@@ -666,7 +662,6 @@ export class StageBinderSettingTab extends PluginSettingTab {
 				slider
 					.setLimits(70, 160, 5)
 					.setValue(this.plugin.settings[key])
-					.setDynamicTooltip()
 					.onChange(async (value) => {
 						this.plugin.settings[key] = value;
 						await this.plugin.saveSettings();

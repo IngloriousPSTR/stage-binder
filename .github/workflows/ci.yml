@@ -20,7 +20,7 @@ jobs:
       - run: npm ci
 
       - name: Version consistency
-        run: node scripts/check-version.mjs
+        run: npm run version:check
 
       - name: Typecheck and build
         run: npm run build

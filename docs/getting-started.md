@@ -8,13 +8,13 @@ This guide takes about fifteen minutes and ends with you running a set from a ta
 
 ## 1. Install
 
-**From the Community directory after approval**
+**From the Community directory**
 
-Once Stage Binder is listed, open **Settings → Community plugins → Browse**, search for "Stage Binder", select **Install**, then **Enable**.
+Open **Settings → Community plugins → Browse**, search for "Stage Binder", select **Install**, then **Enable**.
 
 **Manually from a release**
 
-Until then, download `main.js`, `manifest.json`, and `styles.css` from the [releases page](https://github.com/IngloriousPSTR/stage-binder/releases), and put all three into `YourVault/.obsidian/plugins/stage-binder/`. Restart Obsidian, then enable the plugin under **Settings → Community plugins**.
+Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/IngloriousPSTR/stage-binder/releases/latest), and put all three into `YourVault/.obsidian/plugins/stage-binder/`. Restart Obsidian, then enable the plugin under **Settings → Community plugins**.
 
 ---
 
